@@ -21,46 +21,42 @@ camera {
   angle 120.0
 }
 
-#declare Ball = 
-    sphere { < 0, 0, 0 >, 0.05
-        scale < 1, 1, 1 >
-        texture {
-            pigment {
-                color rgb < 1, 0.1, 0 >
-            }
-            finish {
-                phong 1
-            }
-        }
-        rotate<0,0,0>
-        translate<0,0,0>
-    }
-
 union {
-    #local NrX = 0;    // start x
-    #local EndNrX = 4; // end   x
-    #while (NrX < EndNrX) 
-        #local NrY = 0;    // start y 
-        #local EndNrY = 4; // end    y
+    #local NrZ = 0;
+    #local EndNrZ = 4;
+    #while (NrZ < EndNrZ) 
+        #local NrY = 0;
+        #local EndNrY = 4;
         #while (NrY < EndNrY) 
-            #local NrZ = 0;     // start z
-            #local EndNrZ = 4; // end   z
-            #while (NrZ < EndNrZ) 
+            #local NrX = 0;
+            #local EndNrX = 4;
+            #while (NrX < EndNrX) 
                 #local X = NrX - cameraX;
                 #local Y = NrY - cameraY;
                 #local Z = NrZ - cameraZ;
-                object { Ball
+                sphere { < 0, 0, 0 >, 0.05
+                    texture {
+                        pigment {
+                            #if ( NrZ = 0 ) color rgb < 1, 0, 0 > #end
+                            #if ( NrZ = 1 ) color rgb < 0.5, 0.5, 0 > #end
+                            #if ( NrZ = 2 ) color rgb < 0, 1, 0 > #end
+                            #if ( NrZ = 3 ) color rgb < 0, 0, 1 > #end
+                        }
+                        finish {
+                            phong 1
+                        }
+                    }
                     translate < NrX, NrY, NrZ >
                     matrix < 1.0, 0.0, 0.0,
                         0.0, 1.0, 0.0,
                         0.0, 0.0, GAMMA,
                         0.0, 0.0, GAMMA*V*sqrt(X*X + Y*Y + Z*Z) >
                 }
-            #local NrZ = NrZ + 1;  // next Nr z
-            #end // --------------- end of loop z
-        #local NrY = NrY + 1;  // next Nr y
-        #end // --------------- end of loop y
-    #local NrX = NrX + 1;  // next Nr x
-    #end // --------------- end of loop x
+            #local NrX = NrX + 1;
+            #end
+        #local NrY = NrY + 1;
+        #end
+    #local NrZ = NrZ + 1;
+    #end
 }
 
