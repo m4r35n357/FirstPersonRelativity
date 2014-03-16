@@ -1,10 +1,10 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare V = 0.0;
+#declare V = clock;
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 
-#debug concat("V: ", str(V,3,1))
+#debug concat("V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3), "\n")
 
 #declare cameraX = 1.5;
@@ -41,7 +41,7 @@ union {
                     texture {
                         pigment {
                             #if ( NrZ = 0 ) color rgb < 1, 0, 0 > #end
-                            #if ( NrZ = 1 ) color rgb < 0.5, 0.5, 0 > #end
+                            #if ( NrZ = 1 ) color rgb < 0.7, 0.7, 0 > #end
                             #if ( NrZ = 2 ) color rgb < 0, 1, 0 > #end
                             #if ( NrZ = 3 ) color rgb < 0, 0, 1 > #end
                         }
