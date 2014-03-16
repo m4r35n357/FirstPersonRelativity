@@ -1,8 +1,11 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare V = 0.8;
+#declare V = 0.0;
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
+
+#debug concat("V: ", str(V,3,1))
+#debug concat(", GAMMA: ", str(GAMMA,3,3), "\n")
 
 #declare cameraX = 1.5;
 #declare cameraY = 1.5;
