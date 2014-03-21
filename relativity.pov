@@ -1,19 +1,21 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare V = 0.5;
+#declare V = 0.9;
 //#declare V = clock;
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 
 #debug concat("V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 
-#declare Distance = 10.0;
+#declare Distance = 20.0;
 #declare cameraX = 1.5;
 #declare cameraY = 1.5;
-#declare cameraZ = 1.5 - Distance / 2.0 + clock * Distance;
-//#declare cameraZ = 1.5 - (Distance - 1.5) + clock * (Distance);
+//#declare cameraZ = 1.5 - Distance / 2.0 + clock * Distance;
+#declare cameraZ = 1.5 - 0.2 * Distance + clock * (Distance);
 
+#debug concat(", X: ", str(cameraX,3,1))
+#debug concat(", Y: ", str(cameraY,3,1))
 #debug concat(", Z: ", str(cameraZ,3,1), "\n")
 
 global_settings { assumed_gamma 1.8 }
@@ -25,7 +27,7 @@ camera {
   up < 0, 1, 0 >
   right < 1, 0, 0 >
   location < cameraX, cameraY, cameraZ >
-  angle 90.0
+  angle 120.0
   look_at < cameraX, cameraY, Distance >
 }
 
@@ -54,11 +56,12 @@ union {
                             phong 1
                         }
                     }
-                    translate < NrX, NrY, NrZ >
                     matrix < 1.0, 0.0, 0.0,
                         0.0, 1.0, 0.0,
                         0.0, 0.0, GAMMA,
-                        0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
+                        NrX, NrY, NrZ + GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
+//                        0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
+//                    translate < NrX, NrY, NrZ >
                 }
             #local NrX = NrX + 1;
             #end
