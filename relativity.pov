@@ -13,9 +13,6 @@
 #declare Tau = Time / GAMMA;
 #debug concat(", Proper Time: ", str(Tau,3,1), "\n")
 
-#declare cubeSize = 4;
-#declare cubeCentre = (cubeSize - 1.0) / 2.0;
-
 global_settings { assumed_gamma 1.8 }
 
 light_source { <1, 1, 0> color White }
@@ -28,25 +25,26 @@ camera {
   look_at < 0.0, 0.0, 100 >
 }
 
-#macro Lorentz_Transform (X, Y, Z)
-                    translate < X, Y, Z >
-                    matrix < 1.0, 0.0, 0.0,
-                        0.0, 1.0, 0.0,
-                        0.0, 0.0, GAMMA,
-                        0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
-#end
+#declare LorentzZ = function (X, Y, Z) {
+    GAMMA * (Z + V * sqrt(X*X + Y*Y + Z*Z))
+}
 
 union {
+    #declare Size = 4;
+    #declare Centre = (Size - 1.0) / 2.0;
     #local NrZ = 0;
-    #local EndNrZ = cubeSize;
+    #local EndNrZ = Size;
     #while (NrZ < EndNrZ) 
         #local NrY = 0;
-        #local EndNrY = cubeSize;
+        #local EndNrY = Size;
         #while (NrY < EndNrY) 
             #local NrX = 0;
-            #local EndNrX = cubeSize;
+            #local EndNrX = Size;
             #while (NrX < EndNrX) 
-                sphere { < 0, 0, 0 >, 0.05
+                #local X = NrX - Centre;
+                #local Y = NrY - Centre;
+                #local Z = NrZ - Centre + Distance;
+                sphere { < X, Y, LorentzZ (X, Y, Z) >, 0.05
                     texture {
                         pigment {
                             #if ( NrZ = 0 ) color rgb < 1, 0, 0 > #end
@@ -58,7 +56,6 @@ union {
                             phong 1
                         }
                     }
-                    Lorentz_Transform (NrX - cubeCentre, NrY - cubeCentre, NrZ - cubeCentre + Distance)
                 }
                 #local NrX = NrX + 1;
             #end
