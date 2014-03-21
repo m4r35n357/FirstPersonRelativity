@@ -1,7 +1,7 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare V = 0.8;
+#declare V = 0.5;
 //#declare V = clock;
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 
@@ -11,7 +11,8 @@
 #declare Distance = 10.0;
 #declare cameraX = 1.5;
 #declare cameraY = 1.5;
-#declare cameraZ = 1.5 - (Distance - 1.5) + clock * (Distance);
+#declare cameraZ = 1.5 - Distance / 2.0 + clock * Distance;
+//#declare cameraZ = 1.5 - (Distance - 1.5) + clock * (Distance);
 
 #debug concat(", Z: ", str(cameraZ,3,1), "\n")
 
@@ -24,8 +25,8 @@ camera {
   up < 0, 1, 0 >
   right < 1, 0, 0 >
   location < cameraX, cameraY, cameraZ >
-  look_at < cameraX, cameraY, 1000000 >
-  angle 120.0
+  angle 90.0
+  look_at < cameraX, cameraY, Distance >
 }
 
 union {
@@ -57,7 +58,7 @@ union {
                     matrix < 1.0, 0.0, 0.0,
                         0.0, 1.0, 0.0,
                         0.0, 0.0, GAMMA,
-                        0.0, 0.0, GAMMA*V*sqrt(X*X + Y*Y + Z*Z) >
+                        0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
                 }
             #local NrX = NrX + 1;
             #end
