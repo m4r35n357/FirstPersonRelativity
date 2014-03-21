@@ -1,15 +1,19 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare V = 0.9;
+#declare V = 0.8;
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 
 #debug concat("V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 
 #declare Distance = 10.0 * (0.5 - clock);
+#declare Time = Distance / V;
+#declare Tau = Time / GAMMA;
 
-#debug concat(", Distance: ", str(Distance,3,1), "\n")
+#debug concat(", Distance: ", str(Distance,3,1))
+#debug concat(", Time: ", str(Time,3,1))
+#debug concat(", Proper Time: ", str(Tau,3,1), "\n")
 
 #declare cubeSize = 4;
 #declare cubeCentre = (cubeSize - 1.0) / 2.0;
@@ -17,7 +21,6 @@
 global_settings { assumed_gamma 1.8 }
 
 light_source { <1, 1, 0> color White }
-light_source { <-1, -1, 0> color White }
 
 camera {
   up < 0, 1, 0 >
@@ -58,12 +61,11 @@ union {
                         0.0, 0.0, GAMMA,
                         0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
                 }
-
-            #local NrX = NrX + 1;
+                #local NrX = NrX + 1;
             #end
-        #local NrY = NrY + 1;
+            #local NrY = NrY + 1;
         #end
-    #local NrZ = NrZ + 1;
+        #local NrZ = NrZ + 1;
     #end
 }
 
