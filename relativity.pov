@@ -6,7 +6,7 @@
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 
-#declare Distance = 10.0 * (0.5 - clock);
+#declare Distance = 20.0 * (0.5 - clock);
 #debug concat(", Distance: ", str(Distance,3,1))
 #declare Time = Distance / V;
 #debug concat(", Time: ", str(Time,3,1))
@@ -25,12 +25,12 @@ camera {
   look_at < 0.0, 0.0, 100 >
 }
 
-#declare LorentzZ = function (X, Y, Z) {
+#declare LTZ = function (X, Y, Z) {
     GAMMA * (Z + V * sqrt(X*X + Y*Y + Z*Z))
 }
 
 union {
-    #declare Size = 4;
+    #declare Size = 10;
     #declare Centre = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
@@ -44,24 +44,26 @@ union {
                 #local X = NrX - Centre;
                 #local Y = NrY - Centre;
                 #local Z = NrZ - Centre + Distance;
-                sphere { < X, Y, LorentzZ (X, Y, Z) >, 0.05
-                    texture {
-                        pigment {
-                            #if ( NrZ = 0 ) color rgb < 1, 0, 0 > #end
-                            #if ( NrZ = 1 ) color rgb < 0.7, 0.7, 0 > #end
-                            #if ( NrZ = 2 ) color rgb < 0, 1, 0 > #end
-                            #if ( NrZ = 3 ) color rgb < 0, 0, 1 > #end
-                        }
-                        finish {
-                            phong 1
+                #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
+                    sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
+                        texture {
+                            pigment {
+                                #if ( NrZ = 0 ) color rgb < 1.0, 0.0, 0.0 > #end
+                                #if ( NrZ = 3 ) color rgb < 0.7, 0.7, 0.0 > #end
+                                #if ( NrZ = 6 ) color rgb < 0.0, 1.0, 0.0 > #end
+                                #if ( NrZ = 9 ) color rgb < 0.0, 0.0, 1.0 > #end
+                            }
+                            finish {
+                                phong 1
+                            }
                         }
                     }
-                }
+                #end
                 #local NrX = NrX + 1;
             #end
             #local NrY = NrY + 1;
         #end
-        #local NrZ = NrZ + 1;
+        #local NrZ = NrZ + 3;
     #end
 }
 
