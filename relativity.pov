@@ -1,18 +1,16 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare V = 0.8;
-#declare GAMMA = 1.0 / sqrt(1.0 - V*V);
-
+#declare V = 0.9;
 #debug concat("V: ", str(V,3,2))
+#declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 
 #declare Distance = 10.0 * (0.5 - clock);
-#declare Time = Distance / V;
-#declare Tau = Time / GAMMA;
-
 #debug concat(", Distance: ", str(Distance,3,1))
+#declare Time = Distance / V;
 #debug concat(", Time: ", str(Time,3,1))
+#declare Tau = Time / GAMMA;
 #debug concat(", Proper Time: ", str(Tau,3,1), "\n")
 
 #declare cubeSize = 4;
@@ -30,6 +28,14 @@ camera {
   look_at < 0.0, 0.0, 100 >
 }
 
+#macro Lorentz_Transform (X, Y, Z)
+                    translate < X, Y, Z >
+                    matrix < 1.0, 0.0, 0.0,
+                        0.0, 1.0, 0.0,
+                        0.0, 0.0, GAMMA,
+                        0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
+#end
+
 union {
     #local NrZ = 0;
     #local EndNrZ = cubeSize;
@@ -40,9 +46,6 @@ union {
             #local NrX = 0;
             #local EndNrX = cubeSize;
             #while (NrX < EndNrX) 
-                #local X = NrX - cubeCentre;
-                #local Y = NrY - cubeCentre;
-                #local Z = NrZ - cubeCentre + Distance;
                 sphere { < 0, 0, 0 >, 0.05
                     texture {
                         pigment {
@@ -55,11 +58,7 @@ union {
                             phong 1
                         }
                     }
-                    translate < X, Y, Z >
-                    matrix < 1.0, 0.0, 0.0,
-                        0.0, 1.0, 0.0,
-                        0.0, 0.0, GAMMA,
-                        0.0, 0.0, GAMMA * V * sqrt(X*X + Y*Y + Z*Z) >
+                    Lorentz_Transform (NrX - cubeCentre, NrY - cubeCentre, NrZ - cubeCentre + Distance)
                 }
                 #local NrX = NrX + 1;
             #end
