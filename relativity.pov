@@ -88,16 +88,16 @@ union {
     #end
     #local X1 = 0.0;
     #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 10.01) >, 0.5
+    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5
         texture {
             pigment {
                 color rgb < 0.7, 0.0, 0.7 >
             }
         }
     }
-    #local X2 = 1.0;
-    #local Y2 = 1.0;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.1
+    #local X2 = 0.6;
+    #local Y2 = 0.6;
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03
         texture {
             pigment {
                 color rgb < 0.0, 1.0, 1.0 >
@@ -107,8 +107,8 @@ union {
 }
 
 union {
-    #local CX = 1.0;
-    #local CY = 0.5;
+    #local CX = -1.0;
+    #local CY = 0.0;
     #local CZ = 6.0 + Distance;
     #local A = <0.0 + CX, 1.0 + CY, LTZ(0.0 + CX, 1.0, 0.0 + CZ) >;
     #local B = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, 0.5 + CZ) >;
@@ -128,7 +128,7 @@ union {
         A, C, D
         texture {
             pigment {
-                color rgb < 0.0, 0.0, 1.0 >
+                color rgb < 1.0, 1.0, 0.0 >
             }
         }
     }
@@ -144,7 +144,7 @@ union {
         A, E, B
         texture {
             pigment {
-                color rgb < 1.0, 1.0, 0.0 >
+                color rgb < 0.0, 0.0, 1.0 >
             }
         }
     }
@@ -160,7 +160,7 @@ union {
         F, D, C
         texture {
             pigment {
-                color rgb < 0.0, 1.0, 1.0 >
+                color rgb < 1.0, 1.0, 0.0 >
             }
         }
     }
@@ -176,7 +176,83 @@ union {
         F, B, E
         texture {
             pigment {
+                color rgb < 0.0, 0.0, 1.0 >
+            }
+        }
+    }
+}
+
+union {
+    #local CX = 3.0;
+    #local CY = 0.0;
+    #local CZ = 6.0 + Distance;
+    #local A = <0.0 + CX, 1.0 + CY, LTZ(0.0 + CX, 1.0, 0.0 + CZ) >;
+    #local B = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, 0.5 + CZ) >;
+    #local C = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, 0.5 + CZ) >;
+    #local D = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, -0.5 + CZ) >;
+    #local E = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, -0.5 + CZ) >;
+    #local F = <0.0 + CX, -1.0 + CY, LTZ(0.0 + CX, -1.0, 0.0 + CZ) >;
+    triangle {
+        A, B, C
+        texture {
+            pigment {
+                color rgb < 1.0, 0.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        A, C, D
+        texture {
+            pigment {
                 color rgb < 1.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        A, D, E
+        texture {
+            pigment {
+                color rgb < 0.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        A, E, B
+        texture {
+            pigment {
+                color rgb < 0.0, 0.0, 1.0 >
+            }
+        }
+    }
+    triangle {
+        F, E, D
+        texture {
+            pigment {
+                color rgb < 0.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        F, D, C
+        texture {
+            pigment {
+                color rgb < 1.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        F, C, B
+        texture {
+            pigment {
+                color rgb < 1.0, 0.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        F, B, E
+        texture {
+            pigment {
+                color rgb < 0.0, 0.0, 1.0 >
             }
         }
     }
