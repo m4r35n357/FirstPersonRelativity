@@ -42,6 +42,7 @@
 global_settings { assumed_gamma 1.8 }
 
 light_source { <1, 1, 0> color White }
+light_source { <-1, -1, 0> color White }
 
 camera {
   fisheye
@@ -76,9 +77,6 @@ union {
                                 #if ( NrZ = 6 ) color rgb < 0.0, 1.0, 0.0 > #end
                                 #if ( NrZ = 9 ) color rgb < 0.0, 0.0, 1.0 > #end
                             }
-                            finish {
-                                phong 1
-                            }
                         }
                     }
                 #end
@@ -103,6 +101,82 @@ union {
         texture {
             pigment {
                 color rgb < 0.0, 1.0, 1.0 >
+            }
+        }
+    }
+}
+
+union {
+    #local CX = 1.0;
+    #local CY = 0.5;
+    #local CZ = 6.0 + Distance;
+    #local A = <0.0 + CX, 1.0 + CY, LTZ(0.0 + CX, 1.0, 0.0 + CZ) >;
+    #local B = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, 0.5 + CZ) >;
+    #local C = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, 0.5 + CZ) >;
+    #local D = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, -0.5 + CZ) >;
+    #local E = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, -0.5 + CZ) >;
+    #local F = <0.0 + CX, -1.0 + CY, LTZ(0.0 + CX, -1.0, 0.0 + CZ) >;
+    triangle {
+        A, B, C
+        texture {
+            pigment {
+                color rgb < 1.0, 0.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        A, C, D
+        texture {
+            pigment {
+                color rgb < 0.0, 0.0, 1.0 >
+            }
+        }
+    }
+    triangle {
+        A, D, E
+        texture {
+            pigment {
+                color rgb < 0.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        A, E, B
+        texture {
+            pigment {
+                color rgb < 1.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        F, E, D
+        texture {
+            pigment {
+                color rgb < 0.0, 1.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        F, D, C
+        texture {
+            pigment {
+                color rgb < 0.0, 1.0, 1.0 >
+            }
+        }
+    }
+    triangle {
+        F, C, B
+        texture {
+            pigment {
+                color rgb < 1.0, 0.0, 0.0 >
+            }
+        }
+    }
+    triangle {
+        F, B, E
+        texture {
+            pigment {
+                color rgb < 1.0, 1.0, 0.0 >
             }
         }
     }
