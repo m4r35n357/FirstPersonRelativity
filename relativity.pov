@@ -18,6 +18,7 @@
     #declare Time = 2.0 * HalfTime - sinh(A * (TotalTau - Tau)) / A;
     #declare V = tanh(A * (TotalTau - Tau));
 #end
+
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #debug concat(">>> V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
@@ -34,10 +35,11 @@ global_settings { assumed_gamma 1.8 }
 light_source { <1, 1, 0> color White }
 
 camera {
+  fisheye
   up < 0, 1, 0 >
   right < 1, 0, 0 >
   location < 0.0, 0.0, 0.0 >
-  angle 120.0
+  angle 180.0
   look_at < 0.0, 0.0, 100 >
 }
 
