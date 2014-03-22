@@ -42,8 +42,8 @@ camera {
 }
 
 union {
-    #declare Size = 10;
-    #declare Centre = (Size - 1.0) / 2.0;
+    #local Size = 10;
+    #local Centre = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
     #while (NrZ < EndNrZ) 
@@ -77,18 +77,14 @@ union {
         #end
         #local NrZ = NrZ + 3;
     #end
-#local X1 = 0;
-#local Y1 = 0;
-#local Z1 = - HalfDistance - 0.1;
-                    sphere { < X1, Y1, LTZ (X1, Y1, Z1) >, 0.1
-                        texture {
-                            pigment {
-                                color rgb < 1.0, 1.0, 1.0 >
-                            }
-                            finish {
-                                phong 1
-                            }
-                        }
-                    }
+    #local X1 = 0.0;
+    #local Y1 = 0.0;
+    sphere { < X1, Y1, LTZ (X1, Y1, 10.1) >, 0.1
+        texture {
+            pigment {
+                color rgb < 0.7, 0.0, 0.7 >
+            }
+        }
+    }
 }
 
