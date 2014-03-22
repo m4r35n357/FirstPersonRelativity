@@ -19,11 +19,11 @@
     #declare V = tanh(A * (TotalTau - Tau));
 #end
 #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
-#debug concat("V: ", str(V,3,2))
+#debug concat(">>> V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 #debug concat(", Distance: ", str(Distance,3,1))
 #debug concat(", Time: ", str(Time,3,1))
-#debug concat(", Proper Time: ", str(Tau,3,1), "\n")
+#debug concat(", Proper Time: ", str(Tau,3,1), " <<<\n")
 
 #declare LTZ = function (X, Y, Z) {
     GAMMA * (Z + V * sqrt(X*X + Y*Y + Z*Z))
@@ -79,10 +79,19 @@ union {
     #end
     #local X1 = 0.0;
     #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 10.1) >, 0.1
+    sphere { < X1, Y1, LTZ (X1, Y1, 10.01) >, 0.5
         texture {
             pigment {
                 color rgb < 0.7, 0.0, 0.7 >
+            }
+        }
+    }
+    #local X2 = 1.0;
+    #local Y2 = 1.0;
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.1
+        texture {
+            pigment {
+                color rgb < 0.0, 1.0, 1.0 >
             }
         }
     }
