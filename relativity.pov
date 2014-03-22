@@ -1,25 +1,33 @@
 #version 3.7;
 #include "colors.inc"
 
-#declare A = 0.1;
-#declare TotalDistance = 20.0;
-#declare InitialDistance = TotalDistance / 2.0;
-#declare TotalTau = 2.0 * acosh(A * InitialDistance + 1.0) / A;
-#declare HalfTau = TotalTau / 2.0;
-#declare HalfDistance = TotalDistance / 2.0;
-#declare HalfTime = sinh(A * HalfTau) / A;
-#declare Tau = clock * TotalTau;
-#if (Tau <= HalfTau)
-    #declare Distance = InitialDistance - (cosh(A * Tau) - 1.0) / A;
-    #declare Time = sinh(A * Tau) / A;
-    #declare V = tanh(A * Tau);
+#if (true)
+    #declare V = 0.0;
+    #declare Distance = 20.0 * (0.5 - clock);
+    #declare Time = Distance / V;
+    #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
+    #declare Tau = Time / GAMMA;
 #else
-    #declare Distance = - HalfDistance + (cosh(A * (TotalTau - Tau)) - 1.0) / A;
-    #declare Time = 2.0 * HalfTime - sinh(A * (TotalTau - Tau)) / A;
-    #declare V = tanh(A * (TotalTau - Tau));
+    #declare A = 0.1;
+    #declare TotalDistance = 20.0;
+    #declare InitialDistance = TotalDistance / 2.0;
+    #declare TotalTau = 2.0 * acosh(A * InitialDistance + 1.0) / A;
+    #declare HalfTau = TotalTau / 2.0;
+    #declare HalfDistance = TotalDistance / 2.0;
+    #declare HalfTime = sinh(A * HalfTau) / A;
+    #declare Tau = clock * TotalTau;
+    #if (Tau <= HalfTau)
+        #declare Distance = InitialDistance - (cosh(A * Tau) - 1.0) / A;
+        #declare Time = sinh(A * Tau) / A;
+        #declare V = tanh(A * Tau);
+    #else
+        #declare Distance = - HalfDistance + (cosh(A * (TotalTau - Tau)) - 1.0) / A;
+        #declare Time = 2.0 * HalfTime - sinh(A * (TotalTau - Tau)) / A;
+        #declare V = tanh(A * (TotalTau - Tau));
+    #end
+    #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #end
 
-#declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #debug concat(">>> V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 #debug concat(", Distance: ", str(Distance,3,1))
