@@ -1,7 +1,7 @@
 #version 3.7;
 #include "colors.inc"
 
-#if (true)
+#if (false)
     #declare V = 0.0;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
@@ -9,21 +9,22 @@
     #declare Tau = Time / GAMMA;
 #else
     #declare A = 0.1;
-    #declare TotalDistance = 20.0;
-    #declare InitialDistance = TotalDistance / 2.0;
-    #declare TotalTau = 2.0 * acosh(A * InitialDistance + 1.0) / A;
+    #declare TotalD = 20.0;
+    #declare StartD = TotalD / 2.0;
+    #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
     #declare HalfTau = TotalTau / 2.0;
-    #declare HalfDistance = TotalDistance / 2.0;
-    #declare HalfTime = sinh(A * HalfTau) / A;
+    #declare HalfD = TotalD / 2.0;
+    #declare HalfT = sinh(A * HalfTau) / A;
     #declare Tau = clock * TotalTau;
     #if (Tau <= HalfTau)
-        #declare Distance = InitialDistance - (cosh(A * Tau) - 1.0) / A;
+        #declare Distance = StartD - (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
         #declare V = tanh(A * Tau);
     #else
-        #declare Distance = - HalfDistance + (cosh(A * (TotalTau - Tau)) - 1.0) / A;
-        #declare Time = 2.0 * HalfTime - sinh(A * (TotalTau - Tau)) / A;
-        #declare V = tanh(A * (TotalTau - Tau));
+        #declare Aut = TotalTau - Tau;
+        #declare Distance = - HalfD + (cosh(A * Aut) - 1.0) / A;
+        #declare Time = 2.0 * HalfT - sinh(A * Aut) / A;
+        #declare V = tanh(A * Aut);
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #end
