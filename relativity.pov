@@ -1,7 +1,7 @@
 #version 3.7;
 #include "colors.inc"
 
-#if (true)
+#if (false)
     #declare V = 0.0;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
@@ -45,11 +45,11 @@ light_source { <1, 1, 0> color White }
 light_source { <-1, -1, 0> color White }
 
 camera {
-  fisheye
+//  fisheye
   up < 0, 1, 0 >
   right < 1, 0, 0 >
   location < 0.0, 0.0, 0.0 >
-  angle 180.0
+  angle 120.0
   look_at < 0.0, 0.0, 100 >
 }
 
@@ -133,14 +133,15 @@ union {
 }
 #end
 
-#macro Station (CX, CY, CZ)
+#macro Station (Size, CX, CY, CZ)
 union {
-    #local A = <0.0 + CX, 1.0 + CY, LTZ(0.0 + CX, 1.0, 0.0 + CZ) >;
-    #local B = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, 0.5 + CZ) >;
-    #local C = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, 0.5 + CZ) >;
-    #local D = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, -0.5 + CZ) >;
-    #local E = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, -0.5 + CZ) >;
-    #local F = <0.0 + CX, -1.0 + CY, LTZ(0.0 + CX, -1.0, 0.0 + CZ) >;
+    #local Half = Size / 2.0;
+    #local A = <CX, 1.0 + CY, LTZ(CX, 1.0 + CY, CZ) >;
+    #local B = <-Half + CX, CY, LTZ(-Half + CX, CY, Half + CZ) >;
+    #local C = <Half + CX, CY, LTZ(Half + CX, CY, Half + CZ) >;
+    #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
+    #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
+    #local F = <CX, -1.0 + CY, LTZ(CX, -1.0 + CY, CZ) >;
     triangle {
         A, B, C
         RedTexture ()
@@ -176,11 +177,13 @@ union {
 }
 #end
 
-AsteroidGrid (10, 0.0, 0.0, 0.0 + Distance)
+//AsteroidGrid (10, 0.0, 0.0, 0.0 + Distance)
+AsteroidGrid (10, 5.0, 0.0, 0.0 + Distance)
+AsteroidGrid (10, -5.0, 0.0, 0.0 + Distance)
 
-Station (-5.0, 0.5, 6.0 + Distance)
-Station (-1.0, -0.5, 6.0 + Distance)
-Station (3.0, 0.0, 6.0 + Distance)
+Station (1.0, -5.0, 0.5, 6.0 + Distance)
+Station (1.0, -1.0, -0.5, 6.0 + Distance)
+Station (1.0, 3.0, 0.0, 6.0 + Distance)
 
 union {
     #local X1 = 0.0;
