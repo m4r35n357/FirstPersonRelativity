@@ -42,19 +42,68 @@
 global_settings { assumed_gamma 1.8 }
 
 light_source { <1, 1, 0> color White }
+light_source { <-1, -1, 0> color White }
 
 camera {
-  fisheye
+//  fisheye
   up < 0, 1, 0 >
   right < 1, 0, 0 >
   location < 0.0, 0.0, 0.0 >
-  angle 180.0
+  angle 120.0
   look_at < 0.0, 0.0, 100 >
 }
 
+#macro RedTexture ()
+texture {
+    pigment {
+        color rgb < 1.0, 0.0, 0.0 >
+    }
+}
+#end
+
+#macro GreenTexture ()
+texture {
+    pigment {
+        color rgb < 0.0, 1.0, 0.0 >
+    }
+}
+#end
+
+#macro BlueTexture ()
+texture {
+    pigment {
+        color rgb < 0.0, 0.0, 1.0 >
+    }
+}
+#end
+
+#macro YellowTexture ()
+texture {
+    pigment {
+        color rgb < 0.7, 0.7, 0.0 >
+    }
+}
+#end
+
+#macro CyanTexture ()
+texture {
+    pigment {
+        color rgb < 0.0, 0.7, 0.7 >
+    }
+}
+#end
+
+#macro MagentaTexture ()
+texture {
+    pigment {
+        color rgb < 0.7, 0.0, 0.7 >
+    }
+}
+#end
+
+#macro AsteroidGrid (Size, CX, CY, CZ)
 union {
-    #local Size = 10;
-    #local Centre = (Size - 1.0) / 2.0;
+    #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
     #while (NrZ < EndNrZ) 
@@ -64,22 +113,15 @@ union {
             #local NrX = 0;
             #local EndNrX = Size;
             #while (NrX < EndNrX) 
-                #local X = NrX - Centre;
-                #local Y = NrY - Centre;
-                #local Z = NrZ - Centre + Distance;
+                #local X = NrX - Offset + CX;
+                #local Y = NrY - Offset + CY;
+                #local Z = NrZ - Offset + CZ;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
                     sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
-                        texture {
-                            pigment {
-                                #if ( NrZ = 0 ) color rgb < 1.0, 0.0, 0.0 > #end
-                                #if ( NrZ = 3 ) color rgb < 0.7, 0.7, 0.0 > #end
-                                #if ( NrZ = 6 ) color rgb < 0.0, 1.0, 0.0 > #end
-                                #if ( NrZ = 9 ) color rgb < 0.0, 0.0, 1.0 > #end
-                            }
-                            finish {
-                                phong 1
-                            }
-                        }
+                        #if ( NrZ = 0 ) RedTexture() #end
+                        #if ( NrZ = 3 ) YellowTexture() #end
+                        #if ( NrZ = 6 ) GreenTexture() #end
+                        #if ( NrZ = 9 ) BlueTexture() #end
                     }
                 #end
                 #local NrX = NrX + 1;
@@ -88,23 +130,73 @@ union {
         #end
         #local NrZ = NrZ + 3;
     #end
+}
+#end
+
+#macro Station (Size, CX, CY, CZ)
+union {
+    #local Half = Size / 2.0;
+    #local A = <CX, Size + CY, LTZ(CX, Size + CY, CZ) >;
+    #local B = <-Half + CX, CY, LTZ(-Half + CX, CY, Half + CZ) >;
+    #local C = <Half + CX, CY, LTZ(Half + CX, CY, Half + CZ) >;
+    #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
+    #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
+    #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
+    triangle {
+        A, B, C
+        RedTexture ()
+    }
+    triangle {
+        A, C, D
+        YellowTexture ()
+    }
+    triangle {
+        A, D, E
+        GreenTexture ()
+    }
+    triangle {
+        A, E, B
+        BlueTexture ()
+    }
+    triangle {
+        F, E, D
+        GreenTexture ()
+    }
+    triangle {
+        F, D, C
+        YellowTexture ()
+    }
+    triangle {
+        F, C, B
+        RedTexture ()
+    }
+    triangle {
+        F, B, E
+        BlueTexture ()
+    }
+}
+#end
+
+//AsteroidGrid (10, 0.0, 0.0, 0.0 + Distance)
+AsteroidGrid (10, 5.0, 0.0, 0.0 + Distance)
+AsteroidGrid (10, -5.0, 0.0, 0.0 + Distance)
+
+Station (0.5, 0.0, 2.0, 11.0 + Distance)
+Station (0.5, 0.0, -2.0, 11.0 + Distance)
+Station (0.5, -5.0, 0.5, 6.0 + Distance)
+Station (0.5, -1.0, -0.5, 6.0 + Distance)
+Station (0.5, 3.0, 0.0, 6.0 + Distance)
+
+union {
     #local X1 = 0.0;
     #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 10.01) >, 0.5
-        texture {
-            pigment {
-                color rgb < 0.7, 0.0, 0.7 >
-            }
-        }
+    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5
+        MagentaTexture ()
     }
-    #local X2 = 1.0;
-    #local Y2 = 1.0;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.1
-        texture {
-            pigment {
-                color rgb < 0.0, 1.0, 1.0 >
-            }
-        }
+    #local X2 = 0.6;
+    #local Y2 = 0.6;
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03
+        CyanTexture ()
     }
 }
 
