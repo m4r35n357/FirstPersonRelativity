@@ -101,7 +101,7 @@ texture {
 }
 #end
 
-#macro AsteroidGrid (Size, CentreX, CentreY, CentreZ)
+#macro AsteroidGrid (Size, CX, CY, CZ)
 union {
     #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
@@ -113,9 +113,9 @@ union {
             #local NrX = 0;
             #local EndNrX = Size;
             #while (NrX < EndNrX) 
-                #local X = NrX - Offset + CentreX;
-                #local Y = NrY - Offset + CentreY;
-                #local Z = NrZ - Offset + CentreZ;
+                #local X = NrX - Offset + CX;
+                #local Y = NrY - Offset + CY;
+                #local Z = NrZ - Offset + CZ;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
                     sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
                         #if ( NrZ = 0 ) RedTexture() #end
@@ -136,12 +136,12 @@ union {
 #macro Station (Size, CX, CY, CZ)
 union {
     #local Half = Size / 2.0;
-    #local A = <CX, 1.0 + CY, LTZ(CX, 1.0 + CY, CZ) >;
+    #local A = <CX, Size + CY, LTZ(CX, Size + CY, CZ) >;
     #local B = <-Half + CX, CY, LTZ(-Half + CX, CY, Half + CZ) >;
     #local C = <Half + CX, CY, LTZ(Half + CX, CY, Half + CZ) >;
     #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
     #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
-    #local F = <CX, -1.0 + CY, LTZ(CX, -1.0 + CY, CZ) >;
+    #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
     triangle {
         A, B, C
         RedTexture ()
@@ -181,9 +181,11 @@ union {
 AsteroidGrid (10, 5.0, 0.0, 0.0 + Distance)
 AsteroidGrid (10, -5.0, 0.0, 0.0 + Distance)
 
-Station (1.0, -5.0, 0.5, 6.0 + Distance)
-Station (1.0, -1.0, -0.5, 6.0 + Distance)
-Station (1.0, 3.0, 0.0, 6.0 + Distance)
+Station (0.5, 0.0, 2.0, 11.0 + Distance)
+Station (0.5, 0.0, -2.0, 11.0 + Distance)
+Station (0.5, -5.0, 0.5, 6.0 + Distance)
+Station (0.5, -1.0, -0.5, 6.0 + Distance)
+Station (0.5, 3.0, 0.0, 6.0 + Distance)
 
 union {
     #local X1 = 0.0;
