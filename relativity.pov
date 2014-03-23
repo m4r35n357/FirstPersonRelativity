@@ -1,5 +1,4 @@
 #version 3.7;
-//#include "colors.inc"
 #include "./macros.inc"
 
 #if (false)
@@ -57,8 +56,8 @@ camera {
 AsteroidGrid (10, 5.0, 0.0, 0.0)
 AsteroidGrid (10, -5.0, 0.0, 0.0)
 
-Station (0.25, 0.0, 2.0, 11.0)
-Station (0.25, 0.0, -2.0, 11.0)
+Station (0.25, 1.0, 0.0, 0.0)
+Station (0.25, -1.0, 0.0, 0.0)
 Station (0.25, -5.0, 0.5, 6.0)
 Station (0.25, -1.0, -0.5, 6.0)
 Station (0.25, 3.0, 0.0, 6.0)
