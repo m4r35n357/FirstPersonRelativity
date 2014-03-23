@@ -1,7 +1,7 @@
 #version 3.7;
 #include "colors.inc"
 
-#if (false)
+#if (true)
     #declare V = 0.0;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
@@ -101,9 +101,9 @@ texture {
 }
 #end
 
+#macro AsteroidGrid (Size, CentreX, CentreY, CentreZ)
 union {
-    #local Size = 10;
-    #local Centre = (Size - 1.0) / 2.0;
+    #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
     #while (NrZ < EndNrZ) 
@@ -113,9 +113,9 @@ union {
             #local NrX = 0;
             #local EndNrX = Size;
             #while (NrX < EndNrX) 
-                #local X = NrX - Centre;
-                #local Y = NrY - Centre;
-                #local Z = NrZ - Centre + Distance;
+                #local X = NrX - Offset + CentreX;
+                #local Y = NrY - Offset + CentreY;
+                #local Z = NrZ - Offset + CentreZ;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
                     sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
                         #if ( NrZ = 0 ) RedTexture() #end
@@ -131,19 +131,7 @@ union {
         #local NrZ = NrZ + 3;
     #end
 }
-
-union {
-    #local X1 = 0.0;
-    #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5
-        MagentaTexture ()
-    }
-    #local X2 = 0.6;
-    #local Y2 = 0.6;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03
-        CyanTexture ()
-    }
-}
+#end
 
 #macro Station (CX, CY, CZ)
 union {
@@ -188,7 +176,22 @@ union {
 }
 #end
 
+AsteroidGrid (10, 0.0, 0.0, 0.0 + Distance)
+
 Station (-5.0, 0.5, 6.0 + Distance)
 Station (-1.0, -0.5, 6.0 + Distance)
 Station (3.0, 0.0, 6.0 + Distance)
+
+union {
+    #local X1 = 0.0;
+    #local Y1 = 0.0;
+    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5
+        MagentaTexture ()
+    }
+    #local X2 = 0.6;
+    #local Y2 = 0.6;
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03
+        CyanTexture ()
+    }
+}
 
