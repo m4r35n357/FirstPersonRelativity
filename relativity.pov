@@ -8,7 +8,7 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
     #declare Tau = Time / GAMMA;
 #else
-    #declare A = 0.1;
+    #declare A = 1.0;
     #declare TotalD = 20.0;
     #declare StartD = TotalD / 2.0;
     #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
@@ -118,14 +118,14 @@ union {
     #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
     #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
     #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
-    triangle { A, B, C RedTexture () }
-    triangle { A, C, D YellowTexture () }
-    triangle { A, D, E GreenTexture () }
-    triangle { A, E, B BlueTexture () }
-    triangle { F, E, D GreenTexture () }
-    triangle { F, D, C YellowTexture () }
-    triangle { F, C, B RedTexture () }
-    triangle { F, B, E BlueTexture () }
+    triangle { A, B, C RedTexture() }
+    triangle { A, C, D YellowTexture() }
+    triangle { A, D, E GreenTexture() }
+    triangle { A, E, B BlueTexture() }
+    triangle { F, E, D GreenTexture() }
+    triangle { F, D, C YellowTexture() }
+    triangle { F, C, B RedTexture() }
+    triangle { F, B, E BlueTexture() }
 }
 #end
 
@@ -141,9 +141,9 @@ Station (0.25, 3.0, 0.0, 6.0)
 union {
     #local X1 = 0.0;
     #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture () }
+    sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture() }
     #local X2 = 0.6;
     #local Y2 = 0.6;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.03 MagentaTexture () }
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.03 MagentaTexture() }
 }
 
