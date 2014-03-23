@@ -28,7 +28,7 @@
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #end
-
+#declare Camera = - Distance;
 #debug concat(">>> V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 #debug concat(", Distance: ", str(Distance,3,1))
@@ -54,51 +54,27 @@ camera {
 }
 
 #macro RedTexture ()
-texture {
-    pigment {
-        color rgb < 1.0, 0.0, 0.0 >
-    }
-}
+texture { pigment { color rgb < 1.0, 0.0, 0.0 > } }
 #end
 
 #macro GreenTexture ()
-texture {
-    pigment {
-        color rgb < 0.0, 1.0, 0.0 >
-    }
-}
+texture { pigment { color rgb < 0.0, 1.0, 0.0 > } }
 #end
 
 #macro BlueTexture ()
-texture {
-    pigment {
-        color rgb < 0.0, 0.0, 1.0 >
-    }
-}
+texture { pigment { color rgb < 0.0, 0.0, 1.0 > } }
 #end
 
 #macro YellowTexture ()
-texture {
-    pigment {
-        color rgb < 0.7, 0.7, 0.0 >
-    }
-}
+texture { pigment { color rgb < 0.7, 0.7, 0.0 > } }
 #end
 
 #macro CyanTexture ()
-texture {
-    pigment {
-        color rgb < 0.0, 0.7, 0.7 >
-    }
-}
+texture { pigment { color rgb < 0.0, 0.7, 0.7 > } }
 #end
 
 #macro MagentaTexture ()
-texture {
-    pigment {
-        color rgb < 0.7, 0.0, 0.7 >
-    }
-}
+texture { pigment { color rgb < 0.7, 0.0, 0.7 > } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
@@ -121,7 +97,7 @@ union {
                         #if ( NrZ = 0 ) RedTexture() #end
                         #if ( NrZ = 3 ) YellowTexture() #end
                         #if ( NrZ = 6 ) GreenTexture() #end
-                        #if ( NrZ = 9 ) BlueTexture() #end
+                        #if ( NrZ = 9 ) CyanTexture() #end
                     }
                 #end
                 #local NrX = NrX + 1;
@@ -142,61 +118,32 @@ union {
     #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
     #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
     #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
-    triangle {
-        A, B, C
-        RedTexture ()
-    }
-    triangle {
-        A, C, D
-        YellowTexture ()
-    }
-    triangle {
-        A, D, E
-        GreenTexture ()
-    }
-    triangle {
-        A, E, B
-        BlueTexture ()
-    }
-    triangle {
-        F, E, D
-        GreenTexture ()
-    }
-    triangle {
-        F, D, C
-        YellowTexture ()
-    }
-    triangle {
-        F, C, B
-        RedTexture ()
-    }
-    triangle {
-        F, B, E
-        BlueTexture ()
-    }
+    triangle { A, B, C RedTexture () }
+    triangle { A, C, D YellowTexture () }
+    triangle { A, D, E GreenTexture () }
+    triangle { A, E, B BlueTexture () }
+    triangle { F, E, D GreenTexture () }
+    triangle { F, D, C YellowTexture () }
+    triangle { F, C, B RedTexture () }
+    triangle { F, B, E BlueTexture () }
 }
 #end
 
-//AsteroidGrid (10, 0.0, 0.0, 0.0 + Distance)
 AsteroidGrid (10, 5.0, 0.0, 0.0 + Distance)
 AsteroidGrid (10, -5.0, 0.0, 0.0 + Distance)
 
-Station (0.5, 0.0, 2.0, 11.0 + Distance)
-Station (0.5, 0.0, -2.0, 11.0 + Distance)
-Station (0.5, -5.0, 0.5, 6.0 + Distance)
-Station (0.5, -1.0, -0.5, 6.0 + Distance)
-Station (0.5, 3.0, 0.0, 6.0 + Distance)
+Station (0.25, 0.0, 2.0, 11.0 + Distance)
+Station (0.25, 0.0, -2.0, 11.0 + Distance)
+Station (0.25, -5.0, 0.5, 6.0 + Distance)
+Station (0.25, -1.0, -0.5, 6.0 + Distance)
+Station (0.25, 3.0, 0.0, 6.0 + Distance)
 
 union {
     #local X1 = 0.0;
     #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5
-        MagentaTexture ()
-    }
+    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5 BlueTexture () }
     #local X2 = 0.6;
     #local Y2 = 0.6;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03
-        CyanTexture ()
-    }
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03 MagentaTexture () }
 }
 
