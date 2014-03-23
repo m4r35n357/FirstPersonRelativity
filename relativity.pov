@@ -2,7 +2,7 @@
 #include "./macros.inc"
 
 #if (false)
-    #declare V = 0.0;
+    #declare V = 0.8;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
@@ -46,7 +46,7 @@ light_source { <-1, -1, 0> color White }
 
 camera {
 //  fisheye
-  up < 0, 1, 0 >
+  up < 0, 0.9, 0 >
   right < 1.6, 0, 0 >
   location < 0.0, 0.0, 0.0 >
   angle 120.0
@@ -56,8 +56,9 @@ camera {
 AsteroidGrid (10, 5.0, 0.0, 0.0)
 AsteroidGrid (10, -5.0, 0.0, 0.0)
 
-Station (0.25, 1.0, 0.0, 0.0)
-Station (0.25, -0.5, 0.0, 0.0)
+Station (0.25, -2.0, 0.0, 0.0)
+Station (0.25, 3.0, 0.0, 0.0)
+
 Station (0.25, -5.0, 0.5, 6.0)
 Station (0.25, -1.0, -0.5, 6.0)
 Station (0.25, 3.0, 0.0, 6.0)
@@ -66,8 +67,8 @@ union {
     #local X1 = 0.0;
     #local Y1 = 0.0;
     sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture() }
-    #local X2 = 0.6;
-    #local Y2 = 0.6;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.03 MagentaTexture() }
+    #local X2 = 0.8;
+    #local Y2 = 0.45;
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.01 MagentaTexture() }
 }
 

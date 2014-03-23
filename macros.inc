@@ -1,5 +1,8 @@
-#version 3.7;
 #include "colors.inc"
+
+#macro WhiteTexture ()
+texture { pigment { color rgb < 1.0, 1.0, 1.0 > } }
+#end
 
 #macro RedTexture ()
 texture { pigment { color rgb < 1.0, 0.0, 0.0 > } }
@@ -67,13 +70,13 @@ union {
     #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
     #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
     triangle { A, B, C RedTexture() }
-    triangle { A, C, D YellowTexture() }
+    triangle { A, C, D WhiteTexture() }
     triangle { A, D, E GreenTexture() }
     triangle { A, E, B BlueTexture() }
     triangle { F, E, D GreenTexture() }
-    triangle { F, D, C YellowTexture() }
+    triangle { F, D, C BlueTexture() }
     triangle { F, C, B RedTexture() }
-    triangle { F, B, E BlueTexture() }
+    triangle { F, B, E WhiteTexture() }
 }
 #end
 
