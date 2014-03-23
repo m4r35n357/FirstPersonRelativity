@@ -53,6 +53,54 @@ camera {
   look_at < 0.0, 0.0, 100 >
 }
 
+#macro RedTexture ()
+texture {
+    pigment {
+        color rgb < 1.0, 0.0, 0.0 >
+    }
+}
+#end
+
+#macro GreenTexture ()
+texture {
+    pigment {
+        color rgb < 0.0, 1.0, 0.0 >
+    }
+}
+#end
+
+#macro BlueTexture ()
+texture {
+    pigment {
+        color rgb < 0.0, 0.0, 1.0 >
+    }
+}
+#end
+
+#macro YellowTexture ()
+texture {
+    pigment {
+        color rgb < 0.7, 0.7, 0.0 >
+    }
+}
+#end
+
+#macro CyanTexture ()
+texture {
+    pigment {
+        color rgb < 0.0, 0.7, 0.7 >
+    }
+}
+#end
+
+#macro MagentaTexture ()
+texture {
+    pigment {
+        color rgb < 0.7, 0.0, 0.7 >
+    }
+}
+#end
+
 union {
     #local Size = 10;
     #local Centre = (Size - 1.0) / 2.0;
@@ -70,14 +118,10 @@ union {
                 #local Z = NrZ - Centre + Distance;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
                     sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
-                        texture {
-                            pigment {
-                                #if ( NrZ = 0 ) color rgb < 1.0, 0.0, 0.0 > #end
-                                #if ( NrZ = 3 ) color rgb < 0.7, 0.7, 0.0 > #end
-                                #if ( NrZ = 6 ) color rgb < 0.0, 1.0, 0.0 > #end
-                                #if ( NrZ = 9 ) color rgb < 0.0, 0.0, 1.0 > #end
-                            }
-                        }
+                        #if ( NrZ = 0 ) RedTexture() #end
+                        #if ( NrZ = 3 ) YellowTexture() #end
+                        #if ( NrZ = 6 ) GreenTexture() #end
+                        #if ( NrZ = 9 ) BlueTexture() #end
                     }
                 #end
                 #local NrX = NrX + 1;
@@ -86,23 +130,18 @@ union {
         #end
         #local NrZ = NrZ + 3;
     #end
+}
+
+union {
     #local X1 = 0.0;
     #local Y1 = 0.0;
     sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5
-        texture {
-            pigment {
-                color rgb < 0.7, 0.0, 0.7 >
-            }
-        }
+        MagentaTexture ()
     }
     #local X2 = 0.6;
     #local Y2 = 0.6;
     sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03
-        texture {
-            pigment {
-                color rgb < 0.0, 1.0, 1.0 >
-            }
-        }
+        CyanTexture ()
     }
 }
 
@@ -116,67 +155,35 @@ union {
     #local F = <0.0 + CX, -1.0 + CY, LTZ(0.0 + CX, -1.0, 0.0 + CZ) >;
     triangle {
         A, B, C
-        texture {
-            pigment {
-                color rgb < 1.0, 0.0, 0.0 >
-            }
-        }
+        RedTexture ()
     }
     triangle {
         A, C, D
-        texture {
-            pigment {
-                color rgb < 1.0, 1.0, 0.0 >
-            }
-        }
+        YellowTexture ()
     }
     triangle {
         A, D, E
-        texture {
-            pigment {
-                color rgb < 0.0, 1.0, 0.0 >
-            }
-        }
+        GreenTexture ()
     }
     triangle {
         A, E, B
-        texture {
-            pigment {
-                color rgb < 0.0, 0.0, 1.0 >
-            }
-        }
+        BlueTexture ()
     }
     triangle {
         F, E, D
-        texture {
-            pigment {
-                color rgb < 0.0, 1.0, 0.0 >
-            }
-        }
+        GreenTexture ()
     }
     triangle {
         F, D, C
-        texture {
-            pigment {
-                color rgb < 1.0, 1.0, 0.0 >
-            }
-        }
+        YellowTexture ()
     }
     triangle {
         F, C, B
-        texture {
-            pigment {
-                color rgb < 1.0, 0.0, 0.0 >
-            }
-        }
+        RedTexture ()
     }
     triangle {
         F, B, E
-        texture {
-            pigment {
-                color rgb < 0.0, 0.0, 1.0 >
-            }
-        }
+        BlueTexture ()
     }
 }
 #end
