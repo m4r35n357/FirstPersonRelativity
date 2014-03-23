@@ -8,7 +8,7 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
     #declare Tau = Time / GAMMA;
 #else
-    #declare A = 1.0;
+    #declare A = 0.1;
     #declare TotalD = 20.0;
     #declare StartD = TotalD / 2.0;
     #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
@@ -47,7 +47,7 @@ light_source { <-1, -1, 0> color White }
 camera {
 //  fisheye
   up < 0, 1, 0 >
-  right < 1, 0, 0 >
+  right < 1.6, 0, 0 >
   location < 0.0, 0.0, 0.0 >
   angle 120.0
   look_at < 0.0, 0.0, 100 >
@@ -57,7 +57,7 @@ AsteroidGrid (10, 5.0, 0.0, 0.0)
 AsteroidGrid (10, -5.0, 0.0, 0.0)
 
 Station (0.25, 1.0, 0.0, 0.0)
-Station (0.25, -1.0, 0.0, 0.0)
+Station (0.25, -0.5, 0.0, 0.0)
 Station (0.25, -5.0, 0.5, 6.0)
 Station (0.25, -1.0, -0.5, 6.0)
 Station (0.25, 3.0, 0.0, 6.0)
