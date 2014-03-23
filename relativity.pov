@@ -28,7 +28,7 @@
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #end
-#declare Camera = - Distance;
+
 #debug concat(">>> V: ", str(V,3,2))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 #debug concat(", Distance: ", str(Distance,3,1))
@@ -36,7 +36,7 @@
 #debug concat(", Proper Time: ", str(Tau,3,1), " <<<\n")
 
 #declare LTZ = function (X, Y, Z) {
-    GAMMA * (Z + V * sqrt(X*X + Y*Y + Z*Z))
+    GAMMA * (Z + Distance + V * sqrt(X*X + Y*Y + (Z + Distance)*(Z + Distance)))
 }
 
 global_settings { assumed_gamma 1.8 }
@@ -129,21 +129,21 @@ union {
 }
 #end
 
-AsteroidGrid (10, 5.0, 0.0, 0.0 + Distance)
-AsteroidGrid (10, -5.0, 0.0, 0.0 + Distance)
+AsteroidGrid (10, 5.0, 0.0, 0.0)
+AsteroidGrid (10, -5.0, 0.0, 0.0)
 
-Station (0.25, 0.0, 2.0, 11.0 + Distance)
-Station (0.25, 0.0, -2.0, 11.0 + Distance)
-Station (0.25, -5.0, 0.5, 6.0 + Distance)
-Station (0.25, -1.0, -0.5, 6.0 + Distance)
-Station (0.25, 3.0, 0.0, 6.0 + Distance)
+Station (0.25, 0.0, 2.0, 11.0)
+Station (0.25, 0.0, -2.0, 11.0)
+Station (0.25, -5.0, 0.5, 6.0)
+Station (0.25, -1.0, -0.5, 6.0)
+Station (0.25, 3.0, 0.0, 6.0)
 
 union {
     #local X1 = 0.0;
     #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 11.0 + Distance) >, 0.5 BlueTexture () }
+    sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture () }
     #local X2 = 0.6;
     #local Y2 = 0.6;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0 + Distance) >, 0.03 MagentaTexture () }
+    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.03 MagentaTexture () }
 }
 
