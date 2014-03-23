@@ -106,10 +106,8 @@ union {
     }
 }
 
+#macro Station (CX, CY, CZ)
 union {
-    #local CX = -1.0;
-    #local CY = 0.0;
-    #local CZ = 6.0 + Distance;
     #local A = <0.0 + CX, 1.0 + CY, LTZ(0.0 + CX, 1.0, 0.0 + CZ) >;
     #local B = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, 0.5 + CZ) >;
     #local C = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, 0.5 + CZ) >;
@@ -181,80 +179,9 @@ union {
         }
     }
 }
+#end
 
-union {
-    #local CX = 3.0;
-    #local CY = 0.0;
-    #local CZ = 6.0 + Distance;
-    #local A = <0.0 + CX, 1.0 + CY, LTZ(0.0 + CX, 1.0, 0.0 + CZ) >;
-    #local B = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, 0.5 + CZ) >;
-    #local C = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, 0.5 + CZ) >;
-    #local D = <0.5 + CX, 0.0 + CY, LTZ(0.5 + CX, 0.0, -0.5 + CZ) >;
-    #local E = <-0.5 + CX, 0.0 + CY, LTZ(-0.5 + CX, 0.0, -0.5 + CZ) >;
-    #local F = <0.0 + CX, -1.0 + CY, LTZ(0.0 + CX, -1.0, 0.0 + CZ) >;
-    triangle {
-        A, B, C
-        texture {
-            pigment {
-                color rgb < 1.0, 0.0, 0.0 >
-            }
-        }
-    }
-    triangle {
-        A, C, D
-        texture {
-            pigment {
-                color rgb < 1.0, 1.0, 0.0 >
-            }
-        }
-    }
-    triangle {
-        A, D, E
-        texture {
-            pigment {
-                color rgb < 0.0, 1.0, 0.0 >
-            }
-        }
-    }
-    triangle {
-        A, E, B
-        texture {
-            pigment {
-                color rgb < 0.0, 0.0, 1.0 >
-            }
-        }
-    }
-    triangle {
-        F, E, D
-        texture {
-            pigment {
-                color rgb < 0.0, 1.0, 0.0 >
-            }
-        }
-    }
-    triangle {
-        F, D, C
-        texture {
-            pigment {
-                color rgb < 1.0, 1.0, 0.0 >
-            }
-        }
-    }
-    triangle {
-        F, C, B
-        texture {
-            pigment {
-                color rgb < 1.0, 0.0, 0.0 >
-            }
-        }
-    }
-    triangle {
-        F, B, E
-        texture {
-            pigment {
-                color rgb < 0.0, 0.0, 1.0 >
-            }
-        }
-    }
-}
+Station (-5.0, 0.5, 6.0 + Distance)
+Station (-1.0, -0.5, 6.0 + Distance)
+Station (3.0, 0.0, 6.0 + Distance)
 
