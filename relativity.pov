@@ -2,19 +2,16 @@
 #include "./macros.inc"
 
 #if (false)
-    #declare V = 0.8;
+    #declare V = 0.9;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
     #declare Tau = Time / GAMMA;
 #else
     #declare A = 0.1;
-    #declare TotalD = 20.0;
-    #declare StartD = TotalD / 2.0;
+    #declare StartD = 10.0;
     #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
     #declare HalfTau = TotalTau / 2.0;
-    #declare HalfD = TotalD / 2.0;
-    #declare HalfT = sinh(A * HalfTau) / A;
     #declare Tau = clock * TotalTau;
     #if (Tau <= HalfTau)
         #declare Distance = StartD - (cosh(A * Tau) - 1.0) / A;
@@ -22,8 +19,8 @@
         #declare V = tanh(A * Tau);
     #else
         #declare Aut = TotalTau - Tau;
-        #declare Distance = - HalfD + (cosh(A * Aut) - 1.0) / A;
-        #declare Time = 2.0 * HalfT - sinh(A * Aut) / A;
+        #declare Distance = - StartD + (cosh(A * Aut) - 1.0) / A;
+        #declare Time = (2.0 * sinh(A * HalfTau) - sinh(A * Aut)) / A;
         #declare V = tanh(A * Aut);
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
@@ -45,7 +42,6 @@ light_source { <1, 1, 0> color White }
 light_source { <-1, -1, 0> color White }
 
 camera {
-//  fisheye
   up < 0, 0.9, 0 >
   right < 1.6, 0, 0 >
   location < 0.0, 0.0, 0.0 >
@@ -55,10 +51,10 @@ camera {
 
 AsteroidGrid (10, 5.0, 0.0, 0.0)
 AsteroidGrid (10, -5.0, 0.0, 0.0)
+//AsteroidGrid (10, 0.0, 0.0, 0.0)
 
-Station (0.25, -2.0, 0.0, 0.0)
-Station (0.25, 3.0, 0.0, 0.0)
-
+Station (0.25, 1.0, 0.0, 0.0)
+Station (0.25, -0.5, 0.0, 0.0)
 Station (0.25, -5.0, 0.5, 6.0)
 Station (0.25, -1.0, -0.5, 6.0)
 Station (0.25, 3.0, 0.0, 6.0)
