@@ -12,12 +12,20 @@ texture { pigment { color rgb < 1.0, 0.0, 0.0 > } }
 texture { pigment { color rgb < 0.0, 1.0, 0.0 > } }
 #end
 
+#macro DarkGreenTexture ()
+texture { pigment { color rgb < 0.0, 0.5, 0.0 > } }
+#end
+
 #macro BlueTexture ()
 texture { pigment { color rgb < 0.0, 0.0, 1.0 > } }
 #end
 
 #macro YellowTexture ()
 texture { pigment { color rgb < 0.7, 0.7, 0.0 > } }
+#end
+
+#macro OrangeTexture ()
+texture { pigment { color rgb < 0.8, 0.2, 0.0 > } }
 #end
 
 #macro CyanTexture ()
@@ -71,9 +79,9 @@ union {
     #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
     triangle { A, B, C RedTexture() }
     triangle { A, C, D WhiteTexture() }
-    triangle { A, D, E GreenTexture() }
+    triangle { A, D, E DarkGreenTexture() }
     triangle { A, E, B BlueTexture() }
-    triangle { F, E, D GreenTexture() }
+    triangle { F, E, D DarkGreenTexture() }
     triangle { F, D, C BlueTexture() }
     triangle { F, C, B RedTexture() }
     triangle { F, B, E WhiteTexture() }

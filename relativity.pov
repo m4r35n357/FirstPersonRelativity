@@ -38,8 +38,8 @@
 
 global_settings { assumed_gamma 1.8 }
 
-light_source { <1, 1, 0> color White }
-light_source { <-1, -1, 0> color White }
+light_source { <1, 1, 0> color White shadowless }
+//light_source { <-1, -1, 0> color White shadowless }
 
 camera {
   up < 0, 0.9, 0 >
@@ -49,9 +49,9 @@ camera {
   look_at < 0.0, 0.0, 100 >
 }
 
-AsteroidGrid (10, 5.0, 0.0, 0.0)
-AsteroidGrid (10, -5.0, 0.0, 0.0)
-//AsteroidGrid (10, 0.0, 0.0, 0.0)
+//AsteroidGrid (10, 5.0, 0.0, 0.0)
+//AsteroidGrid (10, -5.0, 0.0, 0.0)
+AsteroidGrid (10, 0.0, 0.0, 0.0)
 
 Station (0.25, 1.0, 0.0, 0.0)
 Station (0.25, -0.5, 0.0, 0.0)
@@ -60,6 +60,9 @@ Station (0.25, -1.0, -0.5, 6.0)
 Station (0.25, 3.0, 0.0, 6.0)
 
 union {
+    #local X1 = -50.0;
+    #local Y1 = 10.0;
+    sphere { < X1, Y1, LTZ (X1, Y1, 200.0) >, 10.0 OrangeTexture() }
     #local X1 = 0.0;
     #local Y1 = 0.0;
     sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture() }
