@@ -2,7 +2,7 @@
 #include "./macros.inc"
 
 #if (false)
-    #declare V = 0.9;
+    #declare V = 0.0;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
@@ -46,7 +46,7 @@ camera {
   right < 1.6, 0, 0 >
   location < 0.0, 0.0, 0.0 >
   angle 120.0
-  look_at < 0.0, 0.0, 100 >
+  look_at < 0.0, 0.0, 100.0 >
 }
 
 //AsteroidGrid (10, 5.0, 0.0, 0.0)
@@ -55,19 +55,22 @@ AsteroidGrid (10, 0.0, 0.0, 0.0)
 
 Station (0.25, 1.0, 0.0, 0.0)
 Station (0.25, -0.5, 0.0, 0.0)
+
 Station (0.25, -5.0, 0.5, 6.0)
 Station (0.25, -1.0, -0.5, 6.0)
 Station (0.25, 3.0, 0.0, 6.0)
 
-union {
-    #local X1 = -50.0;
-    #local Y1 = 10.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 200.0) >, 10.0 OrangeTexture() }
-    #local X1 = 0.0;
-    #local Y1 = 0.0;
-    sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture() }
-    #local X2 = 0.8;
-    #local Y2 = 0.45;
-    sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.01 MagentaTexture() }
-}
+#local X0 = -50.0;
+#local Y0 = 20.0;
+#local Z0 = LTZ (X0, Y0, 200.0);
+light_source { <X0, Y0, Z0> color White }
+sphere { < X0, Y0, Z0 >, 10.0 OrangeTexture() }
+
+#local X1 = 0.0;
+#local Y1 = 0.0;
+sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture() }
+
+#local X2 = 0.8;
+#local Y2 = 0.45;
+sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.01 MagentaTexture() }
 
