@@ -8,7 +8,7 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
     #declare Tau = Time / GAMMA;
 #else
-    #declare A = 0.1;
+    #declare A = 0.001;
     #declare StartD = 10.0;
     #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
     #declare HalfTau = TotalTau / 2.0;
@@ -46,11 +46,20 @@ camera {
   right < 1.6, 0, 0 >
   location < 0.0, 0.0, 0.0 >
   angle 120.0
-  look_at < 0.0, 0.0, 100.0 >
+  #if (true)
+    look_at < 0.0, 0.0, 100.0 >
+  #else
+    look_at < -100.0, 0.0, 0.0 >
+  #end
 }
 
-//AsteroidGrid (10, 5.0, 0.0, 0.0)
-//AsteroidGrid (10, -5.0, 0.0, 0.0)
+#declare X = -10;
+#while (X <= 10)
+//    Milestones (X, 1.0, -10, 10)
+    Milestones (X, -1.0, -10, 10)
+    #local X = X + 1;
+#end
+
 AsteroidGrid (10, 0.0, 0.0, 0.0)
 
 Station (0.25, 1.0, 0.0, 0.0)
