@@ -1,14 +1,14 @@
 #version 3.7;
 #include "./macros.inc"
 
-#if (true)
+#if (false)
     #declare V = 0.0;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
     #declare Tau = Time / GAMMA;
 #else
-    #declare A = 0.000001;
+    #declare A = 1.0;
     #declare StartD = 10.0;
     #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
     #declare HalfTau = TotalTau / 2.0;
@@ -55,5 +55,5 @@ camera {
 
 Milestones (-0.5, 0.0, -10, 10)
 
-#include "./scenery.inc"
+//#include "./scenery.inc"
 
