@@ -4,6 +4,10 @@
 texture { pigment { color rgb < 1.0, 1.0, 1.0 > } }
 #end
 
+#macro GreyTexture ()
+texture { pigment { color rgb < 0.5, 0.5, 0.5 > } }
+#end
+
 #macro RedTexture ()
 texture { pigment { color rgb < 1.0, 0.0, 0.0 > } }
 #end
@@ -86,5 +90,17 @@ union {
     triangle { F, C, B RedTexture() }
     triangle { F, B, E WhiteTexture() }
 }
+#end
+
+#macro Milestones (X, Y, Za, Zz)
+    #local Z = Za;
+    #while (Z <= Zz) 
+        #if (mod(Z, 5) = 0)
+            sphere { < X, Y, LTZ (X, Y, Z) >, 0.02 WhiteTexture() }
+        #else
+            sphere { < X, Y, LTZ (X, Y, Z) >, 0.01 GreyTexture() }
+        #end
+        #local Z = Z + 1;
+    #end
 #end
 
