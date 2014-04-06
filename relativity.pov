@@ -1,11 +1,12 @@
 #version 3.7;
 #include "./macros.inc"
 
-#if (false)
-    #declare V = 0.0;
-    #declare Distance = 20.0 * (0.5 - clock);
-    #declare Time = Distance / V;
-    #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
+#declare TotalDistance = 20.0;
+#if (true)
+    #declare V = 0.8;
+    #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
+    #declare Distance = TotalDistance * (0.5 - clock);
+    #declare Time = (0.5 * TotalDistance - Distance) / V;
     #declare Tau = Time / GAMMA;
 #else
     #declare A = 0.1;
@@ -23,7 +24,7 @@
         #declare Time = (2.0 * sinh(A * HalfTau) - sinh(A * Aut)) / A;
         #declare V = tanh(A * Aut);
     #end
-    #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
+    #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
 #end
 
 #debug concat(" V: ", str(V,3,3))
