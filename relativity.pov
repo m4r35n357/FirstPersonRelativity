@@ -1,14 +1,14 @@
 #version 3.7;
 #include "./macros.inc"
 
-#if (false)
+#if (true)
     #declare V = 0.0;
     #declare Distance = 20.0 * (0.5 - clock);
     #declare Time = Distance / V;
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
     #declare Tau = Time / GAMMA;
 #else
-    #declare A = 0.001;
+    #declare A = 0.000001;
     #declare StartD = 10.0;
     #declare TotalTau = 2.0 * acosh(A * StartD + 1.0) / A;
     #declare HalfTau = TotalTau / 2.0;
@@ -26,11 +26,11 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V*V);
 #end
 
-#debug concat(">>> V: ", str(V,3,2))
+#debug concat("> V: ", str(V,3,3))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
 #debug concat(", Distance: ", str(Distance,3,1))
 #debug concat(", Time: ", str(Time,3,1))
-#debug concat(", Proper Time: ", str(Tau,3,1), " <<<\n")
+#debug concat(", Proper Time: ", str(Tau,3,1), " <\n")
 
 #declare LTZ = function (X, Y, Z) {
     GAMMA * (Z + Distance + V * sqrt(X*X + Y*Y + (Z + Distance)*(Z + Distance)))
@@ -55,7 +55,6 @@ camera {
 
 #declare X = -10;
 #while (X <= 10)
-//    Milestones (X, 1.0, -10, 10)
     Milestones (X, -1.0, -10, 10)
     #local X = X + 1;
 #end
