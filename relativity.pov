@@ -46,39 +46,14 @@ camera {
   right < 1.6, 0, 0 >
   location < 0.0, 0.0, 0.0 >
   angle 120.0
-  #if (true)
+  #if (false)
     look_at < 0.0, 0.0, 100.0 >
   #else
     look_at < -100.0, 0.0, 0.0 >
   #end
 }
 
-#declare X = -10;
-#while (X <= 10)
-    Milestones (X, -1.0, -10, 10)
-    #local X = X + 1;
-#end
+Milestones (-0.5, 0.0, -10, 10)
 
-AsteroidGrid (10, 0.0, 0.0, 0.0)
-
-Station (0.25, 1.0, 0.0, 0.0)
-Station (0.25, -0.5, 0.0, 0.0)
-
-Station (0.25, -5.0, 0.5, 6.0)
-Station (0.25, -1.0, -0.5, 6.0)
-Station (0.25, 3.0, 0.0, 6.0)
-
-#local X0 = -50.0;
-#local Y0 = 20.0;
-#local Z0 = LTZ (X0, Y0, 200.0);
-light_source { <X0, Y0, Z0> color White }
-sphere { < X0, Y0, Z0 >, 10.0 OrangeTexture() }
-
-#local X1 = 0.0;
-#local Y1 = 0.0;
-sphere { < X1, Y1, LTZ (X1, Y1, 11.0) >, 0.5 BlueTexture() }
-
-#local X2 = 0.8;
-#local Y2 = 0.45;
-sphere { < X2, Y2, LTZ (X2, Y2, 10.0) >, 0.01 MagentaTexture() }
+#include "./scenery.inc"
 
