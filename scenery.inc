@@ -25,6 +25,6 @@ sphere { < X0, Y0, Z0 >, 10.0 OrangeTexture() }
 sphere { < X1, Y1, LTZ (X1, Y1, 21.0) >, 0.5 BlueTexture() }
 
 #local X2 = 0.8;
-#local Y2 = 0.45;
+#local Y2 = 0.6;
 sphere { < X2, Y2, LTZ (X2, Y2, 20.0) >, 0.01 MagentaTexture() }
 

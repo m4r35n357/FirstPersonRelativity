@@ -1,24 +1,24 @@
 #version 3.7;
 #include "./macros.inc"
 
-#declare TotalDeltaZ = 20.0;
+#declare TotalDZ = 20.0;
 #if (false)  // constant velocity mode
     #declare V = 0.0;
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
-    #declare DeltaZ = TotalDeltaZ * clock;
-    #declare Time = DeltaZ / V;
+    #declare DZ = TotalDZ * clock;
+    #declare Time = DZ / V;
     #declare Tau = Time / GAMMA;
 #else  // acceleration mode
-    #declare A = 0.1;
-    #declare TotalTau = 2.0 * acosh(A * 0.5 * TotalDeltaZ + 1.0) / A;
+    #declare A = 1.03;
+    #declare TotalTau = 2.0 * acosh(A * 0.5 * TotalDZ + 1.0) / A;
     #declare Tau = clock * TotalTau;
     #if (Tau <= 0.5 * TotalTau)
-        #declare DeltaZ = (cosh(A * Tau) - 1.0) / A;
+        #declare DZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
         #declare V = tanh(A * Tau);
     #else
         #declare Aut = TotalTau - Tau;
-        #declare DeltaZ = TotalDeltaZ - (cosh(A * Aut) - 1.0) / A;
+        #declare DZ = TotalDZ - (cosh(A * Aut) - 1.0) / A;
         #declare Time = (2.0 * sinh(A * 0.5 * TotalTau) - sinh(A * Aut)) / A;
         #declare V = tanh(A * Aut);
     #end
@@ -27,12 +27,12 @@
 
 #debug concat(" V: ", str(V,3,3))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
-#debug concat(", DeltaZ: ", str(DeltaZ,3,1))
+#debug concat(", DZ: ", str(DZ,3,1))
 #debug concat(", Time: ", str(Time,3,1))
 #debug concat(", Proper Time: ", str(Tau,3,1), "\n")
 
 #declare LTZ = function (X, Y, Z) { // light cone view of Lorentz Transform in Z
-    GAMMA * (Z - DeltaZ + V * sqrt(X * X + Y * Y + (Z - DeltaZ) * (Z - DeltaZ)))
+    GAMMA * (Z - DZ + V * sqrt(X * X + Y * Y + (Z - DZ) * (Z - DZ)))
 }
 
 global_settings { assumed_gamma 1.8 }
@@ -54,7 +54,7 @@ camera {
 #declare Horizontal = 50.0;
 #declare X = Horizontal;
 #while (X >= - Horizontal)
-    Milestones (X, -0.5, 0.0, TotalDeltaZ + 5.0)
+    Milestones (X, -0.5, 0.0, TotalDZ + 5.0)
     #local X = X - 0.25;
 #end
 
