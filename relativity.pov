@@ -40,8 +40,6 @@ global_settings { assumed_gamma 1.8 }
 light_source { <1, 1, 0> color White shadowless }
 
 camera {
-//  up < 0, 0.9, 0 >
-//  right < 1.6, 0, 0 >
   up < 0, 1, 0 >
   right < 1, 0, 0 >
   location < 0.0, 0.0, 0.0 >
