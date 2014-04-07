@@ -3,7 +3,7 @@
 
 #declare TotalDeltaZ = 20.0;
 #if (false)  // constant velocity mode
-    #declare V = 0.9;
+    #declare V = 0.0;
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
     #declare DeltaZ = TotalDeltaZ * clock;
     #declare Time = DeltaZ / V;
@@ -61,4 +61,5 @@ camera {
 #end
 
 #include "./scenery.inc"
+//#include "./rings.inc"
 
