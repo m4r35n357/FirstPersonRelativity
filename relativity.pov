@@ -36,8 +36,8 @@
 #macro Doppler (X, Y, Z, Colour)
     #local DF = (1.0 + V * cos(atan2(Z - DZ, sqrt(X * X + Y * Y)))) * GAMMA;
     #local HSL = CRGB2HSL(Colour);
-    #if (DF >= 0.0)
-        CHSL2RGB(<360 - (360.0 - (HSL.red)) / DF, (HSL.green), 1.0 - (1.0 - (HSL.blue)) / DF>)
+    #if (DF >= 1.0)
+        CHSL2RGB(<360.0 - (360.0 - (HSL.red)) / DF, (HSL.green), 1.0 - (1.0 - (HSL.blue)) / DF>)
     #else
         CHSL2RGB(<(HSL.red) * DF, (HSL.green), (HSL.blue) * DF>)
     #end

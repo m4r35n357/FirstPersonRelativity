@@ -86,14 +86,14 @@ union {
     #local D = LorentzZ(Half + CX, CY, -Half + CZ);
     #local E = LorentzZ(-Half + CX, CY, -Half + CZ);
     #local F = LorentzZ(CX, -Size + CY, CZ);
-    triangle { A, B, C RedTexture() }
-    triangle { A, C, D WhiteTexture() }
-    triangle { A, D, E DarkGreenTexture() }
-    triangle { A, E, B BlueTexture() }
-    triangle { F, E, D DarkGreenTexture() }
-    triangle { F, D, C BlueTexture() }
-    triangle { F, C, B RedTexture() }
-    triangle { F, B, E WhiteTexture() }
+    triangle { A, B, C HSLTexture(CX, CY, CZ, Red) }
+    triangle { A, C, D HSLTexture(CX, CY, CZ, Yellow) }
+    triangle { A, D, E HSLTexture(CX, CY, CZ, Green) }
+    triangle { A, E, B HSLTexture(CX, CY, CZ, Blue) }
+    triangle { F, E, D HSLTexture(CX, CY, CZ, Green) }
+    triangle { F, D, C HSLTexture(CX, CY, CZ, Blue) }
+    triangle { F, C, B HSLTexture(CX, CY, CZ, Red) }
+    triangle { F, B, E HSLTexture(CX, CY, CZ, Yellow) }
 }
 #end
 
@@ -101,9 +101,9 @@ union {
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { LorentzZ(X, Y, Z), 0.02 WhiteTexture() }
+            sphere { LorentzZ(X, Y, Z), 0.02 HSLTexture(X, Y, Z, Yellow) }
         #else
-            sphere { LorentzZ(X, Y, Z), 0.01 GreyTexture() }
+            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, Yellow) }
         #end
         #local Z = Z + 1;
     #end
