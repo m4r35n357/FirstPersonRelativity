@@ -56,7 +56,7 @@ union {
                 #local Y = NrY - Offset + CY;
                 #local Z = NrZ - Offset + CZ;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
-                    sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
+                    sphere { LorentzZ(X, Y, Z), 0.05
                         #if ( NrZ = 0 ) RedTexture() #end
                         #if ( NrZ = 3 ) YellowTexture() #end
                         #if ( NrZ = 6 ) GreenTexture() #end
@@ -75,12 +75,12 @@ union {
 #macro Station (Size, CX, CY, CZ)
 union {
     #local Half = Size / 2.0;
-    #local A = <CX, Size + CY, LTZ(CX, Size + CY, CZ) >;
-    #local B = <-Half + CX, CY, LTZ(-Half + CX, CY, Half + CZ) >;
-    #local C = <Half + CX, CY, LTZ(Half + CX, CY, Half + CZ) >;
-    #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
-    #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
-    #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
+    #local A = LorentzZ(CX, Size + CY, CZ);
+    #local B = LorentzZ(-Half + CX, CY, Half + CZ);
+    #local C = LorentzZ(Half + CX, CY, Half + CZ);
+    #local D = LorentzZ(Half + CX, CY, -Half + CZ);
+    #local E = LorentzZ(-Half + CX, CY, -Half + CZ);
+    #local F = LorentzZ(CX, -Size + CY, CZ);
     triangle { A, B, C RedTexture() }
     triangle { A, C, D WhiteTexture() }
     triangle { A, D, E DarkGreenTexture() }
@@ -96,9 +96,9 @@ union {
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { < X, Y, LTZ (X, Y, Z) >, 0.02 WhiteTexture() }
+            sphere { LorentzZ(X, Y, Z), 0.02 WhiteTexture() }
         #else
-            sphere { < X, Y, LTZ (X, Y, Z) >, 0.01 GreyTexture() }
+            sphere { LorentzZ(X, Y, Z), 0.01 GreyTexture() }
         #end
         #local Z = Z + 1;
     #end

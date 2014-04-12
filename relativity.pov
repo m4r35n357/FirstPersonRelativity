@@ -31,9 +31,10 @@
 #debug concat(", Time: ", str(Time,3,1))
 #debug concat(", Proper Time: ", str(Tau,3,1), "\n")
 
-#declare LTZ = function (X, Y, Z) { // light cone view of Lorentz Transform in Z
-    GAMMA * (Z - DZ + V * sqrt(X * X + Y * Y + (Z - DZ) * (Z - DZ)))
-}
+#macro LorentzZ (X, Y, Z)
+    #local newZ = Z - DZ;
+    < X, Y, GAMMA * (newZ + V * sqrt(X * X + Y * Y + newZ * newZ)) >
+#end
 
 global_settings { assumed_gamma 1.8 }
 
