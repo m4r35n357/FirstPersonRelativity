@@ -33,6 +33,16 @@
     < X, Y, GAMMA * (newZ + V * sqrt(X * X + Y * Y + newZ * newZ)) >
 #end
 
+#macro Doppler (X, Y, Z, Colour)
+    #local DF = (1.0 - V * cos(atan2(Z - DZ, sqrt(X * X + Y * Y)))) * GAMMA;
+    #local HSL = CRGB2HSL(Colour);
+    #if (DF >= 0.0)
+        CHSL2RGB(<360 - (360.0 - (HSL.red)) / DF, (HSL.green), 1.0 - (1.0 - (HSL.blue)) / DF>)
+    #else
+        CHSL2RGB(<(HSL.red) * DF, (HSL.green), (HSL.blue) * DF>)
+    #end
+#end
+
 global_settings { assumed_gamma 1.8 }
 
 light_source { <1, 1, 0> color White shadowless }

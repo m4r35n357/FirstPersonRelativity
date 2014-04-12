@@ -1,5 +1,10 @@
 #include "colors.inc"
 
+#macro HSLTexture (X, Y, Z, Colour)
+texture { pigment { color Doppler(X, Y, Z, Colour) } }
+//texture { pigment { color rgb Doppler(X, Y, Z, Colour) } }
+#end
+
 #macro WhiteTexture ()
 texture { pigment { color rgb < 1.0, 1.0, 1.0 > } }
 #end
