@@ -1,15 +1,7 @@
 #version 3.7;
 #include "./macros.inc"
 
-#declare TotalDZ = 20.0;
-#if (false)  // constant velocity mode
-    #declare V = 0.0;
-    #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
-    #declare DZ = TotalDZ * clock;
-    #declare Time = DZ / V;
-    #declare Tau = Time / GAMMA;
-#else  // acceleration mode
-    #declare A = 0.103;
+#if (AccelerationMode > 0.0)
     #declare TotalTau = 2.0 * acosh(A * 0.5 * TotalDZ + 1.0) / A;
     #declare Tau = clock * TotalTau;
     #if (Tau <= 0.5 * TotalTau)
@@ -19,10 +11,15 @@
     #else
         #declare Aut = TotalTau - Tau;
         #declare DZ = TotalDZ - (cosh(A * Aut) - 1.0) / A;
-        #declare Time = (2.0 * sinh(A * 0.5 * TotalTau) - sinh(A * Aut)) / A;
+        #declare Time = (2.0 * sinh(0.5 * A * TotalTau) - sinh(A * Aut)) / A;
         #declare V = tanh(A * Aut);
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
+#else  // constant velocity mode
+    #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
+    #declare DZ = TotalDZ * clock;
+    #declare Time = DZ / V;
+    #declare Tau = Time / GAMMA;
 #end
 
 #debug concat(" V: ", str(V,3,3))
@@ -45,7 +42,7 @@ camera {
   right < 1, 0, 0 >
   location < 0.0, 0.0, 0.0 >
   angle 120.0
-  #if (true)  // look forward
+  #if (LookForward > 0.0)
     look_at < 0.0, 0.0, 100.0 >
   #else  // look left
     look_at < -100.0, 0.0, 0.0 >
