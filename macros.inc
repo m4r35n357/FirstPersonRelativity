@@ -46,7 +46,7 @@ texture { pigment { color rgb < 0.7, 0.0, 0.7 > } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
-union {
+//union {
     #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
@@ -62,10 +62,10 @@ union {
                 #local Z = NrZ - Offset + CZ;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
                     sphere { LorentzZ(X, Y, Z), 0.05
-                        #if ( NrZ = 0 ) RedTexture() #end
-                        #if ( NrZ = 3 ) YellowTexture() #end
-                        #if ( NrZ = 6 ) GreenTexture() #end
-                        #if ( NrZ = 9 ) CyanTexture() #end
+                        #if ( NrZ = 0 ) HSLTexture(X, Y, Z, Red) #end
+                        #if ( NrZ = 3 ) HSLTexture(X, Y, Z, Yellow) #end
+                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, Green) #end
+                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, Cyan) #end
                     }
                 #end
                 #local NrX = NrX + 1;
@@ -74,7 +74,7 @@ union {
         #end
         #local NrZ = NrZ + 3;
     #end
-}
+//}
 #end
 
 #macro Station (Size, CX, CY, CZ)
