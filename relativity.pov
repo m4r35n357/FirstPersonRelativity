@@ -9,7 +9,7 @@
     #declare Time = DZ / V;
     #declare Tau = Time / GAMMA;
 #else  // acceleration mode
-    #declare A = 1.03;
+    #declare A = 0.103;
     #declare TotalTau = 2.0 * acosh(A * 0.5 * TotalDZ + 1.0) / A;
     #declare Tau = clock * TotalTau;
     #if (Tau <= 0.5 * TotalTau)
