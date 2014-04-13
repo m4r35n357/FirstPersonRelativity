@@ -18,15 +18,15 @@ Station (0.25, 3.0, 0.0, 16.0)
 #local Y = 40.0;
 #local Z = 200.0;
 light_source { < X, Y, Z > color White }
-sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, Orange) }
+sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
 #local X = 0.0;
 #local Y = 0.0;
 #local Z = 21.0;
-sphere { LorentzZ(X, Y, Z), 0.5 HSLTexture(X, Y, Z, Blue) }
+sphere { LorentzZ(X, Y, Z), 0.5 HSLTexture(X, Y, Z, HRed) }
 
-#local X = 0.6;
-#local Y = 0.6;
-#local Z = 22.0;
-sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, Magenta) }
+#local X = 0.8;
+#local Y = 0.8;
+#local Z = 20.0;
+sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HTurquoise) }
 
