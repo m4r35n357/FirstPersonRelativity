@@ -34,12 +34,12 @@
 #end
 
 #macro Doppler (X, Y, Z, Colour)
-    #local DF = (1.0 - V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA;
+    #local DF = (1.0 + V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA;
     #local HSL = CRGB2HSL(Colour);
     #if (DF >= 1.0)
-        CHSL2RGB(<270.0 - (270.0 - (HSL.red)) * DF, 1.0, 1.0 - (1.0 - (HSL.blue)) * DF>)
+        CHSL2RGB(<240.0 - (240.0 - (HSL.red)) / DF, 1.0, 1.0 - (1.0 - (HSL.blue)) / DF>)
     #else
-        CHSL2RGB(<(HSL.red) / DF, 1.0, (HSL.blue) / DF>)
+        CHSL2RGB(<(HSL.red) * DF, 1.0, (HSL.blue) * DF>)
     #end
 #end
 
