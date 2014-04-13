@@ -5,46 +5,6 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
 //texture { pigment { color rgb Doppler(X, Y, Z, Colour) } }
 #end
 
-#macro WhiteTexture ()
-texture { pigment { color rgb < 1.0, 1.0, 1.0 > } }
-#end
-
-#macro GreyTexture ()
-texture { pigment { color rgb < 0.5, 0.5, 0.5 > } }
-#end
-
-#macro RedTexture ()
-texture { pigment { color rgb < 1.0, 0.0, 0.0 > } }
-#end
-
-#macro GreenTexture ()
-texture { pigment { color rgb < 0.0, 1.0, 0.0 > } }
-#end
-
-#macro DarkGreenTexture ()
-texture { pigment { color rgb < 0.0, 0.5, 0.0 > } }
-#end
-
-#macro BlueTexture ()
-texture { pigment { color rgb < 0.0, 0.0, 1.0 > } }
-#end
-
-#macro YellowTexture ()
-texture { pigment { color rgb < 0.7, 0.7, 0.0 > } }
-#end
-
-#macro OrangeTexture ()
-texture { pigment { color rgb < 0.8, 0.2, 0.0 > } }
-#end
-
-#macro CyanTexture ()
-texture { pigment { color rgb < 0.0, 0.7, 0.7 > } }
-#end
-
-#macro MagentaTexture ()
-texture { pigment { color rgb < 0.7, 0.0, 0.7 > } }
-#end
-
 #macro AsteroidGrid (Size, CX, CY, CZ)
 //union {
     #local Offset = (Size - 1.0) / 2.0;
