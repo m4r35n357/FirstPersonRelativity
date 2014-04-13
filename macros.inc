@@ -1,4 +1,3 @@
-#include "colors.inc"
 
 #declare HRed = 0.0;
 #declare HOrange = 30.0;
@@ -72,7 +71,7 @@ union {
         #if (mod(Z, 5) = 0)
             sphere { LorentzZ(X, Y, Z), 0.02 HSLTexture(X, Y, Z, HYellow) }
         #else
-            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HOrange) }
+            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HYellow) }
         #end
         #local Z = Z + 1;
     #end
