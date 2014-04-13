@@ -2,7 +2,6 @@
 
 #macro HSLTexture (X, Y, Z, Colour)
 texture { pigment { color Doppler(X, Y, Z, Colour) } }
-//texture { pigment { color rgb Doppler(X, Y, Z, Colour) } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
@@ -37,23 +36,23 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
 //}
 #end
 
-#macro Station (Size, CX, CY, CZ)
+#macro Station (Size, X, Y, Z)
 union {
     #local Half = Size / 2.0;
-    #local A = LorentzZ(CX, Size + CY, CZ);
-    #local B = LorentzZ(-Half + CX, CY, Half + CZ);
-    #local C = LorentzZ(Half + CX, CY, Half + CZ);
-    #local D = LorentzZ(Half + CX, CY, -Half + CZ);
-    #local E = LorentzZ(-Half + CX, CY, -Half + CZ);
-    #local F = LorentzZ(CX, -Size + CY, CZ);
-    triangle { A, B, C HSLTexture(CX, CY, CZ, Red) }
-    triangle { A, C, D HSLTexture(CX, CY, CZ, Yellow) }
-    triangle { A, D, E HSLTexture(CX, CY, CZ, Green) }
-    triangle { A, E, B HSLTexture(CX, CY, CZ, Blue) }
-    triangle { F, E, D HSLTexture(CX, CY, CZ, Green) }
-    triangle { F, D, C HSLTexture(CX, CY, CZ, Blue) }
-    triangle { F, C, B HSLTexture(CX, CY, CZ, Red) }
-    triangle { F, B, E HSLTexture(CX, CY, CZ, Yellow) }
+    #local A = LorentzZ(X, Size + Y, Z);
+    #local B = LorentzZ(-Half + X, Y, Half + Z);
+    #local C = LorentzZ(Half + X, Y, Half + Z);
+    #local D = LorentzZ(Half + X, Y, -Half + Z);
+    #local E = LorentzZ(-Half + X, Y, -Half + Z);
+    #local F = LorentzZ(X, -Size + Y, Z);
+    triangle { A, B, C HSLTexture(X, Y, Z, Red) }
+    triangle { A, C, D HSLTexture(X, Y, Z, Yellow) }
+    triangle { A, D, E HSLTexture(X, Y, Z, Green) }
+    triangle { A, E, B HSLTexture(X, Y, Z, Blue) }
+    triangle { F, E, D HSLTexture(X, Y, Z, Green) }
+    triangle { F, D, C HSLTexture(X, Y, Z, Blue) }
+    triangle { F, C, B HSLTexture(X, Y, Z, Red) }
+    triangle { F, B, E HSLTexture(X, Y, Z, Yellow) }
 }
 #end
 
