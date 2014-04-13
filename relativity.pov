@@ -38,9 +38,9 @@
 #macro Doppler (X, Y, Z, Hue)
     #local DF = (1.0 + V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA;
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF >)
+        CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF  * DF) >)
     #else  // red shift, darken
-        CHSL2RGB(< Hue * DF, 1.0, 0.5 * DF >)
+        CHSL2RGB(< Hue * DF, 1.0, 0.5 * DF  * DF >)
     #end
 #end
 
