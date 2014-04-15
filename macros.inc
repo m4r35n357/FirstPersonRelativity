@@ -1,47 +1,20 @@
-#include "colors.inc"
 
-#macro WhiteTexture ()
-texture { pigment { color rgb < 1.0, 1.0, 1.0 > } }
-#end
+#declare HRed = 0.0;
+#declare HOrange = 30.0;
+#declare HYellow = 60.0;
+#declare HLime = 90.0;
+#declare HGreen = 120.0;
+#declare HTurquoise = 150.0;
+#declare HCyan = 180.0;
+#declare HPaleBlue = 210.0;
+#declare HBlue = 240.0;
 
-#macro GreyTexture ()
-texture { pigment { color rgb < 0.5, 0.5, 0.5 > } }
-#end
-
-#macro RedTexture ()
-texture { pigment { color rgb < 1.0, 0.0, 0.0 > } }
-#end
-
-#macro GreenTexture ()
-texture { pigment { color rgb < 0.0, 1.0, 0.0 > } }
-#end
-
-#macro DarkGreenTexture ()
-texture { pigment { color rgb < 0.0, 0.5, 0.0 > } }
-#end
-
-#macro BlueTexture ()
-texture { pigment { color rgb < 0.0, 0.0, 1.0 > } }
-#end
-
-#macro YellowTexture ()
-texture { pigment { color rgb < 0.7, 0.7, 0.0 > } }
-#end
-
-#macro OrangeTexture ()
-texture { pigment { color rgb < 0.8, 0.2, 0.0 > } }
-#end
-
-#macro CyanTexture ()
-texture { pigment { color rgb < 0.0, 0.7, 0.7 > } }
-#end
-
-#macro MagentaTexture ()
-texture { pigment { color rgb < 0.7, 0.0, 0.7 > } }
+#macro HSLTexture (X, Y, Z, Colour)
+texture { pigment { color Doppler(X, Y, Z, Colour) } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
-union {
+//union {
     #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
@@ -56,11 +29,11 @@ union {
                 #local Y = NrY - Offset + CY;
                 #local Z = NrZ - Offset + CZ;
                 #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
-                    sphere { < X, Y, LTZ (X, Y, Z) >, 0.05
-                        #if ( NrZ = 0 ) RedTexture() #end
-                        #if ( NrZ = 3 ) YellowTexture() #end
-                        #if ( NrZ = 6 ) GreenTexture() #end
-                        #if ( NrZ = 9 ) CyanTexture() #end
+                    sphere { LorentzZ(X, Y, Z), 0.05
+                        #if ( NrZ = 0 ) HSLTexture(X, Y, Z, HRed) #end
+                        #if ( NrZ = 3 ) HSLTexture(X, Y, Z, HYellow) #end
+                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HLime) #end
+                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HTurquoise) #end
                     }
                 #end
                 #local NrX = NrX + 1;
@@ -69,26 +42,26 @@ union {
         #end
         #local NrZ = NrZ + 3;
     #end
-}
+//}
 #end
 
-#macro Station (Size, CX, CY, CZ)
+#macro Station (Size, X, Y, Z)
 union {
     #local Half = Size / 2.0;
-    #local A = <CX, Size + CY, LTZ(CX, Size + CY, CZ) >;
-    #local B = <-Half + CX, CY, LTZ(-Half + CX, CY, Half + CZ) >;
-    #local C = <Half + CX, CY, LTZ(Half + CX, CY, Half + CZ) >;
-    #local D = <Half + CX, CY, LTZ(Half + CX, CY, -Half + CZ) >;
-    #local E = <-Half + CX, CY, LTZ(-Half + CX, CY, -Half + CZ) >;
-    #local F = <CX, -Size + CY, LTZ(CX, -Size + CY, CZ) >;
-    triangle { A, B, C RedTexture() }
-    triangle { A, C, D WhiteTexture() }
-    triangle { A, D, E DarkGreenTexture() }
-    triangle { A, E, B BlueTexture() }
-    triangle { F, E, D DarkGreenTexture() }
-    triangle { F, D, C BlueTexture() }
-    triangle { F, C, B RedTexture() }
-    triangle { F, B, E WhiteTexture() }
+    #local A = LorentzZ(X, Size + Y, Z);
+    #local B = LorentzZ(-Half + X, Y, Half + Z);
+    #local C = LorentzZ(Half + X, Y, Half + Z);
+    #local D = LorentzZ(Half + X, Y, -Half + Z);
+    #local E = LorentzZ(-Half + X, Y, -Half + Z);
+    #local F = LorentzZ(X, -Size + Y, Z);
+    triangle { A, B, C HSLTexture(X, Y, Z, HRed) }
+    triangle { A, C, D HSLTexture(X, Y, Z, HYellow) }
+    triangle { A, D, E HSLTexture(X, Y, Z, HGreen) }
+    triangle { A, E, B HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, E, D HSLTexture(X, Y, Z, HGreen) }
+    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
+    triangle { F, B, E HSLTexture(X, Y, Z, HYellow) }
 }
 #end
 
@@ -96,9 +69,9 @@ union {
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { < X, Y, LTZ (X, Y, Z) >, 0.02 WhiteTexture() }
+            sphere { LorentzZ(X, Y, Z), 0.02 HSLTexture(X, Y, Z, HYellow) }
         #else
-            sphere { < X, Y, LTZ (X, Y, Z) >, 0.01 GreyTexture() }
+            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HYellow) }
         #end
         #local Z = Z + 1;
     #end

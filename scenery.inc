@@ -14,17 +14,19 @@ Station (0.25, -5.0, 0.5, 16.0)
 Station (0.25, -1.0, -0.5, 16.0)
 Station (0.25, 3.0, 0.0, 16.0)
 
-#local X0 = -50.0;
-#local Y0 = 20.0;
-#local Z0 = LTZ (X0, Y0, 200.0);
-light_source { <X0, Y0, Z0> color White }
-sphere { < X0, Y0, Z0 >, 10.0 OrangeTexture() }
+#local X = -100.0;
+#local Y = 40.0;
+#local Z = 200.0;
+light_source { < X, Y, Z > color White }
+sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
-#local X1 = 0.0;
-#local Y1 = 0.0;
-sphere { < X1, Y1, LTZ (X1, Y1, 21.0) >, 0.5 BlueTexture() }
+#local X = 0.0;
+#local Y = 0.0;
+#local Z = 21.0;
+sphere { LorentzZ(X, Y, Z), 0.5 HSLTexture(X, Y, Z, HRed) }
 
-#local X2 = 0.8;
-#local Y2 = 0.6;
-sphere { < X2, Y2, LTZ (X2, Y2, 20.0) >, 0.01 MagentaTexture() }
+#local X = 0.3;
+#local Y = 0.3;
+#local Z = 20.5;
+sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
 
