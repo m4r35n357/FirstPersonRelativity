@@ -17,7 +17,7 @@ AsteroidGrid (10, 0.0, 0.0, 10.0)
 #local X = -100.0;
 #local Y = 40.0;
 #local Z = 200.0;
-light_source { < X, Y, Z > color White }
+light_source { < X, Y, Z > color White shadowless }
 sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
 #local X = 0.0;
