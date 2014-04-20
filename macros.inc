@@ -14,7 +14,6 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
-//union {
     #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
     #local EndNrZ = Size;
@@ -42,11 +41,9 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
         #end
         #local NrZ = NrZ + 3;
     #end
-//}
 #end
 
 #macro Station (Size, X, Y, Z)
-union {
     #local Half = Size / 2.0;
     #local A = LorentzZ(X, Size + Y, Z);
     #local B = LorentzZ(-Half + X, Y, Half + Z);
@@ -62,7 +59,6 @@ union {
     triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
     triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
     triangle { F, B, E HSLTexture(X, Y, Z, HYellow) }
-}
 #end
 
 #macro Milestones (X, Y, Za, Zz)

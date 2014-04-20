@@ -68,5 +68,5 @@ camera {
 #end
 
 #include "./scenery.inc"
-//#include "./rings.inc"
+#include "./rings.inc"
 
