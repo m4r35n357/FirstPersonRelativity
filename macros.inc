@@ -45,12 +45,12 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
 
 #macro Station (Size, X, Y, Z)
     #local Half = Size / 2.0;
-    #local A = LorentzZ(X, Size + Y, Z);
-    #local B = LorentzZ(-Half + X, Y, Half + Z);
-    #local C = LorentzZ(Half + X, Y, Half + Z);
-    #local D = LorentzZ(Half + X, Y, -Half + Z);
-    #local E = LorentzZ(-Half + X, Y, -Half + Z);
-    #local F = LorentzZ(X, -Size + Y, Z);
+    #local A = LorentzZ(X, Y + Size, Z);
+    #local B = LorentzZ(X - Half, Y, Z + Half);
+    #local C = LorentzZ(X + Half, Y, Z + Half);
+    #local D = LorentzZ(X + Half, Y, Z - Half);
+    #local E = LorentzZ(X - Half, Y, Z - Half);
+    #local F = LorentzZ(X, Y - Size, Z);
     triangle { A, B, C HSLTexture(X, Y, Z, HRed) }
     triangle { A, C, D HSLTexture(X, Y, Z, HYellow) }
     triangle { A, D, E HSLTexture(X, Y, Z, HGreen) }
