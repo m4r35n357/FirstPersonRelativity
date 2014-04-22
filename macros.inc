@@ -56,18 +56,18 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
     triangle { A, D, E HSLTexture(X, Y, Z, HGreen) }
     triangle { A, E, B HSLTexture(X, Y, Z, HBlue) }
     triangle { F, E, D HSLTexture(X, Y, Z, HGreen) }
-    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, D, C HSLTexture(X, Y, Z, HYellow) }
     triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
-    triangle { F, B, E HSLTexture(X, Y, Z, HYellow) }
+    triangle { F, B, E HSLTexture(X, Y, Z, HBlue) }
 #end
 
 #macro Milestones (X, Y, Za, Zz)
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { LorentzZ(X, Y, Z), 0.02 HSLTexture(X, Y, Z, HYellow) }
-        #else
             sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HYellow) }
+        #else
+            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HYellow) }
         #end
         #local Z = Z + 1;
     #end

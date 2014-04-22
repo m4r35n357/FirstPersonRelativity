@@ -1,24 +1,10 @@
 
 AsteroidGrid (10, 0.0, 0.0, 10.0)
 
-//Station (0.25, 1.0, -0.5, 10.0)
-//Station (0.25, -0.5, 1.0, 10.0)
-//Station (0.25, 1.0, 0.5, 10.0)
-//Station (0.25, -0.5, -1.0, 10.0)
-//Station (0.25, -1.0, 0.5, 10.0)
-//Station (0.25, 0.5, -1.0, 10.0)
-//Station (0.25, -1.0, -0.5, 10.0)
-//Station (0.25, 0.5, 1.0, 10.0)
-
-//Station (0.25, -5.0, 0.5, 16.0)
-//Station (0.25, -1.0, -0.5, 16.0)
-//Station (0.25, 3.0, 0.0, 16.0)
-
 #local X = -100.0;
 #local Y = 40.0;
 #local Z = 200.0;
 #local SunZ = LorentzZ(X, Y, Z);
-//light_source { SunZ color Doppler(X, Y, Z, HOrange) shadowless }
 light_source { SunZ color White shadowless }
 sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
 
