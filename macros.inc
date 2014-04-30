@@ -31,8 +31,8 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
                     sphere { LorentzZ(X, Y, Z), 0.05
                         #if ( NrZ = 0 ) HSLTexture(X, Y, Z, HRed) #end
                         #if ( NrZ = 3 ) HSLTexture(X, Y, Z, HYellow) #end
-                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HLime) #end
-                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HTurquoise) #end
+                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HGreen) #end
+                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HBlue) #end
                     }
                 #end
                 #local NrX = NrX + 1;
@@ -52,11 +52,11 @@ texture { pigment { color Doppler(X, Y, Z, Colour) } }
     #local E = LorentzZ(X - Half, Y, Z - Half);
     #local F = LorentzZ(X, Y - Size, Z);
     triangle { A, B, C HSLTexture(X, Y, Z, HRed) }
-    triangle { A, C, D HSLTexture(X, Y, Z, HYellow) }
-    triangle { A, D, E HSLTexture(X, Y, Z, HGreen) }
+    triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
+    triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
     triangle { A, E, B HSLTexture(X, Y, Z, HBlue) }
-    triangle { F, E, D HSLTexture(X, Y, Z, HGreen) }
-    triangle { F, D, C HSLTexture(X, Y, Z, HYellow) }
+    triangle { F, E, D HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
     triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
     triangle { F, B, E HSLTexture(X, Y, Z, HBlue) }
 #end
