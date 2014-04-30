@@ -47,7 +47,8 @@
 
 global_settings { assumed_gamma 1.8 }
 
-light_source { <1, 1, 0> color White shadowless }
+light_source { LorentzZ(1, 1, 0) color White }
+//light_source { LorentzZ(-1, 1, 0) color White shadowless }
 
 camera {
   up < 0, 1, 0 >
@@ -61,7 +62,7 @@ camera {
   #end
 }
 
-#declare Horizontal = 20.0;
+//#declare Horizontal = 20.0;
 #declare X = Horizontal;
 #while (X >= - Horizontal)
     Milestones (X, -0.05, 0.0, TotalDZ + 5.0)

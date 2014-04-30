@@ -5,7 +5,7 @@ AsteroidGrid (10, 0.0, 0.0, 10.0)
 #local Y = 40.0;
 #local Z = 200.0;
 #local SunZ = LorentzZ(X, Y, Z);
-light_source { SunZ color White shadowless }
+light_source { SunZ color Doppler(X, Y, Z, HOrange) }
 sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
 
 #local X = 0.0;
