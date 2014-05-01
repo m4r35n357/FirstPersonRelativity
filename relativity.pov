@@ -26,9 +26,9 @@
 
 #debug concat(" V: ", str(V,3,3))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
-#debug concat(", DZ: ", str(DZ,3,1))
-#debug concat(", Time: ", str(Time,3,1))
-#debug concat(", Proper Time: ", str(Tau,3,1), "\n")
+#debug concat(", DZ: ", str(DZ,3,3))
+#debug concat(", Time: ", str(Time,3,3))
+#debug concat(", Proper Time: ", str(Tau,3,3), "\n")
 
 #macro LorentzZ (X, Y, Z)
     #local newZ = Z - DZ;
@@ -38,15 +38,15 @@
 #macro Doppler (X, Y, Z, Hue)
     #local DF = (1.0 + V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA;
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF  * DF) >)
+        CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF) >)
     #else  // red shift, darken
-        CHSL2RGB(< Hue * DF, 1.0, 0.5 * DF  * DF >)
+        CHSL2RGB(< Hue * DF, 1.0, 0.5 * DF * DF >)
     #end
 #end
 
 global_settings { assumed_gamma 1.8 }
 
-light_source { <1, 1, 0> color White shadowless }
+light_source { LorentzZ(1, 2, 0) color White shadowless }
 
 camera {
   up < 0, 1, 0 >
@@ -60,13 +60,13 @@ camera {
   #end
 }
 
-#declare Horizontal = 50.0;
+//#declare Horizontal = 20.0;
 #declare X = Horizontal;
 #while (X >= - Horizontal)
-    Milestones (X, -0.5, 0.0, TotalDZ + 5.0)
+    Milestones (X, -0.05, 0.0, TotalDZ + 5.0)
     #local X = X - 0.25;
 #end
 
 #include "./scenery.inc"
-//#include "./rings.inc"
+#include "./rings.inc"
 

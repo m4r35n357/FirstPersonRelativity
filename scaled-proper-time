@@ -1,0 +1,12 @@
+#!/bin/sh
+
+mplayer -fs a0.103.mp4 -fps 10
+mplayer -fs a1.03.mp4 -fps 41
+mplayer -fs a10.3.mp4 -fps 250
+
+#mplayer -fs a0.00103.mp4 -fps 4
+#mplayer -fs a0.0103.mp4 -fps 11
+#mplayer -fs a0.103.mp4 -fps 39
+#mplayer -fs a1.03.mp4 -fps 164
+#mplayer -fs a10.3.mp4 -fps 1001
+
