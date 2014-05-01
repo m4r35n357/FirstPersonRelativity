@@ -70,9 +70,3 @@ camera {
 #include "./scenery.inc"
 #include "./rings.inc"
 
-//text{ttf "timrom.ttf" concat("clock=",str(clock,8,4)),0.1,0
-// pigment{Red}
-// scale 0.1
-// translate < 0, 0, 1 >
-//}
-
