@@ -26,9 +26,9 @@
 
 #debug concat(" V: ", str(V,3,3))
 #debug concat(", GAMMA: ", str(GAMMA,3,3))
-#debug concat(", DZ: ", str(DZ,3,1))
-#debug concat(", Time: ", str(Time,3,1))
-#debug concat(", Proper Time: ", str(Tau,3,1), "\n")
+#debug concat(", DZ: ", str(DZ,3,3))
+#debug concat(", Time: ", str(Time,3,3))
+#debug concat(", Proper Time: ", str(Tau,3,3), "\n")
 
 #macro LorentzZ (X, Y, Z)
     #local newZ = Z - DZ;
@@ -37,7 +37,6 @@
 
 #macro Doppler (X, Y, Z, Hue)
     #local DF = (1.0 + V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA;
-//    #local DF = 1.0 / ((1.0 - V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA);
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF) >)
     #else  // red shift, darken
@@ -47,8 +46,7 @@
 
 global_settings { assumed_gamma 1.8 }
 
-light_source { LorentzZ(1, 1, 0) color White }
-//light_source { LorentzZ(-1, 1, 0) color White shadowless }
+light_source { LorentzZ(1, 2, 0) color White shadowless }
 
 camera {
   up < 0, 1, 0 >
@@ -71,4 +69,10 @@ camera {
 
 #include "./scenery.inc"
 #include "./rings.inc"
+
+//text{ttf "timrom.ttf" concat("clock=",str(clock,8,4)),0.1,0
+// pigment{Red}
+// scale 0.1
+// translate < 0, 0, 1 >
+//}
 
