@@ -24,11 +24,11 @@
     #declare Tau = Time / GAMMA;
 #end
 
-#debug concat(" V: ", str(V,3,3))
-#debug concat(", GAMMA: ", str(GAMMA,3,3))
-#debug concat(", DZ: ", str(DZ,3,3))
-#debug concat(", Time: ", str(Time,3,3))
-#debug concat(", Proper Time: ", str(Tau,3,3), "\n")
+#debug concat("tau: ", str(Tau,3,3))
+#debug concat(", v: ", str(V,3,3))
+#debug concat(", gamma: ", str(GAMMA,3,3))
+#debug concat(", t: ", str(Time,3,3))
+#debug concat(", z: ", str(DZ,3,3), "\n")
 
 #macro LorentzZ (X, Y, Z)
     #local newZ = Z - DZ;
@@ -46,7 +46,7 @@
 
 global_settings { assumed_gamma 1.8 }
 
-light_source { LorentzZ(1, 2, 0) color White shadowless }
+light_source { LorentzZ(0, 0, 0) color White shadowless }
 
 camera {
   up < 0, 1, 0 >
@@ -60,7 +60,6 @@ camera {
   #end
 }
 
-//#declare Horizontal = 20.0;
 #declare X = Horizontal;
 #while (X >= - Horizontal)
     Milestones (X, -0.05, 0.0, TotalDZ + 5.0)
