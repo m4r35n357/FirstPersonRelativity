@@ -46,7 +46,7 @@
 
 global_settings { assumed_gamma 1.8 }
 
-light_source { LorentzZ(0, 0, 0) color White shadowless }
+light_source { LorentzZ(0, 0, 0) colour White shadowless }
 
 camera {
   up < 0, 1, 0 >
