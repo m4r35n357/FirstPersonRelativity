@@ -62,7 +62,7 @@ camera {
 
 #declare X = Horizontal;
 #while (X >= - Horizontal)
-    Milestones (X, -0.05, 0.0, TotalDZ + 5.0)
+    Milestones(X, -0.05, 0.0, TotalDZ + 5.0)
     #local X = X - 0.25;
 #end
 

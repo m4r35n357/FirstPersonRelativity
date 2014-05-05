@@ -1,5 +1,5 @@
 
-AsteroidGrid (10, 0.0, 0.0, 0.5 * TotalDZ)
+AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalDZ)
 
 #local X = -100.0;
 #local Y = 40.0;
