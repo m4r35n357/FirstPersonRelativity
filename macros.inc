@@ -10,7 +10,7 @@
 #declare HBlue = 240.0;
 
 #macro HSLTexture (X, Y, Z, Colour)
-texture { pigment { color Doppler(X, Y, Z, Colour) } }
+texture { pigment { colour Doppler(X, Y, Z, Colour) } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
