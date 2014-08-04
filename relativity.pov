@@ -60,7 +60,7 @@ camera {
 
 #declare X = Horizontal;
 #while (X >= - Horizontal)
-    Milestones(X, -0.05, 0.0, TotalDZ + 5.0)
+    Milestones(X, - 0.05, 0.0, TotalDZ + 5.0)
     #local X = X - 0.25;
 #end
 
@@ -73,5 +73,6 @@ camera {
 #debug concat(", v: ", str(V,3,3))
 #debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat(", t: ", str(Time,3,3))
-#debug concat(", z: ", str(DZ,3,3), "\n")
+#debug concat(", z: ", str(DZ,3,3))
+#debug concat("\n")
 
