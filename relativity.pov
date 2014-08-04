@@ -24,15 +24,13 @@
     #declare Tau = Time / GAMMA;
 #end
 
-#debug concat("tau: ", str(Tau,3,3))
-#debug concat(", v: ", str(V,3,3))
-#debug concat(", gamma: ", str(GAMMA,3,3))
-#debug concat(", t: ", str(Time,3,3))
-#debug concat(", z: ", str(DZ,3,3), "\n")
-
 #macro LorentzZ (X, Y, Z)
     #local newZ = Z - DZ;
-    < X, Y, GAMMA * (newZ + V * sqrt(X * X + Y * Y + newZ * newZ)) >
+    < X, Y, GAMMA * (newZ + V * LightDelay (X, Y, newZ)) >
+#end
+
+#macro LightDelay (X, Y, Z)
+    sqrt(X * X + Y * Y + Z * Z)
 #end
 
 #macro Doppler (X, Y, Z, Hue)
@@ -68,4 +66,12 @@ camera {
 
 #include "./scenery.inc"
 #include "./rings.inc"
+
+#debug concat("tau: ", str(Tau,3,3))
+#debug concat(", TS: ", str(Time - LightDelay(0.0, 0.0, DZ),3,3))
+#debug concat(", TD: ", str(Time - LightDelay(0.0, 0.0, TotalDZ - DZ),3,3))
+#debug concat(", v: ", str(V,3,3))
+#debug concat(", gamma: ", str(GAMMA,3,3))
+#debug concat(", t: ", str(Time,3,3))
+#debug concat(", z: ", str(DZ,3,3), "\n")
 
