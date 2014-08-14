@@ -9,10 +9,6 @@
     #declare T0 = sinh(A * Tau0) / A;
     #declare V0 = tanh(A * Tau0);
     #declare Tau = 4.0 * Tau0 * clock;
-#debug concat(", Z0: ", str(Z0,3,3))
-#debug concat(", T0: ", str(T0,3,3))
-#debug concat(", Tau0: ", str(Tau0,3,3))
-#debug concat("\n")
     #if (Tau <= Tau0)
         #declare DZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
@@ -91,8 +87,8 @@ camera {
 #debug concat("tau: ", str(Tau,3,3))
 #debug concat(", TS: ", str(Time - LightDelay(0.0, 0.0, DZ),3,3))
 #debug concat(", TD: ", str(Time - LightDelay(0.0, 0.0, TotalDZ - DZ),3,3))
-#debug concat(", v: ", str(V,3,3))
-#debug concat(", gamma: ", str(GAMMA,3,3))
+//#debug concat(", v: ", str(V,3,3))
+//#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat(", t: ", str(Time,3,3))
 #debug concat(", z: ", str(DZ,3,3))
 #debug concat("\n")

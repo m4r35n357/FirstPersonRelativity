@@ -43,7 +43,10 @@ set format z "% g"
 set format cb "% g"
 set format r "% g"
 set angles radians
-unset grid
+set grid nopolar
+set grid xtics nomxtics ytics nomytics noztics nomztics \
+ nox2tics nomx2tics noy2tics nomy2tics nocbtics nomcbtics
+set grid layerdefault   linetype 0 linewidth 1.000,  linetype 0 linewidth 1.000
 set raxis
 set key title ""
 set key inside right top vertical Right noreverse enhanced autotitles nobox
@@ -151,5 +154,5 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 14:2 w l, 'debug.out' using 14:4 w l, 'debug.out' using 14:6 w l, 'debug.out' using 14:12 w l
+plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:4 w l t 'Home Clock', 'debug.out' using 2:6 w l t 'Destination Clock', 'debug.out' using 2:10 w l t 'Distance'
 #    EOF
