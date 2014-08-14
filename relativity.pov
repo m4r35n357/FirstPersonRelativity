@@ -4,17 +4,38 @@
 #include "./macros.inc"
 
 #if (AccelerationMode > 0.0)
-    #declare TotalTau = 2.0 * acosh(A * 0.5 * TotalDZ + 1.0) / A;
-    #declare Tau = clock * TotalTau;
-    #if (Tau <= 0.5 * TotalTau)
+    #declare Z0 = 0.5 * TotalDZ;
+    #declare Tau0 = acosh(A * Z0 + 1.0) / A;
+    #declare T0 = sinh(A * Tau0) / A;
+    #declare V0 = tanh(A * Tau0);
+    #declare Tau = 4.0 * Tau0 * clock;
+#debug concat(", Z0: ", str(Z0,3,3))
+#debug concat(", T0: ", str(T0,3,3))
+#debug concat(", Tau0: ", str(Tau0,3,3))
+#debug concat("\n")
+    #if (Tau <= Tau0)
         #declare DZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
         #declare V = tanh(A * Tau);
     #else
-        #declare Aut = TotalTau - Tau;
-        #declare DZ = TotalDZ - (cosh(A * Aut) - 1.0) / A;
-        #declare Time = (2.0 * sinh(0.5 * A * TotalTau) - sinh(A * Aut)) / A;
-        #declare V = tanh(A * Aut);
+        #if (Tau <= 2.0 * Tau0)
+            #declare Aut = 2.0 * Tau0 - Tau;
+            #declare DZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
+            #declare Time = 2.0 * T0 - sinh(A * Aut) / A;
+            #declare V = tanh(A * Aut);
+        #else
+            #if (Tau <= 3.0 * Tau0)
+                #declare Aut = Tau - 2.0 * Tau0;
+                #declare DZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
+                #declare Time = 2.0 * T0 + sinh(A * Aut) / A;
+                #declare V = - tanh(A * Aut);
+            #else
+                #declare Aut = 4.0 * Tau0 - Tau;
+                #declare DZ = (cosh(A * Aut) - 1.0) / A;
+                #declare Time = 4.0 * T0 - sinh(A * Aut) / A;
+                #declare V = - tanh(A * Aut);
+            #end
+        #end
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
 #else  // constant velocity mode
