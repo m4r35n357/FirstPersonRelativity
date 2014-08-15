@@ -12,24 +12,24 @@
     #if (Tau <= Tau0)
         #declare DZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
-        #declare V = tanh(A * Tau);
+        #declare V = - tanh(A * Tau);
     #else
         #if (Tau <= 2.0 * Tau0)
             #declare Aut = 2.0 * Tau0 - Tau;
             #declare DZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
             #declare Time = 2.0 * T0 - sinh(A * Aut) / A;
-            #declare V = tanh(A * Aut);
+            #declare V = - tanh(A * Aut);
         #else
             #if (Tau <= 3.0 * Tau0)
                 #declare Aut = Tau - 2.0 * Tau0;
                 #declare DZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 2.0 * T0 + sinh(A * Aut) / A;
-                #declare V = - tanh(A * Aut);
+                #declare V = tanh(A * Aut);
             #else
                 #declare Aut = 4.0 * Tau0 - Tau;
                 #declare DZ = (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 4.0 * T0 - sinh(A * Aut) / A;
-                #declare V = - tanh(A * Aut);
+                #declare V = tanh(A * Aut);
             #end
         #end
     #end
@@ -41,17 +41,21 @@
     #declare Tau = Time / GAMMA;
 #end
 
-#macro LorentzZ (X, Y, Z)
+#macro R1 (X, Y, Z)
     #local newZ = Z - DZ;
-    < X, Y, GAMMA * (newZ + V * LightDelay (X, Y, newZ)) >
+    sqrt(X * X + Y * Y + newZ * newZ)
+#end
+
+#macro LorentzZ (X, Y, Z)
+    < X, Y, GAMMA * (Z - DZ - V * R1(X, Y, Z)) >
 #end
 
 #macro LightDelay (X, Y, Z)
-    sqrt(X * X + Y * Y + Z * Z)
+    GAMMA * (R1(X, Y, Z) - V * (Z - DZ))
 #end
 
 #macro Doppler (X, Y, Z, Hue)
-    #local DF = (1.0 + V * cos(atan2(sqrt(X * X + Y * Y), Z - DZ))) * GAMMA;
+    #local DF = LightDelay(X, Y, Z) / R1(X, Y, Z);
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF) >)
     #else  // red shift, darken
@@ -85,8 +89,8 @@ camera {
 #include "./rings.inc"
 
 #debug concat("tau: ", str(Tau,3,3))
-#debug concat(", TS: ", str(Time - LightDelay(0.0, 0.0, DZ),3,3))
-#debug concat(", TD: ", str(Time - LightDelay(0.0, 0.0, TotalDZ - DZ),3,3))
+#debug concat(", TS: ", str(Time - LightDelay(0.0, 0.0, 0.0),3,3))
+#debug concat(", TD: ", str(Time - LightDelay(0.0, 0.0, TotalDZ),3,3))
 //#debug concat(", v: ", str(V,3,3))
 //#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat(", t: ", str(Time,3,3))
