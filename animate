@@ -1,0 +1,4 @@
+#!/bin/sh
+
+avconv -i relativity%04d.png relativity.mp4
+
