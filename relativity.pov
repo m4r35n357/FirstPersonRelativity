@@ -4,30 +4,30 @@
 #include "./macros.inc"
 
 #if (AccelerationMode > 0.0)
-    #declare Z0 = 0.5 * TotalDZ;
+    #declare Z0 = 0.5 * TotalZ;
     #declare Tau0 = acosh(A * Z0 + 1.0) / A;
     #declare T0 = sinh(A * Tau0) / A;
     #declare V0 = tanh(A * Tau0);
     #declare Tau = 4.0 * Tau0 * clock;
     #if (Tau <= Tau0)
-        #declare DZ = (cosh(A * Tau) - 1.0) / A;
+        #declare dZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
         #declare V = - tanh(A * Tau);
     #else
         #if (Tau <= 2.0 * Tau0)
             #declare Aut = 2.0 * Tau0 - Tau;
-            #declare DZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
+            #declare dZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
             #declare Time = 2.0 * T0 - sinh(A * Aut) / A;
             #declare V = - tanh(A * Aut);
         #else
             #if (Tau <= 3.0 * Tau0)
                 #declare Aut = Tau - 2.0 * Tau0;
-                #declare DZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
+                #declare dZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 2.0 * T0 + sinh(A * Aut) / A;
                 #declare V = tanh(A * Aut);
             #else
                 #declare Aut = 4.0 * Tau0 - Tau;
-                #declare DZ = (cosh(A * Aut) - 1.0) / A;
+                #declare dZ = (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 4.0 * T0 - sinh(A * Aut) / A;
                 #declare V = tanh(A * Aut);
             #end
@@ -36,26 +36,26 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
 #else  // constant velocity mode
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
-    #declare DZ = TotalDZ * clock;
-    #declare Time = DZ / V;
+    #declare dZ = TotalZ * clock;
+    #declare Time = dZ / V;
     #declare Tau = Time / GAMMA;
 #end
 
-#macro R1 (X, Y, Z)
-    #local newZ = Z - DZ;
-    sqrt(X * X + Y * Y + newZ * newZ)
+#macro RestT (X, Y, Z)
+    #local cameraZ = Z - dZ;
+    sqrt(X * X + Y * Y + cameraZ * cameraZ)
 #end
 
 #macro LorentzZ (X, Y, Z)
-    < X, Y, GAMMA * (Z - DZ - V * R1(X, Y, Z)) >
+    < X, Y, GAMMA * (Z - dZ - V * RestT(X, Y, Z)) >
 #end
 
-#macro LightDelay (X, Y, Z)
-    GAMMA * (R1(X, Y, Z) - V * (Z - DZ))
+#macro LorentzT (X, Y, Z)
+    GAMMA * (RestT(X, Y, Z) - V * (Z - dZ))
 #end
 
 #macro Doppler (X, Y, Z, Hue)
-    #local DF = LightDelay(X, Y, Z) / R1(X, Y, Z);
+    #local DF = LorentzT(X, Y, Z) / RestT(X, Y, Z);
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF) >)
     #else  // red shift, darken
@@ -81,7 +81,7 @@ camera {
 
 #declare X = Horizontal;
 #while (X >= - Horizontal)
-    Milestones(X, - 0.05, 0.0, TotalDZ + 5.0)
+    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
     #local X = X - 0.25;
 #end
 
@@ -89,11 +89,11 @@ camera {
 #include "./rings.inc"
 
 #debug concat("tau: ", str(Tau,3,3))
-#debug concat(", TS: ", str(Time - LightDelay(0.0, 0.0, 0.0),3,3))
-#debug concat(", TD: ", str(Time - LightDelay(0.0, 0.0, TotalDZ),3,3))
+#debug concat(", TS: ", str(Time - LorentzT(0.0, 0.0, 0.0),3,3))
+#debug concat(", TD: ", str(Time - LorentzT(0.0, 0.0, TotalZ),3,3))
 //#debug concat(", v: ", str(V,3,3))
 //#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat(", t: ", str(Time,3,3))
-#debug concat(", z: ", str(DZ,3,3))
+#debug concat(", z: ", str(dZ,3,3))
 #debug concat("\n")
 

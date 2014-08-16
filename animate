@@ -1,4 +1,5 @@
 #!/bin/sh
 
-avconv -i relativity%04d.png relativity.mp4
+#avconv -i relativity%04d.png relativity.mp4
+avconv -i relativity%04d.png -vcodec h264 -crf 1 relativity.mp4
 
