@@ -9,18 +9,18 @@
     #declare T0 = sinh(A * Tau0) / A;
     #declare V0 = tanh(A * Tau0);
     #declare Tau = 4.0 * Tau0 * clock;
-    #if (Tau <= Tau0)
+    #if (clock <= 0.25)
         #declare dZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
         #declare V = - tanh(A * Tau);
     #else
-        #if (Tau <= 2.0 * Tau0)
+        #if (clock <= 0.5)
             #declare Aut = 2.0 * Tau0 - Tau;
             #declare dZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
             #declare Time = 2.0 * T0 - sinh(A * Aut) / A;
             #declare V = - tanh(A * Aut);
         #else
-            #if (Tau <= 3.0 * Tau0)
+            #if (clock <= 0.75)
                 #declare Aut = Tau - 2.0 * Tau0;
                 #declare dZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 2.0 * T0 + sinh(A * Aut) / A;
@@ -66,11 +66,11 @@
     sqrt(X * X + Y * Y + cameraZ * cameraZ)
 #end
 
-#macro LorentzZ (X, Y, Z)
+#macro LorentzZ (X, Y, Z) // Special Relativity happens here . . .
     < X, Y, GAMMA * (Z - dZ - V * RestT(X, Y, Z)) >
 #end
 
-#macro LorentzT (X, Y, Z)
+#macro LorentzT (X, Y, Z) // . . . and here!
     GAMMA * (RestT(X, Y, Z) - V * (Z - dZ))
 #end
 
