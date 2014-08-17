@@ -38,11 +38,26 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
     #declare Time = 2.0 * TotalZ / V * clock;
     #declare Tau = Time / GAMMA;
-    #if (clock <= 0.5)
-        #declare dZ = 2.0 * TotalZ * clock;
-        #declare V = - V;
+    #if (clock = 0.0)
+        #declare dZ = 0.0;
+        #declare V = 0.0;
     #else
-        #declare dZ = TotalZ - 2.0 * TotalZ * (clock - 0.5);
+        #if (clock < 0.5)
+            #declare dZ = 2.0 * TotalZ * clock;
+            #declare V = - V;
+        #else 
+            #if (clock = 0.5)
+                #declare dZ = TotalZ;
+                #declare V = 0.0;
+            #else
+                #if (clock < 1.0)
+                    #declare dZ = TotalZ - 2.0 * TotalZ * (clock - 0.5);
+                #else
+                    #declare dZ = 0.0;
+                    #declare V = 0.0;
+                #end
+            #end
+        #end
     #end
 #end
 
