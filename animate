@@ -1,0 +1,7 @@
+#!/bin/sh
+
+precision=${1:-'4'}
+
+#avconv -y -i relativity%0${precision}d.png relativity.mp4
+avconv -y -i relativity%0${precision}d.png -vcodec h264 -crf 1 relativity.mp4
+
