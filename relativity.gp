@@ -11,7 +11,7 @@
 #    	gnuplot home:     http://www.gnuplot.info
 #    	faq, bugs, etc:   type "help FAQ"
 #    	immediate help:   type "help"  (plot window: hit 'h')
-# set terminal wxt 0
+# set terminal wxt 0 enhanced
 # set output
 unset clip points
 set clip one
@@ -43,10 +43,7 @@ set format z "% g"
 set format cb "% g"
 set format r "% g"
 set angles radians
-set grid nopolar
-set grid xtics nomxtics ytics nomytics noztics nomztics \
- nox2tics nomx2tics noy2tics nomy2tics nocbtics nomcbtics
-set grid layerdefault   linetype 0 linewidth 1.000,  linetype 0 linewidth 1.000
+unset grid
 set raxis
 set key title ""
 set key inside right top vertical Right noreverse enhanced autotitles nobox
@@ -117,7 +114,7 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "" 
+set xlabel "Ship Clock, $\\tau$" 
 set xlabel  offset character 0, 0, 0 font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  offset character 0, 0, 0 font "" textcolor lt -1 norotate
@@ -154,5 +151,5 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:4 w l t 'Home Clock', 'debug.out' using 2:6 w l t 'Destination Clock', 'debug.out' using 2:10 w l t 'Distance'
+plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:4 w l t 'Home Clock', 'debug.out' using 2:6 w l t 'Away Clock', 'debug.out' using 2:10 w l t 'x',  'debug.out' using 2:($12 * 30.0) w l t 'v'
 #    EOF
