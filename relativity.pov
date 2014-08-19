@@ -7,42 +7,29 @@
     #declare Z0 = 0.5 * TotalZ;
     #declare Tau0 = acosh(A * Z0 + 1.0) / A;
     #declare T0 = sinh(A * Tau0) / A;
-//    #declare V0 = tanh(A * Tau0);
     #declare Tau = 4.0 * Tau0 * clock;
-    #if (clock < 0.25)
+    #if (clock <= 0.25)
         #declare dZ = (cosh(A * Tau) - 1.0) / A;
         #declare Time = sinh(A * Tau) / A;
         #declare V = - tanh(A * Tau);
     #else
-//#if (clock = 0.25)
-//#declare dZ = Z0;
-//#declare Time = T0;
-//#declare V = - V0;
-//#else
         #if (clock <= 0.5)
             #declare Aut = 2.0 * Tau0 - Tau;
             #declare dZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
             #declare Time = 2.0 * T0 - sinh(A * Aut) / A;
             #declare V = - tanh(A * Aut);
         #else
-            #if (clock < 0.75)
+            #if (clock <= 0.75)
                 #declare Aut = Tau - 2.0 * Tau0;
                 #declare dZ = 2.0 * Z0 - (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 2.0 * T0 + sinh(A * Aut) / A;
                 #declare V = tanh(A * Aut);
             #else
-//#if (clock = 0.75)
-//#declare dZ = Z0;
-//#declare Time = T0;
-//#declare V = V0;
-//#else
                 #declare Aut = 4.0 * Tau0 - Tau;
                 #declare dZ = (cosh(A * Aut) - 1.0) / A;
                 #declare Time = 4.0 * T0 - sinh(A * Aut) / A;
                 #declare V = tanh(A * Aut);
             #end
-//#end
-//#end
         #end
     #end
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
@@ -122,9 +109,9 @@ camera {
 #debug concat("tau: ", str(Tau,3,3))
 #debug concat(", TS: ", str(Time - LorentzT(0.0, 0.0, 0.0),3,3))
 #debug concat(", TD: ", str(Time - LorentzT(0.0, 0.0, TotalZ),3,3))
-//#debug concat(", v: ", str(V,3,3))
 //#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat(", t: ", str(Time,3,3))
 #debug concat(", z: ", str(dZ,3,3))
+#debug concat(", v: ", str(V,3,3))
 #debug concat("\n")
 
