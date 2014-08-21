@@ -117,7 +117,7 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "tau" 
+set xlabel "Ship Clock, tau" 
 set xlabel  offset character 0, 0, 0 font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  offset character 0, 0, 0 font "" textcolor lt -1 norotate
@@ -154,5 +154,5 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:10 w l t 'x', 'debug.out' using 2:4 w l t 'Home Clock @Ship', 'debug.out' using 2:6 w l t 'Away Clock @Ship'
+plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:10 w l t 'x', 'debug.out' using 2:4 w l t 'Home Clock @Ship'
 #    EOF
