@@ -11,7 +11,7 @@ sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
 #local X = 0.0;
 #local Y = 0.0;
 #local Z = TotalZ + 1.0;
-sphere { LorentzZ(X, Y, Z), 0.5 HSLTexture(X, Y, Z, HRed) }
+Icosohedron(1.0, X, Y, Z)
 
 #local X = 0.3;
 #local Y = 0.3;

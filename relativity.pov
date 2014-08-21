@@ -37,26 +37,11 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
     #declare Time = 2.0 * TotalZ / V * clock;
     #declare Tau = Time / GAMMA;
-    #if (clock = 0.0)
-        #declare dZ = 0.0;
-        #declare V = 0.0;
-    #else
-        #if (clock < 0.5)
-            #declare dZ = 2.0 * TotalZ * clock;
-            #declare V = - V;
-        #else 
-            #if (clock = 0.5)
-                #declare dZ = TotalZ;
-                #declare V = 0.0;
-            #else
-                #if (clock < 1.0)
-                    #declare dZ = TotalZ - 2.0 * TotalZ * (clock - 0.5);
-                #else
-                    #declare dZ = 0.0;
-                    #declare V = 0.0;
-                #end
-            #end
-        #end
+    #if (clock <= 0.5)
+        #declare dZ = 2.0 * TotalZ * clock;
+        #declare V = - V;
+    #else 
+        #declare dZ = TotalZ - 2.0 * TotalZ * (clock - 0.5);
     #end
 #end
 
@@ -107,11 +92,12 @@ camera {
 #include "./rings.inc"
 
 #debug concat("tau: ", str(Tau,3,3))
-#debug concat(", TS: ", str(Time - LorentzT(0.0, 0.0, 0.0),3,3))
-#debug concat(", TD: ", str(Time - LorentzT(0.0, 0.0, TotalZ),3,3))
-//#debug concat(", gamma: ", str(GAMMA,3,3))
+#debug concat(", TS: ", str(Time - RestT(0.0, 0.0, dZ),3,3))
+#debug concat(", TD: ", str(Time - RestT(0.0, 0.0, TotalZ - dZ),3,3))
 #debug concat(", t: ", str(Time,3,3))
 #debug concat(", z: ", str(dZ,3,3))
-#debug concat(", v: ", str(V,3,3))
+#debug concat(", TH: ", str(Time + RestT(0.0, 0.0, dZ),3,3))
+//#debug concat(", v: ", str(V,3,3))
+//#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat("\n")
 

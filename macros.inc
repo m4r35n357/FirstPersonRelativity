@@ -10,7 +10,7 @@
 #declare HBlue = 240.0;
 
 #macro HSLTexture (X, Y, Z, Colour)
-texture { pigment { colour Doppler(X, Y, Z, Colour) } }
+    texture { pigment { colour Doppler(X, Y, Z, Colour) } }
 #end
 
 #macro AsteroidGrid (Size, CX, CY, CZ)
@@ -59,6 +59,43 @@ texture { pigment { colour Doppler(X, Y, Z, Colour) } }
     triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
     triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
     triangle { F, B, E HSLTexture(X, Y, Z, HBlue) }
+#end
+
+#macro Icosohedron (Size, X, Y, Z)
+    #local dX = Size * 0.525731112119133606;
+    #local dZ = Size * 0.850650808352039932;
+    #local V0 = LorentzZ(X - dX, Y, Z + dZ);
+    #local V1 = LorentzZ(X + dX, Y, Z + dZ);
+    #local V2 = LorentzZ(X - dX, Y, Z - dZ);
+    #local V3 = LorentzZ(X + dX, Y, Z - dZ);
+    #local V4 = LorentzZ(X, Y + dZ, Z + dX);
+    #local V5 = LorentzZ(X, Y + dZ, Z - dX);
+    #local V6 = LorentzZ(X, Y - dZ, Z + dX);
+    #local V7 = LorentzZ(X, Y - dZ, Z - dX);
+    #local V8 = LorentzZ(X + dZ, Y + dX, Z);
+    #local V9 = LorentzZ(X - dZ, Y + dX, Z);
+    #local V10 = LorentzZ(X + dZ, Y - dX, Z);
+    #local V11 = LorentzZ(X - dZ, Y - dX, Z);
+    triangle { V0, V4, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V0, V9, V4 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V5, V4 HSLTexture(X, Y, Z, HRed) }
+    triangle { V4, V5, V8 HSLTexture(X, Y, Z, HRed) }
+    triangle { V4, V8, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V8, V10, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V8, V3, V10 HSLTexture(X, Y, Z, HRed) }
+    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HRed) }
+    triangle { V5, V2, V3 HSLTexture(X, Y, Z, HRed) }
+    triangle { V2, V7, V3 HSLTexture(X, Y, Z, HRed) }
+    triangle { V7, V10, V3 HSLTexture(X, Y, Z, HRed) }
+    triangle { V7, V6, V10 HSLTexture(X, Y, Z, HRed) }
+    triangle { V7, V11, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V11, V0, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V0, V1, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V6, V1, V10 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V0, V11 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V11, V2 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V2, V5 HSLTexture(X, Y, Z, HRed) }
+    triangle { V7, V2, V11 HSLTexture(X, Y, Z, HRed) }
 #end
 
 #macro Milestones (X, Y, Za, Zz)

@@ -11,7 +11,7 @@
 #    	gnuplot home:     http://www.gnuplot.info
 #    	faq, bugs, etc:   type "help FAQ"
 #    	immediate help:   type "help"  (plot window: hit 'h')
-# set terminal wxt 0 enhanced
+# set terminal wxt 0
 # set output
 unset clip points
 set clip one
@@ -31,7 +31,7 @@ set timefmt x2 "%d/%m/%y,%H:%M"
 set x2data 
 set boxwidth
 set style fill  empty border
-set style rectangle back fc lt -3 fillstyle   solid 1.00 border lt -1
+set style rectangle back fc  lt -3 fillstyle   solid 1.00 border lt -1
 set style circle radius graph 0.02, first 0, 0 
 set style ellipse size graph 0.05, 0.03, first 0 angle 0 units xy
 set dummy x,y
@@ -114,7 +114,7 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "Ship Clock, $\\tau$" 
+set xlabel "Home Clock, t" 
 set xlabel  offset character 0, 0, 0 font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  offset character 0, 0, 0 font "" textcolor lt -1 norotate
@@ -151,5 +151,5 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:4 w l t 'Home Clock', 'debug.out' using 2:6 w l t 'Away Clock', 'debug.out' using 2:10 w l t 'x',  'debug.out' using 2:($12 * 30.0) w l t 'v'
+plot 'debug.out' using 8:2 w l t 'tau', 'debug.out' using 8:10 w l t 'x',  'debug.out' using 12:2 w l t 'Ship Clock @Home'
 #    EOF
