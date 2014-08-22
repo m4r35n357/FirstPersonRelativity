@@ -155,4 +155,6 @@ set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
 plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:10 w l t 'x', 'debug.out' using 2:4 w l t 'Home Clock @Ship'
+pause 10
+reread
 #    EOF
