@@ -49,7 +49,7 @@ set grid xtics nomxtics ytics nomytics noztics nomztics \
 set grid layerdefault   linetype 0 linewidth 1.000,  linetype 0 linewidth 1.000
 set raxis
 set key title ""
-set key inside right top vertical Right noreverse enhanced autotitles nobox
+set key inside left top vertical Right noreverse enhanced autotitles nobox
 set key noinvert samplen 4 spacing 1 width 0 height 0 
 set key maxcolumns 0 maxrows 0
 set key noopaque
@@ -154,7 +154,7 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 8:2 w l t 'tau', 'debug.out' using 8:10 w l t 'x',  'debug.out' using 12:2 w l t 'Ship Clock @Home'
+plot 'debug.out' using 8:2 w l t 'tau', 'debug.out' using 8:10 w l t 'x',  'debug.out' using 12:2 w l t 'Ship Clock'
 pause 10
 reread
 #    EOF
