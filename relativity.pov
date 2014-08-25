@@ -45,20 +45,20 @@
     #end
 #end
 
-#macro RestT (X, Y, Z)
+#macro Delay (X, Y, Z)
     sqrt(X * X + Y * Y + Z * Z)
 #end
 
 #macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
-    <X, Y, GAMMA * (Z - dZ - V * RestT(X, Y, Z - dZ))>
+    <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
 #end
 
 #macro LorentzT (X, Y, Z)  // . . . and here!
-    GAMMA * (RestT(X, Y, Z - dZ) - V * (Z - dZ))
+    GAMMA * (Delay(X, Y, Z - dZ) - V * (Z - dZ))
 #end
 
 #macro Doppler (X, Y, Z, Hue)
-    #local DF = LorentzT(X, Y, Z) / RestT(X, Y, Z - dZ);
+    #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(<330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF * DF)>)
     #else  // red shift, darken
@@ -92,11 +92,11 @@ camera {
 #include "./rings.inc"
 
 #debug concat("tau: ", str(Tau,3,3))
-#debug concat(", TS: ", str(Time - RestT(0.0, 0.0, dZ),3,3))
-#debug concat(", TD: ", str(Time - RestT(0.0, 0.0, TotalZ - dZ),3,3))
+#debug concat(", TS: ", str(Time - Delay(0.0, 0.0, dZ),3,3))
+#debug concat(", TD: ", str(Time - Delay(0.0, 0.0, TotalZ - dZ),3,3))
 #debug concat(", t: ", str(Time,3,3))
 #debug concat(", z: ", str(dZ,3,3))
-#debug concat(", TH: ", str(Time + RestT(0.0, 0.0, dZ),3,3))
+#debug concat(", TH: ", str(Time + Delay(0.0, 0.0, dZ),3,3))
 //#debug concat(", v: ", str(V,3,3))
 //#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat("\n")
