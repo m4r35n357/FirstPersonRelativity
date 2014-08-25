@@ -50,7 +50,7 @@
 #end
 
 #macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
-    < X, Y, GAMMA * (Z - dZ - V * RestT(X, Y, Z - dZ)) >
+    <X, Y, GAMMA * (Z - dZ - V * RestT(X, Y, Z - dZ))>
 #end
 
 #macro LorentzT (X, Y, Z)  // . . . and here!
@@ -60,9 +60,9 @@
 #macro Doppler (X, Y, Z, Hue)
     #local DF = LorentzT(X, Y, Z) / RestT(X, Y, Z - dZ);
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(< 330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF) >)
+        CHSL2RGB(<330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF * DF)>)
     #else  // red shift, darken
-        CHSL2RGB(< Hue * DF, 1.0, 0.5 * DF * DF >)
+        CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF * DF * DF>)
     #end
 #end
 
@@ -71,14 +71,14 @@ global_settings { assumed_gamma 1.8 }
 light_source { LorentzZ(0, 0, 0) colour White shadowless }
 
 camera {
-  up < 0, 1, 0 >
-  right < 1, 0, 0 >
-  location < 0.0, 0.0, 0.0 >
+  up <0, 1, 0>
+  right <1, 0, 0>
+  location <0.0, 0.0, 0.0>
   angle 120.0
   #if (LookForward > 0.0)
-    look_at < 0.0, 0.0, 100.0 >
+    look_at <0.0, 0.0, 100.0>
   #else  // look left
-    look_at < -100.0, 0.0, 0.0 >
+    look_at <-100.0, 0.0, 0.0>
   #end
 }
 
