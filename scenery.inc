@@ -7,11 +7,12 @@ AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
 #local SunZ = LorentzZ(X, Y, Z);
 light_source { SunZ colour White shadowless }
 sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
+//Icosohedron(10.0, X, - Y, Z)
 
 #local X = 0.0;
 #local Y = 0.0;
 #local Z = TotalZ + 1.0;
-Icosohedron(1.0, X, Y, Z)
+Icosohedron(0.5, X, Y, Z)
 
 #local X = 0.3;
 #local Y = 0.3;
