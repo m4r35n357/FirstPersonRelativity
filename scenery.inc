@@ -19,3 +19,11 @@ Icosohedron(0.5, X, Y, Z)
 #local Z = TotalZ + 0.5;
 sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
 
+//#declare Z = 0;
+//#while (Z <= 20)
+//    Icosohedron(0.25, -1.0, 0.0, Z)
+//    #local Z = Z + 1;
+//#end
+
+Icosohedron(0.5, 0.0, 0.0, 21.0)
+

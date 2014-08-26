@@ -8,6 +8,8 @@
 #declare HCyan = 180.0;
 #declare HPaleBlue = 210.0;
 #declare HBlue = 240.0;
+#declare HIndigo = 270.0;
+#declare HViolet = 300.0;
 
 #macro HSLTexture (X, Y, Z, Colour)
     texture { pigment { colour Doppler(X, Y, Z, Colour) } }
@@ -80,10 +82,10 @@
     triangle { V0, V9, V4 HSLTexture(X, Y, Z, HGreen) }
     triangle { V9, V5, V4 HSLTexture(X, Y, Z, HGreen) }
     triangle { V4, V5, V8 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V4, V8, V1 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V4, V8, V1 HSLTexture(X, Y, Z, HRed) }
     triangle { V8, V10, V1 HSLTexture(X, Y, Z, HGreen) }
     triangle { V8, V3, V10 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HViolet) }
     triangle { V5, V2, V3 HSLTexture(X, Y, Z, HGreen) }
     triangle { V2, V7, V3 HSLTexture(X, Y, Z, HGreen) }
     triangle { V7, V10, V3 HSLTexture(X, Y, Z, HGreen) }
