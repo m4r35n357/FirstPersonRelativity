@@ -60,15 +60,15 @@
 #macro Doppler (X, Y, Z, Hue)
     #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(<330.0 - (330.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF * DF)>)
+        CHSL2RGB(<300.0 - (300.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF * DF)>)
     #else  // red shift, darken
         CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF * DF * DF>)
     #end
 #end
 
-global_settings { assumed_gamma 1.8 }
+global_settings { assumed_gamma 1.0 }
 
-light_source { LorentzZ(0, 0, 0) colour White shadowless }
+light_source { <0, 0, 0> colour White shadowless }
 
 camera {
   up <0, 1, 0>
