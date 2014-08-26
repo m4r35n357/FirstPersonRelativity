@@ -49,7 +49,7 @@ set grid xtics nomxtics ytics nomytics noztics nomztics \
 set grid layerdefault   linetype 0 linewidth 1.000,  linetype 0 linewidth 1.000
 set raxis
 set key title ""
-set key inside right top vertical Right noreverse enhanced autotitles nobox
+set key inside left top vertical Right noreverse enhanced autotitles nobox
 set key noinvert samplen 4 spacing 1 width 0 height 0 
 set key maxcolumns 0 maxrows 0
 set key noopaque
@@ -117,7 +117,7 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "Ship Clock, tau" 
+set xlabel "Ship Time, tau" 
 set xlabel  offset character 0, 0, 0 font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  offset character 0, 0, 0 font "" textcolor lt -1 norotate
@@ -154,5 +154,7 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:10 w l t 'x', 'debug.out' using 2:4 w l t 'Home Clock @Ship'
+plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:10 w l t 'x', 'debug.out' using 2:4 w l t 'Home Clock', 'debug.out' using 2:6 w l t 'Away Clock'
+pause 10
+reread
 #    EOF
