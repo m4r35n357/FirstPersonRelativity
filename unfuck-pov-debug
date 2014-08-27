@@ -11,29 +11,5 @@ do
 	else
 		buffer="$buffer $line"
 	fi
-#	if []
-#	then
-#		echo $buffer
-#	fi
 done
-
-exit
-
-while read line
-do
-	set -- $line
-	if [ "$1" = 'tau:' ]
-	then
-		while read more
-		do
-			if [ "$1" != 'tau:' ]
-			then
-				line="$line $more"
-#			else
-#				echo $line
-			fi
-		done
-	fi
-	echo $line
-done
-
+echo $buffer
