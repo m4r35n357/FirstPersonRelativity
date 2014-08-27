@@ -8,8 +8,7 @@
 #declare HCyan = 180.0;
 #declare HPaleBlue = 210.0;
 #declare HBlue = 240.0;
-#declare HIndigo = 270.0;
-#declare HViolet = 300.0;
+#declare HViolet = 270.0;
 
 #macro HSLTexture (X, Y, Z, Colour)
     texture { pigment { colour Doppler(X, Y, Z, Colour) } }
