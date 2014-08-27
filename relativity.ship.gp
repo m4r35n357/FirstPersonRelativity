@@ -154,7 +154,7 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'debug.out' using 2:8 w l t 't', 'debug.out' using 2:10 w l t 'x', 'debug.out' using 2:4 w l t 'Home Clock', 'debug.out' using 2:6 w l t 'Away Clock'
-pause 10
-reread
+plot 'relativity.out' using 2:8 w l t 't', 'relativity.out' using 2:10 w l t 'x', 'relativity.out' using 2:4 w l t 'Home Clock', 'relativity.out' using 2:6 w l t 'Away Clock', 'relativity.out' using 2:14 w l t 'Clock 1', 'relativity.out' using 2:16 w l t 'Clock 2', 'relativity.out' using 2:18 w l t 'Clock 3', 'relativity.out' using 2:20 w l t 'Clock 4', 'relativity.out' using 2:22 w l t 'Clock 5', 'relativity.out' using 2:24 w l t 'Clock 6', 'relativity.out' using 2:26 w l t 'Clock 7', 'relativity.out' using 2:28 w l t 'Clock 8', 'relativity.out' using 2:30 w l t 'Clock 9'
+#pause 10
+#reread
 #    EOF
