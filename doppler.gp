@@ -31,7 +31,7 @@ set timefmt x2 "%d/%m/%y,%H:%M"
 set x2data 
 set boxwidth
 set style fill  empty border
-set style rectangle back fc  lt -3 fillstyle   solid 1.00 border lt -1
+set style rectangle back fc lt -3 fillstyle   solid 1.00 border lt -1
 set style circle radius graph 0.02, first 0, 0 
 set style ellipse size graph 0.05, 0.03, first 0 angle 0 units xy
 set dummy x,y
@@ -43,13 +43,10 @@ set format z "% g"
 set format cb "% g"
 set format r "% g"
 set angles radians
-set grid nopolar
-set grid xtics nomxtics ytics nomytics noztics nomztics \
- nox2tics nomx2tics noy2tics nomy2tics nocbtics nomcbtics
-set grid layerdefault   linetype 0 linewidth 1.000,  linetype 0 linewidth 1.000
+unset grid
 set raxis
 set key title ""
-set key inside left top vertical Right noreverse enhanced autotitles nobox
+set key inside right top vertical Right noreverse enhanced autotitles nobox
 set key noinvert samplen 4 spacing 1 width 0 height 0 
 set key maxcolumns 0 maxrows 0
 set key noopaque
@@ -67,9 +64,9 @@ set encoding default
 unset polar
 unset parametric
 unset decimalsign
-set view 60, 30, 1, 1
+set view 44, 326, 1, 1
 set samples 100, 100
-set isosamples 10, 10
+set isosamples 100, 100
 set surface
 unset contour
 set clabel '%8.3g'
@@ -117,7 +114,7 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "Home Time, t" 
+set xlabel "" 
 set xlabel  offset character 0, 0, 0 font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  offset character 0, 0, 0 font "" textcolor lt -1 norotate
@@ -145,7 +142,7 @@ set pm3d explicit at s
 set pm3d scansautomatic
 set pm3d interpolate 1,1 flush begin noftriangles nohidden3d corners2color mean
 set palette positive nops_allcF maxcolors 0 gamma 1.5 color model RGB 
-set palette rgbformulae 7, 5, 15
+set palette defined ( 0 1 0 0, 0.3333 0 1 0, 1 0 0 1 )
 set colorbox default
 set colorbox vertical origin screen 0.9, 0.2, 0 size screen 0.05, 0.6, 0 front bdefault
 set style boxplot candles range  1.50 outliers pt 7 separation 1 labels auto unsorted
@@ -154,7 +151,6 @@ set fontpath
 set psdir
 set fit noerrorvariables
 GNUTERM = "wxt"
-plot 'relativity.out' using 8:2 w l t 'tau', 'relativity.out' using 8:10 w l t 'x',  'relativity.out' using 12:2 w l t 'Ship Clock'
-#pause 10
-#reread
+v = 0.8
+splot [-10:10][-10:10]  (sqrt(x**2 + y**2) + v * x) / ((sqrt(x**2 + y**2)) * sqrt(1.0 - v**2)) ls 4 w pm3d
 #    EOF

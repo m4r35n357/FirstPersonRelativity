@@ -8,8 +8,7 @@
 #declare HCyan = 180.0;
 #declare HPaleBlue = 210.0;
 #declare HBlue = 240.0;
-#declare HIndigo = 270.0;
-#declare HViolet = 300.0;
+#declare HViolet = 270.0;
 
 #macro HSLTexture (X, Y, Z, Colour)
     texture { pigment { colour Doppler(X, Y, Z, Colour) } }
@@ -47,20 +46,20 @@
 
 #macro Station (Size, X, Y, Z)
     #local Half = Size / 2.0;
-    #local A = LorentzZ(X, Y + Size, Z);
-    #local B = LorentzZ(X - Half, Y, Z + Half);
-    #local C = LorentzZ(X + Half, Y, Z + Half);
-    #local D = LorentzZ(X + Half, Y, Z - Half);
-    #local E = LorentzZ(X - Half, Y, Z - Half);
-    #local F = LorentzZ(X, Y - Size, Z);
+    #local A = LorentzZ(X, Y + Half, Z);
+    #local B = LorentzZ(X, Y, Z + Half);
+    #local C = LorentzZ(X + Half, Y, Z);
+    #local D = LorentzZ(X, Y, Z - Half);
+    #local E = LorentzZ(X - Half, Y, Z);
+    #local F = LorentzZ(X, Y - Half, Z);
     triangle { A, B, C HSLTexture(X, Y, Z, HRed) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
-    triangle { A, E, B HSLTexture(X, Y, Z, HBlue) }
+    triangle { A, E, B HSLTexture(X, Y, Z, HRed) }
     triangle { F, E, D HSLTexture(X, Y, Z, HBlue) }
     triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
     triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
-    triangle { F, B, E HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, B, E HSLTexture(X, Y, Z, HRed) }
 #end
 
 #macro Icosohedron (Size, X, Y, Z)
@@ -78,23 +77,23 @@
     #local V9 = LorentzZ(X - dB, Y + dA, Z);
     #local V10 = LorentzZ(X + dB, Y - dA, Z);
     #local V11 = LorentzZ(X - dB, Y - dA, Z);
-    triangle { V0, V4, V1 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V0, V9, V4 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V0, V4, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V0, V9, V4 HSLTexture(X, Y, Z, HRed) }
     triangle { V9, V5, V4 HSLTexture(X, Y, Z, HGreen) }
     triangle { V4, V5, V8 HSLTexture(X, Y, Z, HGreen) }
     triangle { V4, V8, V1 HSLTexture(X, Y, Z, HRed) }
-    triangle { V8, V10, V1 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V8, V10, V1 HSLTexture(X, Y, Z, HRed) }
     triangle { V8, V3, V10 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HViolet) }
+    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HGreen) }
     triangle { V5, V2, V3 HSLTexture(X, Y, Z, HGreen) }
     triangle { V2, V7, V3 HSLTexture(X, Y, Z, HGreen) }
     triangle { V7, V10, V3 HSLTexture(X, Y, Z, HGreen) }
     triangle { V7, V6, V10 HSLTexture(X, Y, Z, HGreen) }
     triangle { V7, V11, V6 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V11, V0, V6 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V0, V1, V6 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V6, V1, V10 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V9, V0, V11 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V11, V0, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V0, V1, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V6, V1, V10 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V0, V11 HSLTexture(X, Y, Z, HRed) }
     triangle { V9, V11, V2 HSLTexture(X, Y, Z, HGreen) }
     triangle { V9, V2, V5 HSLTexture(X, Y, Z, HGreen) }
     triangle { V7, V2, V11 HSLTexture(X, Y, Z, HGreen) }

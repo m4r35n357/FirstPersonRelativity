@@ -60,15 +60,15 @@
 #macro Doppler (X, Y, Z, Hue)
     #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(<300.0 - (300.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF * DF)>)
+        CHSL2RGB(<270.0 - (270.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
     #else  // red shift, darken
-        CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF * DF * DF>)
+        CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF>)
     #end
 #end
 
 global_settings { assumed_gamma 1.0 }
 
-light_source { <0, 0, 0> colour White shadowless }
+light_source { <1, 1, 0> colour White shadowless }
 
 camera {
   up <0, 1, 0>
@@ -89,14 +89,22 @@ camera {
 #end
 
 #include "./scenery.inc"
-#include "./rings.inc"
 
 #debug concat("tau: ", str(Tau,3,3))
-#debug concat(", TS: ", str(Time - Delay(0.0, 0.0, dZ),3,3))
-#debug concat(", TD: ", str(Time - Delay(0.0, 0.0, TotalZ - dZ),3,3))
+#debug concat(", TS: ", str(Time - Delay(1.0, 0.0, - dZ),3,3))
+#debug concat(", TD: ", str(Time - Delay(1.0, 0.0, TotalZ - dZ),3,3))
 #debug concat(", t: ", str(Time,3,3))
 #debug concat(", z: ", str(dZ,3,3))
 #debug concat(", TH: ", str(Time + Delay(0.0, 0.0, dZ),3,3))
+#debug concat(", T1: ", str(Time - Delay(1.0, 0.0, 0.1 * TotalZ - dZ),3,3))
+#debug concat(", T2: ", str(Time - Delay(1.0, 0.0, 0.2 * TotalZ - dZ),3,3))
+#debug concat(", T3: ", str(Time - Delay(1.0, 0.0, 0.3 * TotalZ - dZ),3,3))
+#debug concat(", T4: ", str(Time - Delay(1.0, 0.0, 0.4 * TotalZ - dZ),3,3))
+#debug concat(", T5: ", str(Time - Delay(1.0, 0.0, 0.5 * TotalZ - dZ),3,3))
+#debug concat(", T6: ", str(Time - Delay(1.0, 0.0, 0.6 * TotalZ - dZ),3,3))
+#debug concat(", T7: ", str(Time - Delay(1.0, 0.0, 0.7 * TotalZ - dZ),3,3))
+#debug concat(", T8: ", str(Time - Delay(1.0, 0.0, 0.8 * TotalZ - dZ),3,3))
+#debug concat(", T9: ", str(Time - Delay(1.0, 0.0, 0.9 * TotalZ - dZ),3,3))
 //#debug concat(", v: ", str(V,3,3))
 //#debug concat(", gamma: ", str(GAMMA,3,3))
 #debug concat("\n")

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+while read line
+do
+	set -- $line
+	if [ "$1" = 'tau:' ]
+	then
+		oldline=$buffer
+		echo $oldline
+		buffer=$line
+	else
+		buffer="$buffer $line"
+	fi
+done
+echo $buffer
