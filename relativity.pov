@@ -62,13 +62,13 @@
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(<270.0 - (270.0 - Hue) / DF, 1.0, 1.0 - 0.5 / (DF * DF)>)
     #else  // red shift, darken
-        CHSL2RGB(<Hue * DF, 1.0, 0.5 * (DF * DF)>)
+        CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF * DF>)
     #end
 #end
 
 global_settings { assumed_gamma 1.0 }
 
-light_source { <0, 1, 0> colour White shadowless }
+light_source { <1, 1, 0> colour White shadowless }
 
 camera {
   up <0, 1, 0>
@@ -89,7 +89,7 @@ camera {
 #end
 
 #include "./scenery.inc"
-#include "./rings.inc"
+//#include "./rings.inc"
 
 #debug concat("tau: ", str(Tau,3,3))
 #debug concat(", TS: ", str(Time - Delay(1.0, 0.0, - dZ),3,3))
