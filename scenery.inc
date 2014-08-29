@@ -48,5 +48,21 @@ sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
 #local Z = TotalZ + 0.5;
 sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
 
-Cube(1.0, 5.0, 0.0, 10.0)
+#macro Frame (Size, BlockSize, Z)
+    #local Yc = -Size;
+    #while (Yc <= Size)
+        Cube(BlockSize, Size, Yc, Z)
+        Cube(BlockSize, -Size, Yc, Z)
+        #if ((Yc > -Size) & (Yc < Size))
+            Cube(BlockSize, Yc, -Size, Z)
+            Cube(BlockSize, Yc, Size, Z)
+        #end
+        #local Yc = Yc + BlockSize;
+     #end
+#end
+
+Frame(5.0, 0.5, 5.5)
+Frame(5.0, 0.5, 8.5)
+Frame(5.0, 0.5, 11.5)
+Frame(5.0, 0.5, 14.5)
 
