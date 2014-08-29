@@ -1,3 +1,4 @@
+
 // Milestones
 #local X = Horizontal;
 #while (X >= - Horizontal)
@@ -46,4 +47,6 @@ sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
 #local Y = 0.3;
 #local Z = TotalZ + 0.5;
 sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
+
+Cube(1.0, 5.0, 0.0, 10.0)
 
