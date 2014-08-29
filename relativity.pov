@@ -82,12 +82,6 @@ camera {
   #end
 }
 
-#declare X = Horizontal;
-#while (X >= - Horizontal)
-    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-    #local X = X - 0.25;
-#end
-
 #include "./scenery.inc"
 
 #debug concat("tau: ", str(Tau,3,3))

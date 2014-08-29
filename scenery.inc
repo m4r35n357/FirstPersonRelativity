@@ -1,3 +1,9 @@
+// Milestones
+#local X = Horizontal;
+#while (X >= - Horizontal)
+    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
+    #local X = X - 0.25;
+#end
 
 // Grids
 AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
