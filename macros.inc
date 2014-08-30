@@ -55,23 +55,23 @@
   #local V7 = LorentzZ(X - Half,  Y + Half,  Z - Half);
   #local V8 = LorentzZ(X - Half,  Y - Half,  Z - Half);
   /* top side */
-  triangle { V7, V4, V1 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V7, V2, V1 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V7, V4, V1 HSLTexture(X, Y, Z, HRed) }
+  triangle { V7, V2, V1 HSLTexture(X, Y, Z, HRed) }
   /* bottom side */
-  triangle { V8, V6, V3 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V8, V5, V3 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V8, V6, V3 HSLTexture(X, Y, Z, HRed) }
+  triangle { V8, V5, V3 HSLTexture(X, Y, Z, HRed) }
   /* left side */
-  triangle { V8, V5, V2 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V8, V7, V2 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V8, V5, V2 HSLTexture(X, Y, Z, HRed) }
+  triangle { V8, V7, V2 HSLTexture(X, Y, Z, HRed) }
   /* right side */
-  triangle { V6, V3, V1 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V6, V1, V4 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V6, V3, V1 HSLTexture(X, Y, Z, HRed) }
+  triangle { V6, V1, V4 HSLTexture(X, Y, Z, HRed) }
   /* front side */
-  triangle { V8, V6, V7 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V7, V4, V6 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V8, V6, V7 HSLTexture(X, Y, Z, HRed) }
+  triangle { V7, V4, V6 HSLTexture(X, Y, Z, HRed) }
   /* back side */
-  triangle { V5, V3, V2 HSLTexture(X, Y, Z, HRed) }
-  triangle { V2, V1, V3 HSLTexture(X, Y, Z, HRed) }
+  triangle { V5, V3, V2 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V2, V1, V3 HSLTexture(X, Y, Z, HViolet) }
 #end
 
 #macro Station (Size, X, Y, Z)

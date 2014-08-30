@@ -1,4 +1,17 @@
 
+#macro Frame (Size, BlockSize, Z)
+    #local Yc = -Size;
+    #while (Yc <= Size)
+        Cube(BlockSize, Size, Yc, Z)
+        Cube(BlockSize, -Size, Yc, Z)
+        #if ((Yc > -Size) & (Yc < Size))
+            Cube(BlockSize, Yc, -Size, Z)
+            Cube(BlockSize, Yc, Size, Z)
+        #end
+        #local Yc = Yc + BlockSize;
+     #end
+#end
+
 // Milestones
 #local X = Horizontal;
 #while (X >= - Horizontal)
@@ -7,8 +20,9 @@
 #end
 
 // Grids
-AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
+//AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
 
+/*
 // Rings
 #local Size = 0.1;
 #local Zr = 0.0;
@@ -23,13 +37,17 @@ AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
     Icosohedron(Size, 0.5, 1.0, Zr)
     #local Zr = Zr + 10.0;
 #end
+*/
 
+/*
 // Clock stations
 #local Zc = 0;
 #while (Zc <= 20)
     Station(0.25, -1.0, 0.0, Zc)
+//    Frame(5.0, 0.5, Zc)
     #local Zc = Zc + 2;
 #end
+*/
 
 // Destination
 Station(1.0, 0.0, 0.0, TotalZ + 0.6)
@@ -48,21 +66,10 @@ sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
 #local Z = TotalZ + 0.5;
 sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
 
-#macro Frame (Size, BlockSize, Z)
-    #local Yc = -Size;
-    #while (Yc <= Size)
-        Cube(BlockSize, Size, Yc, Z)
-        Cube(BlockSize, -Size, Yc, Z)
-        #if ((Yc > -Size) & (Yc < Size))
-            Cube(BlockSize, Yc, -Size, Z)
-            Cube(BlockSize, Yc, Size, Z)
-        #end
-        #local Yc = Yc + BlockSize;
-     #end
-#end
-
-Frame(5.0, 0.5, 5.5)
-Frame(5.0, 0.5, 8.5)
-Frame(5.0, 0.5, 11.5)
-Frame(5.0, 0.5, 14.5)
-
+Frame(1.6, 0.1, 0.0)
+Frame(1.6, 0.1, 5.0)
+Frame(1.6, 0.1, 10.0)
+Frame(1.6, 0.1, 15.0)
+Frame(1.6, 0.1, 20.0)
+/*
+*/
