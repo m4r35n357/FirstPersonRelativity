@@ -1,6 +1,27 @@
 
+#macro Frame (Size, BlockSize, Z)
+    #local Yc = -Size;
+    #while (Yc <= Size)
+        Cube(BlockSize, Size, Yc, Z)
+        Cube(BlockSize, -Size, Yc, Z)
+        #if ((Yc > -Size) & (Yc < Size))
+            Cube(BlockSize, Yc, -Size, Z)
+            Cube(BlockSize, Yc, Size, Z)
+        #end
+        #local Yc = Yc + BlockSize;
+     #end
+#end
+
+// Milestones
+#local X = Horizontal;
+#while (X >= - Horizontal)
+    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
+    #local X = X - 0.25;
+#end
+
+/*
 // Grids
-AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
+//AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
 
 // Rings
 #local Size = 0.1;
@@ -23,6 +44,7 @@ AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
     Station(0.25, -1.0, 0.0, Zc)
     #local Zc = Zc + 2;
 #end
+*/
 
 // Destination
 Station(1.0, 0.0, 0.0, TotalZ + 0.6)
@@ -31,13 +53,22 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6)
 #local X = -100.0;
 #local Y = 40.0;
 #local Z = TotalZ + 200.0;
-#local SunZ = LorentzZ(X, Y, Z);
-light_source { SunZ colour White shadowless }
-sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
+sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
-// Moon
-#local X = 0.3;
-#local Y = 0.3;
-#local Z = TotalZ + 0.5;
-sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
+// Frames
+Frame(2.0, 0.1, 0.0)
+Frame(2.0, 0.1, 5.0)
+Frame(2.0, 0.1, 10.0)
+Frame(2.0, 0.1, 15.0)
+Frame(2.0, 0.1, 20.0)
+
+// Position indicators
+sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.0, -1.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
 
