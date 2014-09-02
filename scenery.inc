@@ -16,7 +16,7 @@
 #local X = Horizontal;
 #while (X >= - Horizontal)
     Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-    #local X = X - 0.25;
+    #local X = X - 0.1;
 #end
 
 /*
@@ -37,6 +37,7 @@
     Icosohedron(Size, 0.5, 1.0, Zr)
     #local Zr = Zr + 10.0;
 #end
+*/
 
 // Clock stations
 #local Zc = 0;
@@ -44,7 +45,6 @@
     Station(0.25, -1.0, 0.0, Zc)
     #local Zc = Zc + 2;
 #end
-*/
 
 // Destination
 Station(1.0, 0.0, 0.0, TotalZ + 0.6)
