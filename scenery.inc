@@ -19,10 +19,10 @@
     #local X = X - 0.25;
 #end
 
+/*
 // Grids
 //AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
 
-/*
 // Rings
 #local Size = 0.1;
 #local Zr = 0.0;
@@ -37,14 +37,11 @@
     Icosohedron(Size, 0.5, 1.0, Zr)
     #local Zr = Zr + 10.0;
 #end
-*/
 
-/*
 // Clock stations
 #local Zc = 0;
 #while (Zc <= 20)
     Station(0.25, -1.0, 0.0, Zc)
-//    Frame(5.0, 0.5, Zc)
     #local Zc = Zc + 2;
 #end
 */
@@ -56,20 +53,22 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6)
 #local X = -100.0;
 #local Y = 40.0;
 #local Z = TotalZ + 200.0;
-#local SunZ = LorentzZ(X, Y, Z);
-light_source { SunZ colour White shadowless }
-sphere { SunZ, 10.0 HSLTexture(X, Y, Z, HOrange) }
+sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
-// Moon
-#local X = 0.3;
-#local Y = 0.3;
-#local Z = TotalZ + 0.5;
-sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HLime) }
+// Frames
+Frame(2.0, 0.1, 0.0)
+Frame(2.0, 0.1, 5.0)
+Frame(2.0, 0.1, 10.0)
+Frame(2.0, 0.1, 15.0)
+Frame(2.0, 0.1, 20.0)
 
-Frame(1.6, 0.1, 0.0)
-Frame(1.6, 0.1, 5.0)
-Frame(1.6, 0.1, 10.0)
-Frame(1.6, 0.1, 15.0)
-Frame(1.6, 0.1, 20.0)
-/*
-*/
+// Position indicators
+sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.0, -1.0, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+

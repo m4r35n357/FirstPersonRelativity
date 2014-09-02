@@ -60,7 +60,7 @@
 #macro Doppler (X, Y, Z, Hue)
     #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(<270.0 - (270.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
+        CHSL2RGB(<260.0 - (260.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
     #else  // red shift, darken
         CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF>)
     #end
@@ -76,9 +76,9 @@ camera {
   location <0.0, 0.0, 0.0>
   angle 120.0
   #if (LookForward > 0.0)
-    look_at <0.0, 0.0, 100.0>
+    look_at <0, 0, 1>
   #else  // look left
-    look_at <-100.0, 0.0, 0.0>
+    look_at <-1, 0, 0>
   #end
 }
 
