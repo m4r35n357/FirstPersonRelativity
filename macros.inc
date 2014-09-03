@@ -86,12 +86,12 @@
 
 #macro Station (Size, X, Y, Z)
     #local Half = Size / 2.0;
-    #local A = LorentzZ(X, Y + Half, Z);
+    #local A = LorentzZ(X - Half * SinA, Y + Half * CosA, Z);
     #local B = LorentzZ(X, Y, Z + Half);
-    #local C = LorentzZ(X + Half, Y, Z);
+    #local C = LorentzZ(X + Half * CosA, Y + Half * SinA, Z);
     #local D = LorentzZ(X, Y, Z - Half);
-    #local E = LorentzZ(X - Half, Y, Z);
-    #local F = LorentzZ(X, Y - Half, Z);
+    #local E = LorentzZ(X - Half * CosA, Y - Half * SinA, Z);
+    #local F = LorentzZ(X + Half * SinA, Y - Half * CosA, Z);
     triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }

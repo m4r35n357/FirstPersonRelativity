@@ -3,6 +3,9 @@
 #include "colors.inc"
 #include "./macros.inc"
 
+#declare Angle = 2 * pi * clock;
+#declare CosA = cos(Angle);
+#declare SinA = sin(Angle);
 #if (AccelerationMode > 0.0)
     #declare Z0 = 0.5 * TotalZ;
     #declare Tau0 = acosh(A * Z0 + 1.0) / A;
