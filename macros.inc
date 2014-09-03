@@ -55,20 +55,20 @@
   #local V7 = LorentzZ(X - Half,  Y + Half,  Z - Half);
   #local V8 = LorentzZ(X - Half,  Y - Half,  Z - Half);
   /* top side */
-  triangle { V7, V4, V1 HSLTexture(X, Y, Z, HLime) }
-  triangle { V7, V2, V1 HSLTexture(X, Y, Z, HLime) }
+  triangle { V7, V4, V1 HSLTexture(X, Y, Z, HCyan) }
+  triangle { V7, V2, V1 HSLTexture(X, Y, Z, HCyan) }
   /* bottom side */
-  triangle { V8, V6, V3 HSLTexture(X, Y, Z, HLime) }
-  triangle { V8, V5, V3 HSLTexture(X, Y, Z, HLime) }
+  triangle { V8, V6, V3 HSLTexture(X, Y, Z, HCyan) }
+  triangle { V8, V5, V3 HSLTexture(X, Y, Z, HCyan) }
   /* left side */
-  triangle { V8, V5, V2 HSLTexture(X, Y, Z, HLime) }
-  triangle { V8, V7, V2 HSLTexture(X, Y, Z, HLime) }
+  triangle { V8, V5, V2 HSLTexture(X, Y, Z, HCyan) }
+  triangle { V8, V7, V2 HSLTexture(X, Y, Z, HCyan) }
   /* right side */
-  triangle { V6, V3, V1 HSLTexture(X, Y, Z, HLime) }
-  triangle { V6, V1, V4 HSLTexture(X, Y, Z, HLime) }
+  triangle { V6, V3, V1 HSLTexture(X, Y, Z, HCyan) }
+  triangle { V6, V1, V4 HSLTexture(X, Y, Z, HCyan) }
   /* front side */
-  triangle { V8, V6, V7 HSLTexture(X, Y, Z, HLime) }
-  triangle { V7, V4, V6 HSLTexture(X, Y, Z, HLime) }
+  triangle { V8, V6, V7 HSLTexture(X, Y, Z, HCyan) }
+  triangle { V7, V4, V6 HSLTexture(X, Y, Z, HCyan) }
   /* back side */
   triangle { V5, V3, V2 HSLTexture(X, Y, Z, HViolet) }
   triangle { V2, V1, V3 HSLTexture(X, Y, Z, HViolet) }
@@ -82,14 +82,14 @@
     #local D = LorentzZ(X, Y, Z - Half);
     #local E = LorentzZ(X - Half, Y, Z);
     #local F = LorentzZ(X, Y - Half, Z);
-    triangle { A, B, C HSLTexture(X, Y, Z, HRed) }
+    triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
-    triangle { A, E, B HSLTexture(X, Y, Z, HRed) }
+    triangle { A, E, B HSLTexture(X, Y, Z, HOrange) }
     triangle { F, E, D HSLTexture(X, Y, Z, HBlue) }
     triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
-    triangle { F, C, B HSLTexture(X, Y, Z, HRed) }
-    triangle { F, B, E HSLTexture(X, Y, Z, HRed) }
+    triangle { F, C, B HSLTexture(X, Y, Z, HOrange) }
+    triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
 #end
 
 #macro Icosohedron (Size, X, Y, Z)
@@ -133,9 +133,9 @@
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HYellow) }
+            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HGreen) }
         #else
-            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HYellow) }
+            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HGreen) }
         #end
         #local Z = Z + 1;
     #end
