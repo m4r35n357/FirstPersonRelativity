@@ -5,39 +5,44 @@
         Cube(BlockSize, Size, Yc, Z)
         Cube(BlockSize, -Size, Yc, Z)
         #if ((Yc > -Size) & (Yc < Size))
-            Cube(BlockSize, Yc, -Size, Z)
+//            Cube(BlockSize, Yc, -Size, Z)
             Cube(BlockSize, Yc, Size, Z)
         #end
         #local Yc = Yc + BlockSize;
      #end
 #end
 
+// Tiles
+#macro Tiles (Size, Y, Hue1, Hue2)
+    #local Zt = 0;
+    #while (Zt <= TotalZ + 5.0)
+        Tile(Size, -3.5, Y, Zt, Hue1)
+        Tile(Size, -3.5, Y, Zt + Size, Hue2)
+        Tile(Size, -2.5, Y, Zt, Hue2)
+        Tile(Size, -2.5, Y, Zt + Size, Hue1)
+        Tile(Size, -1.5, Y, Zt, Hue1)
+        Tile(Size, -1.5, Y, Zt + Size, Hue2)
+        Tile(Size, -0.5, Y, Zt, Hue2)
+        Tile(Size, -0.5, Y, Zt + Size, Hue1)
+        Tile(Size, 0.5, Y, Zt, Hue1)
+        Tile(Size, 0.5, Y, Zt + Size, Hue2)
+        Tile(Size, 1.5, Y, Zt, Hue2)
+        Tile(Size, 1.5, Y, Zt + Size, Hue1)
+        Tile(Size, 2.5, Y, Zt, Hue1)
+        Tile(Size, 2.5, Y, Zt + Size, Hue2)
+        Tile(Size, 3.5, Y, Zt, Hue2)
+        Tile(Size, 3.5, Y, Zt + Size, Hue1)
+        #local Zt = Zt + 2;
+    #end
+#end
+
 // Milestones
-#local X = Horizontal;
-#while (X >= - Horizontal)
-    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-    #local X = X - 0.1;
-#end
-
-/*
-// Grids
-//AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
-
-// Rings
-#local Size = 0.1;
-#local Zr = 0.0;
-#while (Zr < TotalZ + 5.0)
-    Icosohedron(Size, 1.0, -0.5, Zr)
-    Icosohedron(Size, -0.5, 1.0, Zr)
-    Icosohedron(Size, 1.0, 0.5, Zr)
-    Icosohedron(Size, -0.5, -1.0, Zr)
-    Icosohedron(Size, -1.0, 0.5, Zr)
-    Icosohedron(Size, 0.5, -1.0, Zr)
-    Icosohedron(Size, -1.0, -0.5, Zr)
-    Icosohedron(Size, 0.5, 1.0, Zr)
-    #local Zr = Zr + 10.0;
-#end
-*/
+//#local X = Horizontal;
+//#while (X >= - Horizontal)
+//    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
+//    #local X = X - 0.1;
+//#end
+Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 
 // Clock stations
 #local Zc = 0;
@@ -62,6 +67,9 @@ Frame(2.0, 0.1, 10.0)
 Frame(2.0, 0.1, 15.0)
 Frame(2.0, 0.1, 20.0)
 
+// Floor
+Tiles(1.0, -0.5, HLime, HYellow)
+
 // Position indicators
 sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
 sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
@@ -71,4 +79,24 @@ sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
 sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
 sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
 sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+
+/*
+// Grids
+//AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
+
+// Rings
+#local Size = 0.1;
+#local Zr = 0.0;
+#while (Zr < TotalZ + 5.0)
+    Icosohedron(Size, 1.0, -0.5, Zr)
+    Icosohedron(Size, -0.5, 1.0, Zr)
+    Icosohedron(Size, 1.0, 0.5, Zr)
+    Icosohedron(Size, -0.5, -1.0, Zr)
+    Icosohedron(Size, -1.0, 0.5, Zr)
+    Icosohedron(Size, 0.5, -1.0, Zr)
+    Icosohedron(Size, -1.0, -0.5, Zr)
+    Icosohedron(Size, 0.5, 1.0, Zr)
+    #local Zr = Zr + 10.0;
+#end
+*/
 
