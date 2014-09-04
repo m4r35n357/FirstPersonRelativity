@@ -5,7 +5,7 @@
         Cube(BlockSize, Size, Yc, Z)
         Cube(BlockSize, -Size, Yc, Z)
         #if ((Yc > -Size) & (Yc < Size))
-//            Cube(BlockSize, Yc, -Size, Z)
+            Cube(BlockSize, Yc, -Size, Z)
             Cube(BlockSize, Yc, Size, Z)
         #end
         #local Yc = Yc + BlockSize;
@@ -35,12 +35,12 @@
 #end
 
 // Milestones
-//#local X = Horizontal;
-//#while (X >= - Horizontal)
-//    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-//    #local X = X - 0.1;
-//#end
-Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
+#local X = Horizontal;
+#while (X >= - Horizontal)
+    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
+    #local X = X - 0.1;
+#end
+//Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 
 // Clock stations
 #local Zc = 0;
@@ -68,7 +68,7 @@ Frame(2.0, 0.1, 15.0)
 Frame(2.0, 0.1, 20.0)
 
 // Floor
-Tiles(0.25, -0.5, HRed, HBlue)
+//Tiles(0.25, -0.5, HRed, HBlue)
 
 // Position indicators
 sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }

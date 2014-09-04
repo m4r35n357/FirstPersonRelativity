@@ -97,12 +97,12 @@
     #local E = LorentzZ(X - Half * CosA, Y, Z + Half * SinA);
     #local F = LorentzZ(X, Y - Half, Z); // bottom
 */
-    #local A = LorentzZ(X - Half * SinA, Y + Half * CosA, Z);
+    #local A = LorentzZ(X + Half * SinA, Y + Half * CosA, Z);
     #local B = LorentzZ(X, Y, Z + Half);
-    #local C = LorentzZ(X + Half * CosA, Y + Half * SinA, Z);
+    #local C = LorentzZ(X + Half * CosA, Y - Half * SinA, Z);
     #local D = LorentzZ(X, Y, Z - Half);
-    #local E = LorentzZ(X - Half * CosA, Y - Half * SinA, Z);
-    #local F = LorentzZ(X + Half * SinA, Y - Half * CosA, Z);
+    #local E = LorentzZ(X - Half * CosA, Y + Half * SinA, Z);
+    #local F = LorentzZ(X - Half * SinA, Y - Half * CosA, Z);
     triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
