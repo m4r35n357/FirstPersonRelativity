@@ -43,9 +43,11 @@ Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 
 // Clock stations
 #local Zc = 0;
+#local Xc = -1.0;
+#local Yc = 0.0;
 #while (Zc <= 20)
-    Station(0.25, -1.0, 0.0, Zc, Time - Delay(-1.0, 0.0, Zc - dZ))
-    #local Zc = Zc + 2;
+    Station(0.25, Xc, Yc, Zc, Time - Delay(Xc, Yc, Zc - dZ))
+    #local Zc = Zc + 1;
 #end
 
 // Destination
