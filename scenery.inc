@@ -29,40 +29,6 @@
             Tile(Size, Xt, Y, Zt + 0.5 * Size, Hue)
             #local Xt = Xt + Size;
         #end
-/*
-        Tile(Size, -3.75, Y, Zt, Hue1)
-        Tile(Size, -3.75, Y, Zt + Size, Hue2)
-        Tile(Size, -3.25, Y, Zt, Hue2)
-        Tile(Size, -3.25, Y, Zt + Size, Hue1)
-        Tile(Size, -2.75, Y, Zt, Hue1)
-        Tile(Size, -2.75, Y, Zt + Size, Hue2)
-        Tile(Size, -2.25, Y, Zt, Hue2)
-        Tile(Size, -2.25, Y, Zt + Size, Hue1)
-        Tile(Size, -1.75, Y, Zt, Hue1)
-        Tile(Size, -1.75, Y, Zt + Size, Hue2)
-        Tile(Size, -1.25, Y, Zt, Hue2)
-        Tile(Size, -1.25, Y, Zt + Size, Hue1)
-        Tile(Size, -0.75, Y, Zt, Hue1)
-        Tile(Size, -0.75, Y, Zt + Size, Hue2)
-        Tile(Size, -0.25, Y, Zt, Hue2)
-        Tile(Size, -0.25, Y, Zt + Size, Hue1)
-        Tile(Size, 0.25, Y, Zt, Hue1)
-        Tile(Size, 0.25, Y, Zt + Size, Hue2)
-        Tile(Size, 0.75, Y, Zt, Hue2)
-        Tile(Size, 0.75, Y, Zt + Size, Hue1)
-        Tile(Size, 1.25, Y, Zt, Hue1)
-        Tile(Size, 1.25, Y, Zt + Size, Hue2)
-        Tile(Size, 1.75, Y, Zt, Hue2)
-        Tile(Size, 1.75, Y, Zt + Size, Hue1)
-        Tile(Size, 2.25, Y, Zt, Hue1)
-        Tile(Size, 2.25, Y, Zt + Size, Hue2)
-        Tile(Size, 2.75, Y, Zt, Hue2)
-        Tile(Size, 2.75, Y, Zt + Size, Hue1)
-        Tile(Size, 3.25, Y, Zt, Hue1)
-        Tile(Size, 3.25, Y, Zt + Size, Hue2)
-        Tile(Size, 3.75, Y, Zt, Hue2)
-        Tile(Size, 3.75, Y, Zt + Size, Hue1)
-*/
         #local Zt = Zt + Size;
     #end
 #end
@@ -78,12 +44,12 @@ Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 // Clock stations
 #local Zc = 0;
 #while (Zc <= 20)
-    Station(0.25, -1.0, 0.0, Zc)
+    Station(0.25, -1.0, 0.0, Zc, Time - Delay(-1.0, 0.0, Zc - dZ))
     #local Zc = Zc + 2;
 #end
 
 // Destination
-Station(1.0, 0.0, 0.0, TotalZ + 0.6)
+Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 
 // Sun
 #local X = -100.0;

@@ -84,7 +84,10 @@
   triangle { V2, V1, V3 HSLTexture(X, Y, Z, HViolet) }
 #end
 
-#macro Station (Size, X, Y, Z)
+#macro Station (Size, X, Y, Z, T)
+    #local Angle = 2.0 * pi * T / TotalZ;
+    #local CosA = cos(Angle);
+    #local SinA = sin(Angle);
     #local Half = Size / 2.0;
     #local A = LorentzZ(X - Half * SinA, Y + Half * CosA, Z);
     #local B = LorentzZ(X, Y, Z + Half);
