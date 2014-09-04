@@ -89,12 +89,20 @@
     #local CosA = cos(Angle);
     #local SinA = sin(Angle);
     #local Half = Size / 2.0;
+    #local A = LorentzZ(X, Y + Half, Z); //top
+    #local B = LorentzZ(X - Half * SinA, Y, Z + Half * CosA);
+    #local C = LorentzZ(X + Half * CosA, Y, Z + Half * SinA);
+    #local D = LorentzZ(X + Half * SinA, Y, Z - Half * CosA);
+    #local E = LorentzZ(X - Half * CosA, Y, Z - Half * SinA);
+    #local F = LorentzZ(X, Y - Half, Z); // bottom
+/*
     #local A = LorentzZ(X - Half * SinA, Y + Half * CosA, Z);
     #local B = LorentzZ(X, Y, Z + Half);
     #local C = LorentzZ(X + Half * CosA, Y + Half * SinA, Z);
     #local D = LorentzZ(X, Y, Z - Half);
     #local E = LorentzZ(X - Half * CosA, Y - Half * SinA, Z);
     #local F = LorentzZ(X + Half * SinA, Y - Half * CosA, Z);
+*/
     triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
