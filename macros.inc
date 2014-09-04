@@ -45,7 +45,7 @@
 #end
 
 #macro Tile (Size, X, Y, Z, Hue)
-  #local Half = Size / 2.0;
+  #local Half = 0.5 * Size;
   #local V1 = LorentzZ(X + Half,  Y,  Z + Half);
   #local V2 = LorentzZ(X - Half,  Y,  Z + Half);
   #local V4 = LorentzZ(X + Half,  Y,  Z - Half);
@@ -55,7 +55,7 @@
 #end
 
 #macro Cube (Size, X, Y, Z)
-  #local Half = Size / 2.0;
+  #local Half = 0.5 * Size;
   #local V1 = LorentzZ(X + Half,  Y + Half,  Z + Half);
   #local V2 = LorentzZ(X - Half,  Y + Half,  Z + Half);
   #local V3 = LorentzZ(X + Half,  Y - Half,  Z + Half);
@@ -88,21 +88,21 @@
     #local Angle = 2.0 * pi * T / TotalZ;
     #local CosA = cos(Angle);
     #local SinA = sin(Angle);
-    #local Half = Size / 2.0;
+    #local Half = 0.5 * Size;
+/*
     #local A = LorentzZ(X, Y + Half, Z); //top
     #local B = LorentzZ(X + Half * SinA, Y, Z + Half * CosA);
     #local C = LorentzZ(X + Half * CosA, Y, Z - Half * SinA);
     #local D = LorentzZ(X - Half * SinA, Y, Z - Half * CosA);
     #local E = LorentzZ(X - Half * CosA, Y, Z + Half * SinA);
     #local F = LorentzZ(X, Y - Half, Z); // bottom
-/*
+*/
     #local A = LorentzZ(X - Half * SinA, Y + Half * CosA, Z);
     #local B = LorentzZ(X, Y, Z + Half);
     #local C = LorentzZ(X + Half * CosA, Y + Half * SinA, Z);
     #local D = LorentzZ(X, Y, Z - Half);
     #local E = LorentzZ(X - Half * CosA, Y - Half * SinA, Z);
     #local F = LorentzZ(X + Half * SinA, Y - Half * CosA, Z);
-*/
     triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }

@@ -14,6 +14,7 @@
 
 // Tiles
 #macro Tiles (Size, Y, Hue1, Hue2)
+    #local Half = 0.5 * Size;
     #local Hue = Hue1;
     #local Zt = 0.0;
     #while (Zt <= TotalZ + 5.0)
@@ -24,9 +25,9 @@
             #local Hue = Hue1;
         #end
         #end
-        #local Xt = -1.75;
+        #local Xt = -2.0 + Half;
 	#while (Xt <= 2.0)
-            Tile(Size, Xt, Y, Zt + 0.5 * Size, Hue)
+            Tile(Size, Xt, Y, Zt + Half, Hue)
             #local Xt = Xt + Size;
         #end
         #local Zt = Zt + Size;
@@ -67,7 +68,7 @@ Frame(2.0, 0.1, 15.0)
 Frame(2.0, 0.1, 20.0)
 
 // Floor
-Tiles(0.5, -0.5, HRed, HBlue)
+Tiles(0.25, -0.5, HRed, HBlue)
 
 // Position indicators
 sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
