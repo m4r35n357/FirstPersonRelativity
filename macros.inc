@@ -90,10 +90,10 @@
     #local SinA = sin(Angle);
     #local Half = Size / 2.0;
     #local A = LorentzZ(X, Y + Half, Z); //top
-    #local B = LorentzZ(X - Half * SinA, Y, Z + Half * CosA);
-    #local C = LorentzZ(X + Half * CosA, Y, Z + Half * SinA);
-    #local D = LorentzZ(X + Half * SinA, Y, Z - Half * CosA);
-    #local E = LorentzZ(X - Half * CosA, Y, Z - Half * SinA);
+    #local B = LorentzZ(X + Half * SinA, Y, Z + Half * CosA);
+    #local C = LorentzZ(X + Half * CosA, Y, Z - Half * SinA);
+    #local D = LorentzZ(X - Half * SinA, Y, Z - Half * CosA);
+    #local E = LorentzZ(X - Half * CosA, Y, Z + Half * SinA);
     #local F = LorentzZ(X, Y - Half, Z); // bottom
 /*
     #local A = LorentzZ(X - Half * SinA, Y + Half * CosA, Z);
