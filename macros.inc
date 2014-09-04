@@ -85,7 +85,7 @@
 #end
 
 #macro Station (Size, X, Y, Z, T)
-    #local Angle = 2.0 * pi * T / TotalZ;
+    #local Angle = pi * T / T0;
     #local CosA = cos(Angle);
     #local SinA = sin(Angle);
     #local Half = 0.5 * Size;
