@@ -113,6 +113,7 @@
     triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
     #if (VisualAids > 0.0)
         sphere { A, 0.05 * Size pigment { colour Red } }
+        sphere { F, 0.05 * Size pigment { colour White } }
     #end
 #end
 
