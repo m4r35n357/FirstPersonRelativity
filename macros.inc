@@ -111,6 +111,9 @@
     triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
     triangle { F, C, B HSLTexture(X, Y, Z, HOrange) }
     triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
+    #if (VisualAids > 0.0)
+        sphere { A, 0.05 * Size pigment { colour Red } }
+    #end
 #end
 
 #macro Icosohedron (Size, X, Y, Z)

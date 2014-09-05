@@ -34,13 +34,17 @@
     #end
 #end
 
-// Milestones
-#local X = Horizontal;
-#while (X >= - Horizontal)
-    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-    #local X = X - 0.1;
+// Floor/Milestones
+#if (Floor > 0)
+    Tiles(0.25, -0.5, HOrange, HPaleBlue)
+    Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
+#else
+    #local X = Horizontal;
+    #while (X >= - Horizontal)
+        Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
+        #local X = X - 0.1;
+    #end
 #end
-//Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 
 // Clock stations
 #local Zc = 0;
@@ -67,18 +71,17 @@ Frame(2.0, 0.1, 10.0)
 Frame(2.0, 0.1, 15.0)
 Frame(2.0, 0.1, 20.0)
 
-// Floor
-//Tiles(0.25, -0.5, HRed, HBlue)
-
 // Position indicators
-sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.0, -1.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+#if (VisualAids > 0.0)
+    sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.0, -1.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+#end
 
 /*
 // Grids
