@@ -5,8 +5,10 @@
         Cube(BlockSize, Size, Yc, Z)
         Cube(BlockSize, -Size, Yc, Z)
         #if ((Yc > -Size) & (Yc < Size))
-            Cube(BlockSize, Yc, -Size, Z)
             Cube(BlockSize, Yc, Size, Z)
+            #if (Floor < 0)
+                Cube(BlockSize, Yc, -Size, Z)
+            #end
         #end
         #local Yc = Yc + BlockSize;
      #end
