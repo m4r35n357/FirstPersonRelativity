@@ -124,10 +124,8 @@
     #local Half = 0.5 * Size;
     #local A = <X + Half * SinA, Y + Half * CosA, Z>;
     #local F = <X - Half * SinA, Y - Half * CosA, Z>;
-    #if (VisualAids > 0.0)
-        sphere { A, 0.05 * Size pigment { colour Colour } }
-        sphere { F, 0.05 * Size pigment { colour White } }
-    #end
+    sphere { A, 0.05 * Size pigment { colour Colour } }
+//    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
 #macro Icosohedron (Size, X, Y, Z)

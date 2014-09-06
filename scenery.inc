@@ -73,8 +73,8 @@ Frame(2.0, 0.1, 10.0)
 Frame(2.0, 0.1, 15.0)
 Frame(2.0, 0.1, 20.0)
 
-// Position indicators
 #if (VisualAids > 0.0)
+    // Position indicators
     sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
@@ -83,11 +83,12 @@ Frame(2.0, 0.1, 20.0)
     sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+    // Ship clocks
+    ShipClock(0.2, -1.5, 1.5, 1.0, Tau, Green)
+    ShipClock(0.2, -1.5, 1.5, 1.0, Time, Red)
+    ShipClock(0.2, -1.5, 1.5, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
+    ShipClock(0.2, -1.5, 1.5, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
 #end
-
-// Ship clocks
-ShipClock(0.1, -1.5, 1.5, 1.0, Tau, Green)
-ShipClock(0.1, 1.5, 1.5, 1.0, Time, Red)
 
 /*
 // Grids
