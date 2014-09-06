@@ -85,7 +85,7 @@
 #end
 
 #macro Station (Size, X, Y, Z, T)
-    #local Angle = pi * T / T0;
+    #local Angle = 0.5 * pi * T / T0;
     #local CosA = cos(Angle);
     #local SinA = sin(Angle);
     #local Half = 0.5 * Size;
@@ -113,6 +113,19 @@
     triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
     #if (VisualAids > 0.0)
         sphere { A, 0.05 * Size pigment { colour Red } }
+        sphere { F, 0.05 * Size pigment { colour White } }
+    #end
+#end
+
+#macro ShipClock (Size, X, Y, Z, T, Colour)
+    #local Angle = 0.5 * pi * T / T0;
+    #local CosA = cos(Angle);
+    #local SinA = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = <X + Half * SinA, Y + Half * CosA, Z>;
+    #local F = <X - Half * SinA, Y - Half * CosA, Z>;
+    #if (VisualAids > 0.0)
+        sphere { A, 0.05 * Size pigment { colour Colour } }
         sphere { F, 0.05 * Size pigment { colour White } }
     #end
 #end
