@@ -44,6 +44,10 @@
         #declare dZ = TotalZ - 2.0 * TotalZ * (clock - 0.5);
     #end
 #end
+#if (Reverse > 0.0)
+    #declare dZ = TotalZ - dZ;
+    #declare V = -V;
+#end
 
 #macro Delay (X, Y, Z)
     sqrt(X * X + Y * Y + Z * Z)
