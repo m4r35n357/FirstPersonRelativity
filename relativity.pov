@@ -35,7 +35,13 @@
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
 #else  // constant velocity mode
     #declare GAMMA = 1.0 / sqrt(1.0 - V * V);
-    #declare Time = 2.0 * TotalZ / V * clock;
+    #if (V > 0.0)
+        #declare T0 = TotalZ / V;
+        #declare Time = 2.0 * TotalZ / V * clock;
+    #else
+        #declare T0 = TotalZ;
+        #declare Time = 4.0 * T0 * clock;
+    #end
     #declare Tau = Time / GAMMA;
     #if (clock <= 0.5)
         #declare dZ = 2.0 * TotalZ * clock;
