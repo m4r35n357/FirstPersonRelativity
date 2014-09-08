@@ -86,23 +86,15 @@
 
 #macro Station (Size, X, Y, Z, T)
     #local Angle = 0.5 * pi * T / T0;
-    #local CosA = cos(Angle);
-    #local SinA = sin(Angle);
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
-/*
-    #local A = LorentzZ(X, Y + Half, Z); //top
-    #local B = LorentzZ(X + Half * SinA, Y, Z + Half * CosA);
-    #local C = LorentzZ(X + Half * CosA, Y, Z - Half * SinA);
-    #local D = LorentzZ(X - Half * SinA, Y, Z - Half * CosA);
-    #local E = LorentzZ(X - Half * CosA, Y, Z + Half * SinA);
-    #local F = LorentzZ(X, Y - Half, Z); // bottom
-*/
-    #local A = LorentzZ(X + Half * SinA, Y + Half * CosA, Z);
+    #local A = LorentzZ(X + Half * Sin, Y + Half * Cos, Z);
     #local B = LorentzZ(X, Y, Z + Half);
-    #local C = LorentzZ(X + Half * CosA, Y - Half * SinA, Z);
+    #local C = LorentzZ(X + Half * Cos, Y - Half * Sin, Z);
     #local D = LorentzZ(X, Y, Z - Half);
-    #local E = LorentzZ(X - Half * CosA, Y + Half * SinA, Z);
-    #local F = LorentzZ(X - Half * SinA, Y - Half * CosA, Z);
+    #local E = LorentzZ(X - Half * Cos, Y + Half * Sin, Z);
+    #local F = LorentzZ(X - Half * Sin, Y - Half * Cos, Z);
     triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
     triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
     triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
@@ -119,30 +111,33 @@
 
 #macro ShipClock (Size, X, Y, Z, T, Colour)
     #local Angle = 0.5 * pi * T / T0;
-    #local CosA = cos(Angle);
-    #local SinA = sin(Angle);
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
-    #local A = <X + Half * SinA, Y + Half * CosA, Z>;
-    #local F = <X - Half * SinA, Y - Half * CosA, Z>;
+    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
+    #local F = <X - Half * Sin, Y - Half * Cos, Z>;
     sphere { A, 0.05 * Size pigment { colour Colour } }
 //    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
-#macro Icosohedron (Size, X, Y, Z)
+#macro Icosohedron (Size, X, Y, Z, T)
+    #local Angle = - 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
     #local dA = Size * 0.525731112119133606;
     #local dB = Size * 0.850650808352039932;
-    #local V0 = LorentzZ(X - dA, Y, Z + dB);
-    #local V1 = LorentzZ(X + dA, Y, Z + dB);
-    #local V2 = LorentzZ(X - dA, Y, Z - dB);
-    #local V3 = LorentzZ(X + dA, Y, Z - dB);
-    #local V4 = LorentzZ(X, Y + dB, Z + dA);
-    #local V5 = LorentzZ(X, Y + dB, Z - dA);
-    #local V6 = LorentzZ(X, Y - dB, Z + dA);
-    #local V7 = LorentzZ(X, Y - dB, Z - dA);
-    #local V8 = LorentzZ(X + dB, Y + dA, Z);
-    #local V9 = LorentzZ(X - dB, Y + dA, Z);
-    #local V10 = LorentzZ(X + dB, Y - dA, Z);
-    #local V11 = LorentzZ(X - dB, Y - dA, Z);
+    #local V0 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z + dB);
+    #local V1 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z + dB);
+    #local V2 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z - dB);
+    #local V3 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z - dB);
+    #local V4 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z + dA);
+    #local V5 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z - dA);
+    #local V6 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z + dA);
+    #local V7 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z - dA);
+    #local V8 = LorentzZ(X + dB * Cos - dA * Sin, Y + dA * Cos + dB * Sin, Z);
+    #local V9 = LorentzZ(X - dB * Cos - dA * Sin, Y + dA * Cos - dB * Sin, Z);
+    #local V10 = LorentzZ(X + dB * Cos + dA * Sin, Y - dA * Cos + dB * Sin, Z);
+    #local V11 = LorentzZ(X - dB * Cos + dA * Sin, Y - dA * Cos - dB * Sin, Z);
     triangle { V0, V4, V1 HSLTexture(X, Y, Z, HRed) }
     triangle { V0, V9, V4 HSLTexture(X, Y, Z, HRed) }
     triangle { V9, V5, V4 HSLTexture(X, Y, Z, HGreen) }
@@ -163,6 +158,10 @@
     triangle { V9, V11, V2 HSLTexture(X, Y, Z, HGreen) }
     triangle { V9, V2, V5 HSLTexture(X, Y, Z, HGreen) }
     triangle { V7, V2, V11 HSLTexture(X, Y, Z, HGreen) }
+    #if (VisualAids > 0.0)
+        sphere { V5, 0.05 * Size pigment { colour Red } }
+        sphere { V7, 0.05 * Size pigment { colour White } }
+    #end
 #end
 
 #macro Milestones (X, Y, Za, Zz)

@@ -58,7 +58,8 @@
 #end
 
 // Destination
-Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
+//Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
+Icosohedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
 
 // Sun
 #local X = -100.0;
@@ -84,10 +85,10 @@ Frame(2.0, 0.1, 20.0)
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     // Ship clocks
-    ShipClock(0.2, -1.5, 1.5, 1.0, Tau, Green)
-    ShipClock(0.2, -1.5, 1.5, 1.0, Time, Red)
-    ShipClock(0.2, -1.5, 1.5, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
-    ShipClock(0.2, -1.5, 1.5, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Tau, Green)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
 #end
 
 /*
