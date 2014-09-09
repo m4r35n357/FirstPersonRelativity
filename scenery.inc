@@ -1,22 +1,22 @@
 
-#macro CubeRing (Radius, Thickness, X, Y, Z)
-    #local Outer = Radius + 0.5 * Thickness;
-    #local Inner = Radius - 0.5 * Thickness;
-    #local Angle = 0.0;
+#macro CubeRing (Radius, Thick, X, Y, Z)
+    #local Out = Radius + 0.5 * Thick;
+    #local In = Radius - 0.5 * Thick;
     #local Delta = 2.0 * pi / 12.0;
+    #local Angle = 0.0;
     #while (Angle < 2.0 * pi)
         #local Sin = sin(Angle);
         #local Cos = cos(Angle);
-        #local v1 = LorentzZ(X + Inner * Sin, Y + Inner * Cos, Z - 0.5 * Thickness);
-        #local v2 = LorentzZ(X + Outer * Sin, Y + Outer * Cos, Z - 0.5 * Thickness);
-        #local v3 = LorentzZ(X + Outer * Sin, Y + Outer * Cos, Z + 0.5 * Thickness);
-        #local v4 = LorentzZ(X + Inner * Sin, Y + Inner * Cos, Z + 0.5 * Thickness);
+        #local v1 = LorentzZ(X + In * Sin, Y + In * Cos, Z - 0.5 * Thick);
+        #local v2 = LorentzZ(X + Out * Sin, Y + Out * Cos, Z - 0.5 * Thick);
+        #local v3 = LorentzZ(X + Out * Sin, Y + Out * Cos, Z + 0.5 * Thick);
+        #local v4 = LorentzZ(X + In * Sin, Y + In * Cos, Z + 0.5 * Thick);
         #local SinB = sin(Angle + Delta);
         #local CosB = cos(Angle + Delta);
-        #local v5 = LorentzZ(X + Inner * SinB, Y + Inner * CosB, Z - 0.5 * Thickness);
-        #local v6 = LorentzZ(X + Outer * SinB, Y + Outer * CosB, Z - 0.5 * Thickness);
-        #local v7 = LorentzZ(X + Outer * SinB, Y + Outer * CosB, Z + 0.5 * Thickness);
-        #local v8 = LorentzZ(X + Inner * SinB, Y + Inner * CosB, Z + 0.5 * Thickness);
+        #local v5 = LorentzZ(X + In * SinB, Y + In * CosB, Z - 0.5 * Thick);
+        #local v6 = LorentzZ(X + Out * SinB, Y + Out * CosB, Z - 0.5 * Thick);
+        #local v7 = LorentzZ(X + Out * SinB, Y + Out * CosB, Z + 0.5 * Thick);
+        #local v8 = LorentzZ(X + In * SinB, Y + In * CosB, Z + 0.5 * Thick);
         Tiloid (v2, v6, v1, v5, HPaleBlue)
         Tiloid (v3, v7, v4, v8, HViolet)
         Tiloid (v3, v7, v2, v6, HPaleBlue)
@@ -79,13 +79,13 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
 // Frames
-CubeRing (1.0, 0.1, 0.0, 0.0, -0.1)
-//Frame(2.0, 0.1, 0.0)
+//CubeRing (1.0, 0.1, 0.0, 0.0, -0.1)
+Frame(2.0, 0.1, 0.0)
 Frame(2.0, 0.1, 5.0)
 Frame(2.0, 0.1, 10.0)
 Frame(2.0, 0.1, 15.0)
-//Frame(2.0, 0.1, 20.0)
-CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
+Frame(2.0, 0.1, 20.0)
+//CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
 
 #if (VisualAids > 0.0)
     // Position indicators
