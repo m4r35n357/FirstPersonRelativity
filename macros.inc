@@ -14,34 +14,21 @@
     texture { pigment { colour Doppler(X, Y, Z, Colour) } }
 #end
 
-#macro AsteroidGrid (Size, CX, CY, CZ)
-    #local Offset = (Size - 1.0) / 2.0;
-    #local NrZ = 0;
-    #local EndNrZ = Size;
-    #while (NrZ < EndNrZ) 
-        #local NrY = 0;
-        #local EndNrY = Size;
-        #while (NrY < EndNrY) 
-            #local NrX = 0;
-            #local EndNrX = Size;
-            #while (NrX < EndNrX) 
-                #local X = NrX - Offset + CX;
-                #local Y = NrY - Offset + CY;
-                #local Z = NrZ - Offset + CZ;
-                #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
-                    sphere { LorentzZ(X, Y, Z), 0.05
-                        #if ( NrZ = 0 ) HSLTexture(X, Y, Z, HRed) #end
-                        #if ( NrZ = 3 ) HSLTexture(X, Y, Z, HYellow) #end
-                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HGreen) #end
-                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HBlue) #end
-                    }
-                #end
-                #local NrX = NrX + 1;
-            #end
-            #local NrY = NrY + 1;
+#macro Milestones (X, Y, Za, Zz)
+    #local Z = Za;
+    #while (Z <= Zz) 
+        #if (mod(Z, 5) = 0)
+            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HGreen) }
+        #else
+            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HGreen) }
         #end
-        #local NrZ = NrZ + 3;
+        #local Z = Z + 1;
     #end
+#end
+
+#macro Tiloid (vA, vB, vC, vD, Hue)
+  triangle { vA, vB, vD HSLTexture(X, Y, Z, Hue) }
+  triangle { vA, vC, vD HSLTexture(X, Y, Z, Hue) }
 #end
 
 #macro Tile (Size, X, Y, Z, Hue)
@@ -50,20 +37,10 @@
   #local V2 = LorentzZ(X - Half,  Y,  Z + Half);
   #local V4 = LorentzZ(X + Half,  Y,  Z - Half);
   #local V7 = LorentzZ(X - Half,  Y,  Z - Half);
-  triangle { V7, V4, V1 HSLTexture(X, Y, Z, Hue) }
-  triangle { V7, V2, V1 HSLTexture(X, Y, Z, Hue) }
+  Tiloid(V7, V2, V4, V1, Hue)
 #end
 
-#macro Cube (Size, X, Y, Z)
-  #local Half = 0.5 * Size;
-  #local V1 = LorentzZ(X + Half,  Y + Half,  Z + Half);
-  #local V2 = LorentzZ(X - Half,  Y + Half,  Z + Half);
-  #local V3 = LorentzZ(X + Half,  Y - Half,  Z + Half);
-  #local V4 = LorentzZ(X + Half,  Y + Half,  Z - Half);
-  #local V5 = LorentzZ(X - Half,  Y - Half,  Z + Half);
-  #local V6 = LorentzZ(X + Half,  Y - Half,  Z - Half);
-  #local V7 = LorentzZ(X - Half,  Y + Half,  Z - Half);
-  #local V8 = LorentzZ(X - Half,  Y - Half,  Z - Half);
+#macro Cuboid (V1, V2, V3, V4, V5, V6, V7, V8)
   /* top side */
   triangle { V7, V4, V1 HSLTexture(X, Y, Z, HPaleBlue) }
   triangle { V7, V2, V1 HSLTexture(X, Y, Z, HPaleBlue) }
@@ -82,6 +59,38 @@
   /* back side */
   triangle { V5, V3, V2 HSLTexture(X, Y, Z, HViolet) }
   triangle { V2, V1, V3 HSLTexture(X, Y, Z, HViolet) }
+#end
+
+#macro Cube (Size, X, Y, Z)
+  #local Half = 0.5 * Size;
+  #local V1 = LorentzZ(X + Half,  Y + Half,  Z + Half);
+  #local V2 = LorentzZ(X - Half,  Y + Half,  Z + Half);
+  #local V3 = LorentzZ(X + Half,  Y - Half,  Z + Half);
+  #local V4 = LorentzZ(X + Half,  Y + Half,  Z - Half);
+  #local V5 = LorentzZ(X - Half,  Y - Half,  Z + Half);
+  #local V6 = LorentzZ(X + Half,  Y - Half,  Z - Half);
+  #local V7 = LorentzZ(X - Half,  Y + Half,  Z - Half);
+  #local V8 = LorentzZ(X - Half,  Y - Half,  Z - Half);
+  Cuboid(V1, V2, V3, V4, V5, V6, V7, V8)
+#end
+
+#macro Frame (Size, BlockSize, Z)
+    #local Yc = -0.5 * Size;
+    #while (Yc <= 0.5 * Size)
+        Cube(BlockSize, Size, Yc, Z)
+        Cube(BlockSize, -Size, Yc, Z)
+        #local Yc = Yc + BlockSize;
+     #end
+    #local Xc = -Size;
+    #while (Xc <= Size)
+        #if ((Xc > -Size) & (Xc < Size))
+            Cube(BlockSize, Xc, 0.5 * Size, Z)
+            #if (Floor < 0)
+                Cube(BlockSize, Xc, -0.5 * Size, Z)
+            #end
+        #end
+        #local Xc = Xc + BlockSize;
+     #end
 #end
 
 #macro Station (Size, X, Y, Z, T)
@@ -164,15 +173,33 @@
     #end
 #end
 
-#macro Milestones (X, Y, Za, Zz)
-    #local Z = Za;
-    #while (Z <= Zz) 
-        #if (mod(Z, 5) = 0)
-            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HGreen) }
-        #else
-            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HGreen) }
+#macro AsteroidGrid (Size, CX, CY, CZ)
+    #local Offset = (Size - 1.0) / 2.0;
+    #local NrZ = 0;
+    #local EndNrZ = Size;
+    #while (NrZ < EndNrZ) 
+        #local NrY = 0;
+        #local EndNrY = Size;
+        #while (NrY < EndNrY) 
+            #local NrX = 0;
+            #local EndNrX = Size;
+            #while (NrX < EndNrX) 
+                #local X = NrX - Offset + CX;
+                #local Y = NrY - Offset + CY;
+                #local Z = NrZ - Offset + CZ;
+                #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
+                    sphere { LorentzZ(X, Y, Z), 0.05
+                        #if ( NrZ = 0 ) HSLTexture(X, Y, Z, HRed) #end
+                        #if ( NrZ = 3 ) HSLTexture(X, Y, Z, HYellow) #end
+                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HGreen) #end
+                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HBlue) #end
+                    }
+                #end
+                #local NrX = NrX + 1;
+            #end
+            #local NrY = NrY + 1;
         #end
-        #local Z = Z + 1;
+        #local NrZ = NrZ + 3;
     #end
 #end
 
