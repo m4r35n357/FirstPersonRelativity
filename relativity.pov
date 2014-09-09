@@ -55,27 +55,6 @@
     #declare V = -V;
 #end
 
-#macro Delay (X, Y, Z)
-    sqrt(X * X + Y * Y + Z * Z)
-#end
-
-#macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
-    <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
-#end
-
-#macro LorentzT (X, Y, Z)  // . . . and here!
-    GAMMA * (Delay(X, Y, Z - dZ) - V * (Z - dZ))
-#end
-
-#macro Doppler (X, Y, Z, Hue)
-    #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
-    #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(<260.0 - (260.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
-    #else  // red shift, darken
-        CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF>)
-    #end
-#end
-
 global_settings { assumed_gamma 1.0 }
 
 light_source { <1, 1, 0> colour White shadowless }

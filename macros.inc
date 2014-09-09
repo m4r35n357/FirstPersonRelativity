@@ -10,6 +10,27 @@
 #declare HBlue = 240.0;
 #declare HViolet = 260.0;
 
+#macro Delay (X, Y, Z)
+    sqrt(X * X + Y * Y + Z * Z)
+#end
+
+#macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
+    <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
+#end
+
+#macro LorentzT (X, Y, Z)  // . . . and here!
+    GAMMA * (Delay(X, Y, Z - dZ) - V * (Z - dZ))
+#end
+
+#macro Doppler (X, Y, Z, Hue)
+    #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
+    #if (DF >= 1.0)  // blue shift, lighten
+        CHSL2RGB(<260.0 - (260.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
+    #else  // red shift, darken
+        CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF>)
+    #end
+#end
+
 #macro HSLTexture (X, Y, Z, Colour)
     texture { pigment { colour Doppler(X, Y, Z, Colour) } }
 #end
@@ -74,23 +95,30 @@
   Cuboid(V1, V2, V3, V4, V5, V6, V7, V8)
 #end
 
-#macro Frame (Size, BlockSize, Z)
-    #local Yc = -0.5 * Size;
-    #while (Yc <= 0.5 * Size)
-        Cube(BlockSize, Size, Yc, Z)
-        Cube(BlockSize, -Size, Yc, Z)
-        #local Yc = Yc + BlockSize;
-     #end
-    #local Xc = -Size;
-    #while (Xc <= Size)
-        #if ((Xc > -Size) & (Xc < Size))
-            Cube(BlockSize, Xc, 0.5 * Size, Z)
-            #if (Floor < 0)
-                Cube(BlockSize, Xc, -0.5 * Size, Z)
-            #end
-        #end
-        #local Xc = Xc + BlockSize;
-     #end
+#macro CubeRing (Radius, Thick, X, Y, Z)
+    #local Out = Radius + 0.5 * Thick;
+    #local In = Radius - 0.5 * Thick;
+    #local Delta = 2.0 * pi / 12.0;
+    #local Angle = 0.0;
+    #while (Angle < 2.0 * pi)
+        #local Sin = sin(Angle);
+        #local Cos = cos(Angle);
+        #local v1 = LorentzZ(X + In * Sin, Y + In * Cos, Z - 0.5 * Thick);
+        #local v2 = LorentzZ(X + Out * Sin, Y + Out * Cos, Z - 0.5 * Thick);
+        #local v3 = LorentzZ(X + Out * Sin, Y + Out * Cos, Z + 0.5 * Thick);
+        #local v4 = LorentzZ(X + In * Sin, Y + In * Cos, Z + 0.5 * Thick);
+        #local SinB = sin(Angle + Delta);
+        #local CosB = cos(Angle + Delta);
+        #local v5 = LorentzZ(X + In * SinB, Y + In * CosB, Z - 0.5 * Thick);
+        #local v6 = LorentzZ(X + Out * SinB, Y + Out * CosB, Z - 0.5 * Thick);
+        #local v7 = LorentzZ(X + Out * SinB, Y + Out * CosB, Z + 0.5 * Thick);
+        #local v8 = LorentzZ(X + In * SinB, Y + In * CosB, Z + 0.5 * Thick);
+        Tiloid (v2, v6, v1, v5, HPaleBlue)
+        Tiloid (v3, v7, v4, v8, HViolet)
+        Tiloid (v3, v7, v2, v6, HPaleBlue)
+        Tiloid (v4, v8, v1, v5, HPaleBlue)
+        #local Angle = Angle + Delta;
+    #end
 #end
 
 #macro Station (Size, X, Y, Z, T)
@@ -116,17 +144,6 @@
         sphere { A, 0.05 * Size pigment { colour Red } }
         sphere { F, 0.05 * Size pigment { colour White } }
     #end
-#end
-
-#macro ShipClock (Size, X, Y, Z, T, Colour)
-    #local Angle = 0.5 * pi * T / T0;
-    #local Cos = cos(Angle);
-    #local Sin = sin(Angle);
-    #local Half = 0.5 * Size;
-    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
-    #local F = <X - Half * Sin, Y - Half * Cos, Z>;
-    sphere { A, 0.05 * Size pigment { colour Colour } }
-//    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
 #macro Icosohedron (Size, X, Y, Z, T)

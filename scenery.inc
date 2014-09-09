@@ -1,29 +1,42 @@
 
-#macro CubeRing (Radius, Thick, X, Y, Z)
-    #local Out = Radius + 0.5 * Thick;
-    #local In = Radius - 0.5 * Thick;
-    #local Delta = 2.0 * pi / 12.0;
-    #local Angle = 0.0;
-    #while (Angle < 2.0 * pi)
-        #local Sin = sin(Angle);
-        #local Cos = cos(Angle);
-        #local v1 = LorentzZ(X + In * Sin, Y + In * Cos, Z - 0.5 * Thick);
-        #local v2 = LorentzZ(X + Out * Sin, Y + Out * Cos, Z - 0.5 * Thick);
-        #local v3 = LorentzZ(X + Out * Sin, Y + Out * Cos, Z + 0.5 * Thick);
-        #local v4 = LorentzZ(X + In * Sin, Y + In * Cos, Z + 0.5 * Thick);
-        #local SinB = sin(Angle + Delta);
-        #local CosB = cos(Angle + Delta);
-        #local v5 = LorentzZ(X + In * SinB, Y + In * CosB, Z - 0.5 * Thick);
-        #local v6 = LorentzZ(X + Out * SinB, Y + Out * CosB, Z - 0.5 * Thick);
-        #local v7 = LorentzZ(X + Out * SinB, Y + Out * CosB, Z + 0.5 * Thick);
-        #local v8 = LorentzZ(X + In * SinB, Y + In * CosB, Z + 0.5 * Thick);
-        Tiloid (v2, v6, v1, v5, HPaleBlue)
-        Tiloid (v3, v7, v4, v8, HViolet)
-        Tiloid (v3, v7, v2, v6, HPaleBlue)
-        Tiloid (v4, v8, v1, v5, HPaleBlue)
-        #local Angle = Angle + Delta;
-    #end
+#macro ShipClock (Size, X, Y, Z, T, Colour)
+    #local Angle = 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
+    #local F = <X - Half * Sin, Y - Half * Cos, Z>;
+    sphere { A, 0.05 * Size pigment { colour Colour } }
+//    sphere { F, 0.05 * Size pigment { colour White } }
 #end
+
+#macro Frame (Size, BlockSize, Z)
+    #local Yc = -0.5 * Size;
+    #while (Yc <= 0.5 * Size)
+        Cube(BlockSize, Size, Yc, Z)
+        Cube(BlockSize, -Size, Yc, Z)
+        #local Yc = Yc + BlockSize;
+     #end
+    #local Xc = -Size;
+    #while (Xc <= Size)
+        #if ((Xc > -Size) & (Xc < Size))
+            Cube(BlockSize, Xc, 0.5 * Size, Z)
+            #if (Floor < 0)
+                Cube(BlockSize, Xc, -0.5 * Size, Z)
+            #end
+        #end
+        #local Xc = Xc + BlockSize;
+     #end
+#end
+
+// Frames
+//CubeRing (2.0, 0.1, 0.0, 0.0, TotalZ + 10.0)
+Frame(2.0, 0.1, 0.0)
+Frame(2.0, 0.1, 5.0)
+Frame(2.0, 0.1, 10.0)
+Frame(2.0, 0.1, 15.0)
+Frame(2.0, 0.1, 20.0)
+//CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
 
 // Tiles
 #macro Tiles (Size, Y, Hue1, Hue2)
@@ -38,8 +51,8 @@
             #local Hue = Hue1;
         #end
         #end
-        #local Xt = -2.0 + Half;
-	#while (Xt <= 2.0)
+        #local Xt = - Horizontal + Half;
+	#while (Xt <= Horizontal)
             Tile(Size, Xt, Y, Zt + Half, Hue)
             #local Xt = Xt + Size;
         #end
@@ -77,15 +90,6 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 #local Y = 40.0;
 #local Z = TotalZ + 200.0;
 sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
-
-// Frames
-//CubeRing (1.0, 0.1, 0.0, 0.0, -0.1)
-Frame(2.0, 0.1, 0.0)
-Frame(2.0, 0.1, 5.0)
-Frame(2.0, 0.1, 10.0)
-Frame(2.0, 0.1, 15.0)
-Frame(2.0, 0.1, 20.0)
-//CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
 
 #if (VisualAids > 0.0)
     // Position indicators
