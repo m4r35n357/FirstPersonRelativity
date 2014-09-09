@@ -1,16 +1,20 @@
 
 #macro Frame (Size, BlockSize, Z)
-    #local Yc = -Size;
-    #while (Yc <= Size)
+    #local Yc = -0.5 * Size;
+    #while (Yc <= 0.5 * Size)
         Cube(BlockSize, Size, Yc, Z)
         Cube(BlockSize, -Size, Yc, Z)
-        #if ((Yc > -Size) & (Yc < Size))
-            Cube(BlockSize, Yc, Size, Z)
+        #local Yc = Yc + BlockSize;
+     #end
+    #local Xc = -Size;
+    #while (Xc <= Size)
+        #if ((Xc > -Size) & (Xc < Size))
+            Cube(BlockSize, Xc, 0.5 * Size, Z)
             #if (Floor < 0)
-                Cube(BlockSize, Yc, -Size, Z)
+                Cube(BlockSize, Xc, -0.5 * Size, Z)
             #end
         #end
-        #local Yc = Yc + BlockSize;
+        #local Xc = Xc + BlockSize;
      #end
 #end
 
@@ -58,8 +62,8 @@
 #end
 
 // Destination
-//Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
-Icosohedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
+Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
+//Icosohedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
 
 // Sun
 #local X = -100.0;
