@@ -263,80 +263,6 @@ camera {
     #end
 #end
 
-#macro Icosohedron (Size, X, Y, Z, T)
-    #local Angle = - 0.5 * pi * T / T0;
-    #local Cos = cos(Angle);
-    #local Sin = sin(Angle);
-    #local dA = Size * 0.525731112119133606;
-    #local dB = Size * 0.850650808352039932;
-    #local V0 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z + dB);
-    #local V1 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z + dB);
-    #local V2 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z - dB);
-    #local V3 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z - dB);
-    #local V4 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z + dA);
-    #local V5 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z - dA);
-    #local V6 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z + dA);
-    #local V7 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z - dA);
-    #local V8 = LorentzZ(X + dB * Cos - dA * Sin, Y + dA * Cos + dB * Sin, Z);
-    #local V9 = LorentzZ(X - dB * Cos - dA * Sin, Y + dA * Cos - dB * Sin, Z);
-    #local V10 = LorentzZ(X + dB * Cos + dA * Sin, Y - dA * Cos + dB * Sin, Z);
-    #local V11 = LorentzZ(X - dB * Cos + dA * Sin, Y - dA * Cos - dB * Sin, Z);
-    triangle { V0, V4, V1 HSLTexture(X, Y, Z, HRed) }
-    triangle { V0, V9, V4 HSLTexture(X, Y, Z, HRed) }
-    triangle { V9, V5, V4 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V4, V5, V8 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V4, V8, V1 HSLTexture(X, Y, Z, HRed) }
-    triangle { V8, V10, V1 HSLTexture(X, Y, Z, HRed) }
-    triangle { V8, V3, V10 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V5, V2, V3 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V2, V7, V3 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V7, V10, V3 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V7, V6, V10 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V7, V11, V6 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V11, V0, V6 HSLTexture(X, Y, Z, HRed) }
-    triangle { V0, V1, V6 HSLTexture(X, Y, Z, HRed) }
-    triangle { V6, V1, V10 HSLTexture(X, Y, Z, HRed) }
-    triangle { V9, V0, V11 HSLTexture(X, Y, Z, HRed) }
-    triangle { V9, V11, V2 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V9, V2, V5 HSLTexture(X, Y, Z, HGreen) }
-    triangle { V7, V2, V11 HSLTexture(X, Y, Z, HGreen) }
-    #if (VisualAids > 0.0)
-        sphere { V5, 0.05 * Size pigment { colour Red } }
-        sphere { V7, 0.05 * Size pigment { colour White } }
-    #end
-#end
-
-#macro AsteroidGrid (Size, CX, CY, CZ)
-    #local Offset = (Size - 1.0) / 2.0;
-    #local NrZ = 0;
-    #local EndNrZ = Size;
-    #while (NrZ < EndNrZ) 
-        #local NrY = 0;
-        #local EndNrY = Size;
-        #while (NrY < EndNrY) 
-            #local NrX = 0;
-            #local EndNrX = Size;
-            #while (NrX < EndNrX) 
-                #local X = NrX - Offset + CX;
-                #local Y = NrY - Offset + CY;
-                #local Z = NrZ - Offset + CZ;
-                #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
-                    sphere { LorentzZ(X, Y, Z), 0.05
-                        #if ( NrZ = 0 ) HSLTexture(X, Y, Z, HRed) #end
-                        #if ( NrZ = 3 ) HSLTexture(X, Y, Z, HYellow) #end
-                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HGreen) #end
-                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HBlue) #end
-                    }
-                #end
-                #local NrX = NrX + 1;
-            #end
-            #local NrY = NrY + 1;
-        #end
-        #local NrZ = NrZ + 3;
-    #end
-#end
-
 #macro ShipClock (Size, X, Y, Z, T, Colour)
     #local Angle = 0.5 * pi * T / T0;
     #local Cos = cos(Angle);
@@ -400,7 +326,7 @@ Frame(2.0, 0.1, 20.0)
 
 // Floor/Milestones
 #if (Floor > 0)
-    Tiles(0.25, -0.5, HOrange, HPaleBlue)
+    Tiles(0.125, -0.5, HOrange, HPaleBlue)
     Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 #else
     #local X = Horizontal;
@@ -421,7 +347,7 @@ Frame(2.0, 0.1, 20.0)
 
 // Destination
 Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
-//Icosohedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
+//Icosahedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
 
 // Sun
 #local X = -100.0;
@@ -447,6 +373,80 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 #end
 
 /*
+#macro AsteroidGrid (Size, CX, CY, CZ)
+    #local Offset = (Size - 1.0) / 2.0;
+    #local NrZ = 0;
+    #local EndNrZ = Size;
+    #while (NrZ < EndNrZ) 
+        #local NrY = 0;
+        #local EndNrY = Size;
+        #while (NrY < EndNrY) 
+            #local NrX = 0;
+            #local EndNrX = Size;
+            #while (NrX < EndNrX) 
+                #local X = NrX - Offset + CX;
+                #local Y = NrY - Offset + CY;
+                #local Z = NrZ - Offset + CZ;
+                #if ( mod(NrX, 3) = 0 | mod(NrY, 3) = 0 )
+                    sphere { LorentzZ(X, Y, Z), 0.05
+                        #if ( NrZ = 0 ) HSLTexture(X, Y, Z, HRed) #end
+                        #if ( NrZ = 3 ) HSLTexture(X, Y, Z, HYellow) #end
+                        #if ( NrZ = 6 ) HSLTexture(X, Y, Z, HGreen) #end
+                        #if ( NrZ = 9 ) HSLTexture(X, Y, Z, HBlue) #end
+                    }
+                #end
+                #local NrX = NrX + 1;
+            #end
+            #local NrY = NrY + 1;
+        #end
+        #local NrZ = NrZ + 3;
+    #end
+#end
+
+#macro Icosahedron (Size, X, Y, Z, T)
+    #local Angle = - 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local dA = Size * 0.525731112119133606;
+    #local dB = Size * 0.850650808352039932;
+    #local V0 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z + dB);
+    #local V1 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z + dB);
+    #local V2 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z - dB);
+    #local V3 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z - dB);
+    #local V4 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z + dA);
+    #local V5 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z - dA);
+    #local V6 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z + dA);
+    #local V7 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z - dA);
+    #local V8 = LorentzZ(X + dB * Cos - dA * Sin, Y + dA * Cos + dB * Sin, Z);
+    #local V9 = LorentzZ(X - dB * Cos - dA * Sin, Y + dA * Cos - dB * Sin, Z);
+    #local V10 = LorentzZ(X + dB * Cos + dA * Sin, Y - dA * Cos + dB * Sin, Z);
+    #local V11 = LorentzZ(X - dB * Cos + dA * Sin, Y - dA * Cos - dB * Sin, Z);
+    triangle { V0, V4, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V0, V9, V4 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V5, V4 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V4, V5, V8 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V4, V8, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V8, V10, V1 HSLTexture(X, Y, Z, HRed) }
+    triangle { V8, V3, V10 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V5, V3, V8 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V5, V2, V3 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V2, V7, V3 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V7, V10, V3 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V7, V6, V10 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V7, V11, V6 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V11, V0, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V0, V1, V6 HSLTexture(X, Y, Z, HRed) }
+    triangle { V6, V1, V10 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V0, V11 HSLTexture(X, Y, Z, HRed) }
+    triangle { V9, V11, V2 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V9, V2, V5 HSLTexture(X, Y, Z, HGreen) }
+    triangle { V7, V2, V11 HSLTexture(X, Y, Z, HGreen) }
+    #if (VisualAids > 0.0)
+        sphere { V5, 0.05 * Size pigment { colour Red } }
+        sphere { V7, 0.05 * Size pigment { colour White } }
+    #end
+#end
+
 // Grids
 //AsteroidGrid(10, 0.0, 0.0, 0.5 * TotalZ)
 
@@ -454,14 +454,14 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 #local Size = 0.1;
 #local Zr = 0.0;
 #while (Zr < TotalZ + 5.0)
-    Icosohedron(Size, 1.0, -0.5, Zr)
-    Icosohedron(Size, -0.5, 1.0, Zr)
-    Icosohedron(Size, 1.0, 0.5, Zr)
-    Icosohedron(Size, -0.5, -1.0, Zr)
-    Icosohedron(Size, -1.0, 0.5, Zr)
-    Icosohedron(Size, 0.5, -1.0, Zr)
-    Icosohedron(Size, -1.0, -0.5, Zr)
-    Icosohedron(Size, 0.5, 1.0, Zr)
+    Icosahedron(Size, 1.0, -0.5, Zr)
+    Icosahedron(Size, -0.5, 1.0, Zr)
+    Icosahedron(Size, 1.0, 0.5, Zr)
+    Icosahedron(Size, -0.5, -1.0, Zr)
+    Icosahedron(Size, -1.0, 0.5, Zr)
+    Icosahedron(Size, 0.5, -1.0, Zr)
+    Icosahedron(Size, -1.0, -0.5, Zr)
+    Icosahedron(Size, 0.5, 1.0, Zr)
     #local Zr = Zr + 10.0;
 #end
 */
