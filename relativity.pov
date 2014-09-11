@@ -125,7 +125,7 @@ camera {
 #declare HCyan = 180.0;
 #declare HPaleBlue = 210.0;
 #declare HBlue = 240.0;
-#declare HViolet = 260.0;
+#declare HViolet = 250.0;
 
 #macro Delay (X, Y, Z)
     sqrt(X * X + Y * Y + Z * Z)
@@ -142,7 +142,7 @@ camera {
 #macro Doppler (X, Y, Z, Hue)
     #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
     #if (DF >= 1.0)  // blue shift, lighten
-        CHSL2RGB(<260.0 - (260.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
+        CHSL2RGB(<250.0 - (250.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
     #else  // red shift, darken
         CHSL2RGB(<Hue * DF, 1.0, 0.5 * DF>)
     #end
@@ -150,6 +150,133 @@ camera {
 
 #macro HSLTexture (X, Y, Z, Colour)
     texture { pigment { colour Doppler(X, Y, Z, Colour) } }
+#end
+
+#macro IsoSphere (X, Y, Z)
+  #local V0 = LorentzZ(0.000000 + X, 0.000000 + Y, -1.000000 + Z);
+  #local V1 = LorentzZ(0.723607 + X, -0.525725 + Y, -0.447220 + Z);
+  #local V2 = LorentzZ(-0.276388 + X, -0.850649 + Y, -0.447220 + Z);
+  #local V3 = LorentzZ(-0.894426 + X, 0.000000 + Y, -0.447216 + Z);
+  #local V4 = LorentzZ(-0.276388 + X, 0.850649 + Y, -0.447220 + Z);
+  #local V5 = LorentzZ(0.723607 + X, 0.525725 + Y, -0.447220 + Z);
+  #local V6 = LorentzZ(0.276388 + X, -0.850649 + Y, 0.447220 + Z);
+  #local V7 = LorentzZ(-0.723607 + X, -0.525725 + Y, 0.447220 + Z);
+  #local V8 = LorentzZ(-0.723607 + X, 0.525725 + Y, 0.447220 + Z);
+  #local V9 = LorentzZ(0.276388 + X, 0.850649 + Y, 0.447220 + Z);
+  #local V10 = LorentzZ(0.894426 + X, 0.000000 + Y, 0.447216 + Z);
+  #local V11 = LorentzZ(0.000000 + X, 0.000000 + Y, 1.000000 + Z);
+  #local V12 = LorentzZ(-0.162456 + X, -0.499995 + Y, -0.850654 + Z);
+  #local V13 = LorentzZ(0.425323 + X, -0.309011 + Y, -0.850654 + Z);
+  #local V14 = LorentzZ(0.262869 + X, -0.809012 + Y, -0.525738 + Z);
+  #local V15 = LorentzZ(0.850648 + X, 0.000000 + Y, -0.525736 + Z);
+  #local V16 = LorentzZ(0.425323 + X, 0.309011 + Y, -0.850654 + Z);
+  #local V17 = LorentzZ(-0.525730 + X, 0.000000 + Y, -0.850652 + Z);
+  #local V18 = LorentzZ(-0.688189 + X, -0.499997 + Y, -0.525736 + Z);
+  #local V19 = LorentzZ(-0.162456 + X, 0.499995 + Y, -0.850654 + Z);
+  #local V20 = LorentzZ(-0.688189 + X, 0.499997 + Y, -0.525736 + Z);
+  #local V21 = LorentzZ(0.262869 + X, 0.809012 + Y, -0.525738 + Z);
+  #local V22 = LorentzZ(0.951058 + X, -0.309013 + Y, 0.000000 + Z);
+  #local V23 = LorentzZ(0.951058 + X, 0.309013 + Y, 0.000000 + Z);
+  #local V24 = LorentzZ(0.000000 + X, -1.000000 + Y, 0.000000 + Z);
+  #local V25 = LorentzZ(0.587786 + X, -0.809017 + Y, 0.000000 + Z);
+  #local V26 = LorentzZ(-0.951058 + X, -0.309013 + Y, 0.000000 + Z);
+  #local V27 = LorentzZ(-0.587786 + X, -0.809017 + Y, 0.000000 + Z);
+  #local V28 = LorentzZ(-0.587786 + X, 0.809017 + Y, 0.000000 + Z);
+  #local V29 = LorentzZ(-0.951058 + X, 0.309013 + Y, 0.000000 + Z);
+  #local V30 = LorentzZ(0.587786 + X, 0.809017 + Y, 0.000000 + Z);
+  #local V31 = LorentzZ(0.000000 + X, 1.000000 + Y, 0.000000 + Z);
+  #local V32 = LorentzZ(0.688189 + X, -0.499997 + Y, 0.525736 + Z);
+  #local V33 = LorentzZ(-0.262869 + X, -0.809012 + Y, 0.525738 + Z);
+  #local V34 = LorentzZ(-0.850648 + X, 0.000000 + Y, 0.525736 + Z);
+  #local V35 = LorentzZ(-0.262869 + X, 0.809012 + Y, 0.525738 + Z);
+  #local V36 = LorentzZ(0.688189 + X, 0.499997 + Y, 0.525736 + Z);
+  #local V37 = LorentzZ(0.162456 + X, -0.499995 + Y, 0.850654 + Z);
+  #local V38 = LorentzZ(0.525730 + X, 0.000000 + Y, 0.850652 + Z);
+  #local V39 = LorentzZ(-0.425323 + X, -0.309011 + Y, 0.850654 + Z);
+  #local V40 = LorentzZ(-0.425323 + X, 0.309011 + Y, 0.850654 + Z);
+  #local V41 = LorentzZ(0.162456 + X, 0.499995 + Y, 0.850654  + Z);
+  #local V42 = LorentzZ(0.000000 + X, 0.000000 + Y, -1.000000 + Z);
+
+//  triangle { V0, V13, V13 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V1, V13, V16 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V0, V12, V18 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V0, V17, V20 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V0, V19, V17 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V1, V15, V23 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V2, V14, V25 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V3, V18, V27 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V4, V20, V29 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V5, V21, V31 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V1, V22, V26 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V2, V24, V28 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V3, V26, V30 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V4, V28, V32 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V5, V30, V24 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V6, V32, V38 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V7, V33, V40 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V8, V34, V41 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V9, V35, V42 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V10, V36, V39 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V12, V14, V3 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V12, V13, V15 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V13, V1, V15 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V15, V16, V6 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V15, V13, V17 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V13, V0, V17 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V17, V18, V4 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V17, V12, V19 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V12, V2, V19 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V19, V20, V5 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V19, V17, V21 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V17, V3, V21 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V16, V21, V6 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V16, V19, V22 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V19, V4, V22 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V22, V23, V11 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V22, V15, V24 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V15, V5, V24 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V24, V25, V7 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V24, V14, V26 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V14, V1, V26 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V26, V27, V8 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V26, V18, V28 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V18, V2, V28 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V28, V29, V9 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V28, V20, V30 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V20, V3, V30 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V30, V31, V10 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V30, V21, V32 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V21, V4, V32 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V25, V32, V7 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V25, V22, V33 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V22, V10, V33 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V27, V33, V8 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V27, V24, V34 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V24, V6, V34 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V29, V34, V9 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V29, V26, V35 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V26, V7, V35 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V31, V35, V10 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V31, V28, V36 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V28, V8, V36 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V23, V36, V11 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V23, V30, V37 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V30, V9, V37 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V37, V38, V12 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V37, V32, V39 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V32, V10, V39 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V39, V37, V12 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V39, V33, V38 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V33, V6, V38 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V40, V39, V12 HSLTexture(X, Y, Z, HViolet) }
+//  triangle { V40, V34, V40 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V34, V7, V40 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V41, V40, V12 HSLTexture(X, Y, Z, HViolet) }
+//  triangle { V41, V35, V41 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V35, V8, V41 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V38, V41, V12 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V38, V36, V42 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V36, V9, V42 HSLTexture(X, Y, Z, HViolet) }
 #end
 
 #macro Milestones (X, Y, Za, Zz)
@@ -326,7 +453,7 @@ Frame(2.0, 0.1, 20.0)
 
 // Floor/Milestones
 #if (Floor > 0)
-    Tiles(0.125, -0.5, HOrange, HPaleBlue)
+    Tiles(0.125, -0.5, HRed, HViolet)
     Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 #else
     #local X = Horizontal;
@@ -348,6 +475,7 @@ Frame(2.0, 0.1, 20.0)
 // Destination
 Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 //Icosahedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
+//IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
 // Sun
 #local X = -100.0;
