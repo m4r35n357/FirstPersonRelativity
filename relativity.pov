@@ -9,6 +9,7 @@
 #declare Clear   = rgbf 1;
 #declare White   = rgb 1;
 #declare Black   = rgb 0;
+#declare Grey = color red 0.752941 green 0.752941 blue 0.752941;
 
 #macro CH2RGB (HH)
    #local H = mod(HH, 360);
@@ -435,7 +436,7 @@ Frame(2.0, 0.1, 20.0)
     #local Hue = Hue1;
     #local Zt = 0.0;
     #while (Zt <= TotalZ + 5.0)
-        #if (mod(Zt, 1) = 0)
+        #if (mod(Zt, 1) = 0.0)
         #if (Hue = Hue1)
             #local Hue = Hue2;
         #else
@@ -484,6 +485,18 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
 #if (VisualAids > 0.0)
+    #if (-V > 0.1)
+    #local XY = sqrt((V * GAMMA) * (V * GAMMA) - (GAMMA - 1.0) * (GAMMA - 1.0)) / (GAMMA - 1.0);
+    #local RTXY = 0.5 * sqrt(2.0) * XY;
+    sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <0.0, XY, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <RTXY, -RTXY, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <-XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <-RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <0.0, -XY, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <-RTXY, -RTXY, 1.0>, 0.01 pigment { colour Grey } }
+    #end
     // Position indicators
     sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
