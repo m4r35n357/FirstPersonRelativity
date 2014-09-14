@@ -506,11 +506,19 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+    // Clock face
+    sphere { <-1.5, 0.8, 1.0>, 0.002 pigment { colour Grey } }
+    #local Angle = 0.0;
+    #local Hour = pi / 6.0;
+    #while (Angle < 2.0 * pi)
+        sphere { <-1.5 + 0.1 * sin(Angle), 0.8 + 0.1 * cos(Angle), 1.0>, 0.002 pigment { colour Grey } }
+        #local Angle = Angle + Hour;
+    #end
     // Ship clocks
     ShipClock(0.2, -1.5, 0.8, 1.0, Tau, Green)
     ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
-    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
     ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+//    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
 #end
 
 /*
