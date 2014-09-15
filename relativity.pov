@@ -506,7 +506,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
-    // Clock face
+    // Ship clock face
     sphere { <-1.5, 0.8, 1.0>, 0.002 pigment { colour Grey } }
     #local Angle = 0.0;
     #local Hour = pi / 6.0;
@@ -519,6 +519,25 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
     ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
 //    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
+#if (Reverse < 0.0)
+    ShipClock(0.2, 1.5, 0.8, 1.0, Tau + Delay(0.0, 0.0, dZ), Blue)
+#else
+    ShipClock(0.2, 1.5, 0.8, 1.0, Tau + Delay(0.0, 0.0, TotalZ - dZ), Blue)
+#end
+/*
+    // Home clock face
+    sphere { <1.5, 0.8, 1.0>, 0.002 pigment { colour Grey } }
+    #local Angle = 0.0;
+    #local Hour = pi / 6.0;
+    #while (Angle < 2.0 * pi)
+        sphere { <1.5 + 0.1 * sin(Angle), 0.8 + 0.1 * cos(Angle), 1.0>, 0.002 pigment { colour Grey } }
+        #local Angle = Angle + Hour;
+    #end
+    // Ship clocks
+    ShipClock(0.2, 1.5, 0.8, 1.0, Time, Red)
+    ShipClock(0.2, 1.5, 0.8, 1.0, Tau + Delay(0.0, 0.0, TotalZ - dZ), Blue)
+//    ShipClock(0.2, 1.5, 0.8, 1.0, Time + Delay(0.0, 0.0, dZ), Blue)
+*/
 #end
 
 /*
@@ -619,8 +638,13 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 #debug concat(", TS: ", str(Time - Delay(1.0, 0.0, - dZ),3,3))
 #debug concat(", TD: ", str(Time - Delay(1.0, 0.0, TotalZ - dZ),3,3))
 #debug concat(", t: ", str(Time,3,3))
-#debug concat(", z: ", str(dZ,3,3))
-#debug concat(", TH: ", str(Time + Delay(0.0, 0.0, dZ),3,3))
+#if (Reverse < 0.0)
+    #debug concat(", z: ", str(dZ,3,3))
+    #debug concat(", TH: ", str(Time + Delay(0.0, 0.0, dZ),3,3))
+#else
+    #debug concat(", z: ", str(TotalZ - dZ,3,3))
+    #debug concat(", TH: ", str(Time + Delay(0.0, 0.0, TotalZ - dZ),3,3))
+#end
 #debug concat(", T1: ", str(Time - Delay(1.0, 0.0, 0.1 * TotalZ - dZ),3,3))
 #debug concat(", T2: ", str(Time - Delay(1.0, 0.0, 0.2 * TotalZ - dZ),3,3))
 #debug concat(", T3: ", str(Time - Delay(1.0, 0.0, 0.3 * TotalZ - dZ),3,3))
