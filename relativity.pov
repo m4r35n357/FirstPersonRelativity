@@ -519,12 +519,12 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
     ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
 //    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
-#if (Reverse < 0.0)
-    ShipClock(0.2, 1.5, 0.8, 1.0, Tau + Delay(0.0, 0.0, dZ), Blue)
-#else
-    ShipClock(0.2, 1.5, 0.8, 1.0, Tau + Delay(0.0, 0.0, TotalZ - dZ), Blue)
-#end
 /*
+#if (Reverse < 0.0)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Tau - Delay(0.0, 0.0, dZ), Blue)
+#else
+    ShipClock(0.2, -1.5, 0.8, 1.0, Tau - Delay(0.0, 0.0, TotalZ - dZ), Blue)
+#end
     // Home clock face
     sphere { <1.5, 0.8, 1.0>, 0.002 pigment { colour Grey } }
     #local Angle = 0.0;
