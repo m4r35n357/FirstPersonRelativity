@@ -398,7 +398,7 @@ camera {
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
     #local F = <X - Half * Sin, Y - Half * Cos, Z>;
-    sphere { A, 0.05 * Size pigment { colour Colour } }
+    sphere { A, 0.005 pigment { colour Colour } }
 //    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
