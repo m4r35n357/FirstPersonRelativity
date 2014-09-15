@@ -1,16 +1,42 @@
 
+#macro ShipClock (Size, X, Y, Z, T, Colour)
+    #local Angle = 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
+    #local F = <X - Half * Sin, Y - Half * Cos, Z>;
+    sphere { A, 0.05 * Size pigment { colour Colour } }
+//    sphere { F, 0.05 * Size pigment { colour White } }
+#end
+
 #macro Frame (Size, BlockSize, Z)
-    #local Yc = -Size;
-    #while (Yc <= Size)
+    #local Yc = -0.5 * Size;
+    #while (Yc <= 0.5 * Size)
         Cube(BlockSize, Size, Yc, Z)
         Cube(BlockSize, -Size, Yc, Z)
-        #if ((Yc > -Size) & (Yc < Size))
-            Cube(BlockSize, Yc, -Size, Z)
-            Cube(BlockSize, Yc, Size, Z)
-        #end
         #local Yc = Yc + BlockSize;
      #end
+    #local Xc = -Size;
+    #while (Xc <= Size)
+        #if ((Xc > -Size) & (Xc < Size))
+            Cube(BlockSize, Xc, 0.5 * Size, Z)
+            #if (Floor < 0)
+                Cube(BlockSize, Xc, -0.5 * Size, Z)
+            #end
+        #end
+        #local Xc = Xc + BlockSize;
+     #end
 #end
+
+// Frames
+//CubeRing (2.0, 0.1, 0.0, 0.0, TotalZ + 10.0)
+Frame(2.0, 0.1, 0.0)
+Frame(2.0, 0.1, 5.0)
+Frame(2.0, 0.1, 10.0)
+Frame(2.0, 0.1, 15.0)
+Frame(2.0, 0.1, 20.0)
+//CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
 
 // Tiles
 #macro Tiles (Size, Y, Hue1, Hue2)
@@ -25,8 +51,8 @@
             #local Hue = Hue1;
         #end
         #end
-        #local Xt = -2.0 + Half;
-	#while (Xt <= 2.0)
+        #local Xt = - Horizontal + Half;
+	#while (Xt <= Horizontal)
             Tile(Size, Xt, Y, Zt + Half, Hue)
             #local Xt = Xt + Size;
         #end
@@ -34,13 +60,17 @@
     #end
 #end
 
-// Milestones
-#local X = Horizontal;
-#while (X >= - Horizontal)
-    Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-    #local X = X - 0.1;
+// Floor/Milestones
+#if (Floor > 0)
+    Tiles(0.25, -0.5, HOrange, HPaleBlue)
+    Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
+#else
+    #local X = Horizontal;
+    #while (X >= - Horizontal)
+        Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
+        #local X = X - 0.1;
+    #end
 #end
-//Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 
 // Clock stations
 #local Zc = 0;
@@ -53,6 +83,7 @@
 
 // Destination
 Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
+//Icosohedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
 
 // Sun
 #local X = -100.0;
@@ -60,25 +91,22 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 #local Z = TotalZ + 200.0;
 sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 
-// Frames
-Frame(2.0, 0.1, 0.0)
-Frame(2.0, 0.1, 5.0)
-Frame(2.0, 0.1, 10.0)
-Frame(2.0, 0.1, 15.0)
-Frame(2.0, 0.1, 20.0)
-
-// Floor
-//Tiles(0.25, -0.5, HRed, HBlue)
-
-// Position indicators
-sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.0, -1.0, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
-sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+#if (VisualAids > 0.0)
+    // Position indicators
+    sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.0, -1.0, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
+    sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+    // Ship clocks
+    ShipClock(0.2, -1.5, 0.8, 1.0, Tau, Green)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
+    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+#end
 
 /*
 // Grids
