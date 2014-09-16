@@ -253,7 +253,7 @@ camera {
 #end
 
 #macro Bisect (I, J)
-    Lorentz(<0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z)>)
+    LorentzZ(0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z))
 #end
 
 #macro Station (Size, X, Y, Z, T)
@@ -279,12 +279,12 @@ camera {
     #local BC = Bisect(B, C);
     #local BE = Bisect(B, E);
     #local BF = Bisect(B, F);
-    #local A = Lorentz(A);
-    #local B = Lorentz(B);
-    #local C = Lorentz(C);
-    #local D = Lorentz(D);
-    #local E = Lorentz(E);
-    #local F = Lorentz(F);
+    #local A = LorentzZ(A.x, A.y, A.z);
+    #local B = LorentzZ(B.x, B.y, B.z);
+    #local C = LorentzZ(C.x, C.y, C.z);
+    #local D = LorentzZ(D.x, D.y, D.z);
+    #local E = LorentzZ(E.x, E.y, E.z);
+    #local F = LorentzZ(F.x, F.y, F.z);
     triangle { A, AB, AC HSLTexture(X, Y, Z, HOrange) }
     triangle { C, AC, BC HSLTexture(X, Y, Z, HOrange) }
     triangle { B, BC, AB HSLTexture(X, Y, Z, HOrange) }
@@ -466,17 +466,17 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
 #if (LookForward > 0.0)
     // Ship clock face
-    sphere { <-1.5, 0.8, 1.0>, 0.002 pigment { colour Grey } }
+    sphere { <-1.2, 0.6, 0.8>, 0.002 pigment { colour Grey } }
     #local Angle = 0.0;
     #local Hour = pi / 6.0;
     #while (Angle < 2.0 * pi)
-        sphere { <-1.5 + 0.1 * sin(Angle), 0.8 + 0.1 * cos(Angle), 1.0>, 0.002 pigment { colour Grey } }
+        sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.002 pigment { colour Grey } }
         #local Angle = Angle + Hour;
     #end
     // Ship clocks
-    ShipClock(0.2, -1.5, 0.8, 1.0, Tau, Green)
-    ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
-    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+    ShipClock(0.2, -1.2, 0.6, 0.8, Tau, Green)
+    ShipClock(0.2, -1.2, 0.6, 0.8, Time, Red)
+    ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
 #end
 #end
 
