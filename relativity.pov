@@ -383,31 +383,6 @@ camera {
     Lorentz(<0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z)>)
 #end
 
-#macro Octohedron (Size, X, Y, Z, T)
-    #local Angle = 0.5 * pi * T / T0;
-    #local Cos = cos(Angle);
-    #local Sin = sin(Angle);
-    #local Half = 0.5 * Size;
-    #local A = LorentzZ(X + Half * Sin, Y + Half * Cos, Z);
-    #local B = LorentzZ(X, Y, Z + Half);
-    #local C = LorentzZ(X + Half * Cos, Y - Half * Sin, Z);
-    #local D = LorentzZ(X, Y, Z - Half);
-    #local E = LorentzZ(X - Half * Cos, Y + Half * Sin, Z);
-    #local F = LorentzZ(X - Half * Sin, Y - Half * Cos, Z);
-    triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
-    triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
-    triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
-    triangle { A, E, B HSLTexture(X, Y, Z, HOrange) }
-    triangle { F, E, D HSLTexture(X, Y, Z, HBlue) }
-    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
-    triangle { F, C, B HSLTexture(X, Y, Z, HOrange) }
-    triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
-    #if (VisualAids > 0.0)
-        sphere { A, 0.05 * Size pigment { colour Red } }
-        sphere { F, 0.05 * Size pigment { colour White } }
-    #end
-#end
-
 #macro Station (Size, X, Y, Z, T)
     #local Angle = 0.5 * pi * T / T0;
     #local Cos = cos(Angle);
@@ -441,12 +416,10 @@ camera {
     triangle { C, AC, BC HSLTexture(X, Y, Z, HOrange) }
     triangle { B, BC, AB HSLTexture(X, Y, Z, HOrange) }
     triangle { AC, AB, BC HSLTexture(X, Y, Z, HOrange) }
-//    triangle { A, C, D HSLTexture(X, Y, Z, HBlue) } //
     triangle { A, AC, DA HSLTexture(X, Y, Z, HBlue) }
     triangle { C, DC, AC HSLTexture(X, Y, Z, HBlue) }
     triangle { D, DA, DC HSLTexture(X, Y, Z, HBlue) }
     triangle { AC, DC, DA HSLTexture(X, Y, Z, HBlue) }
-//    triangle { A, D, E HSLTexture(X, Y, Z, HBlue) } //
     triangle { A, DA, EA HSLTexture(X, Y, Z, HBlue) }
     triangle { E, EA, DE HSLTexture(X, Y, Z, HBlue) }
     triangle { D, DE, DA HSLTexture(X, Y, Z, HBlue) }
@@ -455,12 +428,10 @@ camera {
     triangle { E, BE, EA HSLTexture(X, Y, Z, HOrange) }
     triangle { B, AB, BE HSLTexture(X, Y, Z, HOrange) }
     triangle { EA, BE, AB HSLTexture(X, Y, Z, HOrange) }
-//    triangle { F, E, D HSLTexture(X, Y, Z, HBlue) } //
     triangle { F, FE, DF HSLTexture(X, Y, Z, HBlue) }
     triangle { E, DE, FE HSLTexture(X, Y, Z, HBlue) }
     triangle { D, DF, DE HSLTexture(X, Y, Z, HBlue) }
     triangle { FE, DE, DF HSLTexture(X, Y, Z, HBlue) }
-//    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) } //
     triangle { F, DF, CF HSLTexture(X, Y, Z, HBlue) }
     triangle { C, CF, DC HSLTexture(X, Y, Z, HBlue) }
     triangle { D, DC, DF HSLTexture(X, Y, Z, HBlue) }
@@ -522,8 +493,8 @@ Frame(2.0, 0.1, 20.0)
 #macro WallOfTiles (Size, Z, Hue1, Hue2)
     #local Half = 0.5 * Size;
     #local Hue = Hue1;
-    #local Yt = -1.0;
-    #while (Yt < 1.0)
+    #local Yt = -2.0;
+    #while (Yt < 2.0)
         #if (mod(Yt, 1) = 0.0)
         #if (Hue = Hue1)
             #local Hue = Hue2;
@@ -531,8 +502,8 @@ Frame(2.0, 0.1, 20.0)
             #local Hue = Hue1;
         #end
         #end
-        #local Xt = - 1.0 + Half;
-	#while (Xt < 1.0)
+        #local Xt = - 2.0 + Half;
+	#while (Xt < 2.0)
             ZTile(Size, Xt, Yt + Half, Z, Hue)
             #local Xt = Xt + Size;
         #end
@@ -657,6 +628,31 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 #end
 
 /*
+#macro Octohedron (Size, X, Y, Z, T)
+    #local Angle = 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = LorentzZ(X + Half * Sin, Y + Half * Cos, Z);
+    #local B = LorentzZ(X, Y, Z + Half);
+    #local C = LorentzZ(X + Half * Cos, Y - Half * Sin, Z);
+    #local D = LorentzZ(X, Y, Z - Half);
+    #local E = LorentzZ(X - Half * Cos, Y + Half * Sin, Z);
+    #local F = LorentzZ(X - Half * Sin, Y - Half * Cos, Z);
+    triangle { A, B, C HSLTexture(X, Y, Z, HOrange) }
+    triangle { A, C, D HSLTexture(X, Y, Z, HBlue) }
+    triangle { A, D, E HSLTexture(X, Y, Z, HBlue) }
+    triangle { A, E, B HSLTexture(X, Y, Z, HOrange) }
+    triangle { F, E, D HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, C, B HSLTexture(X, Y, Z, HOrange) }
+    triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
+    #if (VisualAids > 0.0)
+        sphere { A, 0.05 * Size pigment { colour Red } }
+        sphere { F, 0.05 * Size pigment { colour White } }
+    #end
+#end
+
 #macro AsteroidGrid (Size, CX, CY, CZ)
     #local Offset = (Size - 1.0) / 2.0;
     #local NrZ = 0;
