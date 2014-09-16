@@ -132,6 +132,10 @@ camera {
     sqrt(X * X + Y * Y + Z * Z)
 #end
 
+#macro Lorentz (W)  // Special Relativity happens here . . .
+    <W.x, W.y, GAMMA * (W.z - dZ - V * Delay(W.x, W.y, W.z - dZ))>
+#end
+
 #macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
     <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
 #end
@@ -375,7 +379,11 @@ camera {
     #end
 #end
 
-#macro Station (Size, X, Y, Z, T)
+#macro Bisect (I, J)
+    Lorentz(<0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z)>)
+#end
+
+#macro Octohedron (Size, X, Y, Z, T)
     #local Angle = 0.5 * pi * T / T0;
     #local Cos = cos(Angle);
     #local Sin = sin(Angle);
@@ -394,6 +402,77 @@ camera {
     triangle { F, D, C HSLTexture(X, Y, Z, HBlue) }
     triangle { F, C, B HSLTexture(X, Y, Z, HOrange) }
     triangle { F, B, E HSLTexture(X, Y, Z, HOrange) }
+    #if (VisualAids > 0.0)
+        sphere { A, 0.05 * Size pigment { colour Red } }
+        sphere { F, 0.05 * Size pigment { colour White } }
+    #end
+#end
+
+#macro Station (Size, X, Y, Z, T)
+    #local Angle = 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
+    #local B = <X, Y, Z + Half>;
+    #local C = <X + Half * Cos, Y - Half * Sin, Z>;
+    #local D = <X, Y, Z - Half>;
+    #local E = <X - Half * Cos, Y + Half * Sin, Z>;
+    #local F = <X - Half * Sin, Y - Half * Cos, Z>;
+    #local AC = Bisect(A, C);
+    #local CF = Bisect(C, F);
+    #local FE = Bisect(F, E);
+    #local EA = Bisect(E, A);
+    #local DA = Bisect(D, A);
+    #local DC = Bisect(D, C);
+    #local DF = Bisect(D, F);
+    #local DE = Bisect(D, E);
+    #local AB = Bisect(A, B);
+    #local BC = Bisect(B, C);
+    #local BE = Bisect(B, E);
+    #local BF = Bisect(B, F);
+    #local A = Lorentz(A);
+    #local B = Lorentz(B);
+    #local C = Lorentz(C);
+    #local D = Lorentz(D);
+    #local E = Lorentz(E);
+    #local F = Lorentz(F);
+    triangle { A, AB, AC HSLTexture(X, Y, Z, HOrange) }
+    triangle { C, AC, BC HSLTexture(X, Y, Z, HOrange) }
+    triangle { B, BC, AB HSLTexture(X, Y, Z, HOrange) }
+    triangle { AC, AB, BC HSLTexture(X, Y, Z, HOrange) }
+//    triangle { A, C, D HSLTexture(X, Y, Z, HBlue) } //
+    triangle { A, AC, DA HSLTexture(X, Y, Z, HBlue) }
+    triangle { C, DC, AC HSLTexture(X, Y, Z, HBlue) }
+    triangle { D, DA, DC HSLTexture(X, Y, Z, HBlue) }
+    triangle { AC, DC, DA HSLTexture(X, Y, Z, HBlue) }
+//    triangle { A, D, E HSLTexture(X, Y, Z, HBlue) } //
+    triangle { A, DA, EA HSLTexture(X, Y, Z, HBlue) }
+    triangle { E, EA, DE HSLTexture(X, Y, Z, HBlue) }
+    triangle { D, DE, DA HSLTexture(X, Y, Z, HBlue) }
+    triangle { EA, DA, DE HSLTexture(X, Y, Z, HBlue) }
+    triangle { A, EA, AB HSLTexture(X, Y, Z, HOrange) }
+    triangle { E, BE, EA HSLTexture(X, Y, Z, HOrange) }
+    triangle { B, AB, BE HSLTexture(X, Y, Z, HOrange) }
+    triangle { EA, BE, AB HSLTexture(X, Y, Z, HOrange) }
+//    triangle { F, E, D HSLTexture(X, Y, Z, HBlue) } //
+    triangle { F, FE, DF HSLTexture(X, Y, Z, HBlue) }
+    triangle { E, DE, FE HSLTexture(X, Y, Z, HBlue) }
+    triangle { D, DF, DE HSLTexture(X, Y, Z, HBlue) }
+    triangle { FE, DE, DF HSLTexture(X, Y, Z, HBlue) }
+//    triangle { F, D, C HSLTexture(X, Y, Z, HBlue) } //
+    triangle { F, DF, CF HSLTexture(X, Y, Z, HBlue) }
+    triangle { C, CF, DC HSLTexture(X, Y, Z, HBlue) }
+    triangle { D, DC, DF HSLTexture(X, Y, Z, HBlue) }
+    triangle { CF, DF, DC HSLTexture(X, Y, Z, HBlue) }
+    triangle { F, CF, BF HSLTexture(X, Y, Z, HOrange) }
+    triangle { C, BC, CF HSLTexture(X, Y, Z, HOrange) }
+    triangle { B, BF, BC HSLTexture(X, Y, Z, HOrange) }
+    triangle { CF, BC, BF HSLTexture(X, Y, Z, HOrange) }
+    triangle { F, BF, FE HSLTexture(X, Y, Z, HOrange) }
+    triangle { E, FE, BE HSLTexture(X, Y, Z, HOrange) }
+    triangle { B, BE, BF HSLTexture(X, Y, Z, HOrange) }
+    triangle { FE, BF, BE HSLTexture(X, Y, Z, HOrange) }
     #if (VisualAids > 0.0)
         sphere { A, 0.05 * Size pigment { colour Red } }
         sphere { F, 0.05 * Size pigment { colour White } }
