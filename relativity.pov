@@ -306,6 +306,15 @@ camera {
   Tiloid(V7, V2, V4, V1, Hue)
 #end
 
+#macro ZTile (Size, X, Y, Z, Hue)
+  #local Half = 0.5 * Size;
+  #local V1 = LorentzZ(X + Half,  Y + Half, Z);
+  #local V2 = LorentzZ(X - Half,  Y + Half, Z);
+  #local V4 = LorentzZ(X + Half,  Y - Half, Z);
+  #local V7 = LorentzZ(X - Half,  Y - Half, Z);
+  Tiloid(V7, V2, V4, V1, Hue)
+#end
+
 #macro Cuboid (V1, V2, V3, V4, V5, V6, V7, V8)
   /* top side */
   triangle { V7, V4, V1 HSLTexture(X, Y, Z, HPaleBlue) }
@@ -431,11 +440,33 @@ Frame(2.0, 0.1, 20.0)
 //CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
 
 // Tiles
+#macro WallOfTiles (Size, Z, Hue1, Hue2)
+    #local Half = 0.5 * Size;
+    #local Hue = Hue1;
+    #local Yt = -1.0;
+    #while (Yt < 1.0)
+        #if (mod(Yt, 1) = 0.0)
+        #if (Hue = Hue1)
+            #local Hue = Hue2;
+        #else
+            #local Hue = Hue1;
+        #end
+        #end
+        #local Xt = - 1.0 + Half;
+	#while (Xt < 1.0)
+            ZTile(Size, Xt, Yt + Half, Z, Hue)
+            #local Xt = Xt + Size;
+        #end
+        #local Yt = Yt + Size;
+    #end
+#end
+
+// Tiles
 #macro Tiles (Size, Y, Hue1, Hue2)
     #local Half = 0.5 * Size;
     #local Hue = Hue1;
     #local Zt = 0.0;
-    #while (Zt <= TotalZ + 5.0)
+    #while (Zt < TotalZ + 5.0)
         #if (mod(Zt, 1) = 0.0)
         #if (Hue = Hue1)
             #local Hue = Hue2;
@@ -478,6 +509,9 @@ Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
 //Icosahedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
+//WallOfTiles(0.25, TotalZ + 6.0, HBlue, HYellow)
+WallOfTiles(0.25, -1.0, HBlue, HYellow)
+
 // Sun
 #local X = -100.0;
 #local Y = 40.0;
@@ -487,6 +521,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
 #if (VisualAids > 0.0)
     #if (-V > 0.1)
     #local XY = sqrt((V * GAMMA) * (V * GAMMA) - (GAMMA - 1.0) * (GAMMA - 1.0)) / (GAMMA - 1.0);
+    // Doppler indicators
     #local RTXY = 0.5 * sqrt(2.0) * XY;
     sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
     sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
@@ -506,6 +541,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
+#if (LookForward > 0.0)
     // Ship clock face
     sphere { <-1.5, 0.8, 1.0>, 0.002 pigment { colour Grey } }
     #local Angle = 0.0;
@@ -518,6 +554,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     ShipClock(0.2, -1.5, 0.8, 1.0, Tau, Green)
     ShipClock(0.2, -1.5, 0.8, 1.0, Time, Red)
     ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+#end
 //    ShipClock(0.2, -1.5, 0.8, 1.0, Time - Delay(0.0, 0.0, - dZ), Blue)
 /*
 #if (Reverse < 0.0)
