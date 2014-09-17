@@ -330,6 +330,15 @@ camera {
 //    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
+#macro Speedometer (Size, X, Y, Z, Speed, Colour)
+    #local Angle = 0.5 * 5.0 / 3.0 * pi * Speed;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
+    sphere { A, 0.003 pigment { colour Colour } }
+#end
+
 #macro Frame (Size, BlockSize, Z)
     #local Yc = -0.5 * Size;
     #while (Yc <= 0.5 * Size)
@@ -477,6 +486,15 @@ sphere { LorentzZ(X, Y, Z), 10.0 DopplerColour(X, Y, Z, HOrange) }
         #else
             ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, dZ), Yellow)
         #end
+        // Speedometer
+        sphere { <1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
+        #local Hour = pi / 12.0;
+        #local Angle = - pi + 2.0 * Hour;
+        #while (Angle < pi - Hour)
+            sphere { <1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
+            #local Angle = Angle + Hour;
+        #end
+        Speedometer(0.2, 1.2, 0.6, 0.8, V, Red)
     #end
 #end
 
