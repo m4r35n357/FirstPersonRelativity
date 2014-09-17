@@ -336,7 +336,7 @@ camera {
     #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
-    sphere { A, 0.003 pigment { colour Colour } }
+    sphere { A, 0.003 pigment { colour CHSL2RGB(<250.0 - 250.0 * abs(V), 1.0, 0.5>) } }
 #end
 
 #macro Frame (Size, BlockSize, Z)
