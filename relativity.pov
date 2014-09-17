@@ -131,11 +131,11 @@ camera {
 #macro Delay (X, Y, Z)
     sqrt(X * X + Y * Y + Z * Z)
 #end
-
+/*
 #macro Lorentz (W)  // Special Relativity happens here . . .
     <W.x, W.y, GAMMA * (W.z - dZ - V * Delay(W.x, W.y, W.z - dZ))>
 #end
-
+*/
 #macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
     <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
 #end
@@ -330,7 +330,7 @@ camera {
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
     #local F = <X - Half * Sin, Y - Half * Cos, Z>;
-    sphere { A, 0.005 pigment { colour Colour } }
+    sphere { A, 0.003 pigment { colour Colour } }
 //    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
@@ -375,7 +375,7 @@ Frame(2.0, 0.1, 20.0)
             #local Hue = Hue1;
         #end
         #end
-        #local Xt = - 2.0 + Half;
+        #local Xt = -2.0 + Half;
 	#while (Xt < 2.0)
             ZTile(Size, Xt, Yt + Half, Z, Hue)
             #local Xt = Xt + Size;
@@ -466,11 +466,11 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
 #if (LookForward > 0.0)
     // Ship clock face
-    sphere { <-1.2, 0.6, 0.8>, 0.002 pigment { colour Grey } }
+    sphere { <-1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
     #local Angle = 0.0;
     #local Hour = pi / 6.0;
     #while (Angle < 2.0 * pi)
-        sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.002 pigment { colour Grey } }
+        sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
         #local Angle = Angle + Hour;
     #end
     // Ship clocks
