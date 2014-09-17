@@ -149,25 +149,25 @@ camera {
     #end
 #end
 
-#macro HSLTexture (X, Y, Z, Colour)
-    texture { pigment { colour Doppler(X, Y, Z, Colour) } }
+#macro DopplerColour (X, Y, Z, Colour)
+    pigment { colour Doppler(X, Y, Z, Colour) }
 #end
 
 #macro Milestones (X, Y, Za, Zz)
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HGreen) }
+            sphere { LorentzZ(X, Y, Z), 0.01 DopplerColour(X, Y, Z, HGreen) }
         #else
-            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HGreen) }
+            sphere { LorentzZ(X, Y, Z), 0.005 DopplerColour(X, Y, Z, HGreen) }
         #end
         #local Z = Z + 1;
     #end
 #end
 
 #macro Tiloid (vA, vB, vC, vD, Hue)
-  triangle { vA, vB, vD HSLTexture(X, Y, Z, Hue) }
-  triangle { vA, vC, vD HSLTexture(X, Y, Z, Hue) }
+  triangle { vA, vB, vD DopplerColour(X, Y, Z, Hue) }
+  triangle { vA, vC, vD DopplerColour(X, Y, Z, Hue) }
 #end
 
 #macro Tile (Size, X, Y, Z, Hue)
@@ -190,23 +190,23 @@ camera {
 
 #macro Cuboid (V1, V2, V3, V4, V5, V6, V7, V8)
   /* top side */
-  triangle { V7, V4, V1 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V7, V2, V1 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V7, V4, V1 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V7, V2, V1 DopplerColour(X, Y, Z, HPaleBlue) }
   /* bottom side */
-  triangle { V8, V6, V3 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V8, V5, V3 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V8, V6, V3 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V8, V5, V3 DopplerColour(X, Y, Z, HPaleBlue) }
   /* left side */
-  triangle { V8, V5, V2 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V8, V7, V2 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V8, V5, V2 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V8, V7, V2 DopplerColour(X, Y, Z, HPaleBlue) }
   /* right side */
-  triangle { V6, V3, V1 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V6, V1, V4 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V6, V3, V1 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V6, V1, V4 DopplerColour(X, Y, Z, HPaleBlue) }
   /* front side */
-  triangle { V8, V6, V7 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V7, V4, V6 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V8, V6, V7 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V7, V4, V6 DopplerColour(X, Y, Z, HPaleBlue) }
   /* back side */
-  triangle { V5, V3, V2 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V2, V1, V3 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V5, V3, V2 DopplerColour(X, Y, Z, HViolet) }
+  triangle { V2, V1, V3 DopplerColour(X, Y, Z, HViolet) }
 #end
 
 #macro Cube (Size, X, Y, Z)
@@ -281,38 +281,38 @@ camera {
     #local D = LorentzZ(D.x, D.y, D.z);
     #local E = LorentzZ(E.x, E.y, E.z);
     #local F = LorentzZ(F.x, F.y, F.z);
-    triangle { A, AB, AC HSLTexture(X, Y, Z, Hue2) }
-    triangle { C, AC, BC HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, BC, AB HSLTexture(X, Y, Z, Hue2) }
-    triangle { AC, AB, BC HSLTexture(X, Y, Z, Hue2) }
-    triangle { A, AC, DA HSLTexture(X, Y, Z, Hue1) }
-    triangle { C, DC, AC HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DA, DC HSLTexture(X, Y, Z, Hue1) }
-    triangle { AC, DC, DA HSLTexture(X, Y, Z, Hue1) }
-    triangle { A, DA, EA HSLTexture(X, Y, Z, Hue1) }
-    triangle { E, EA, DE HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DE, DA HSLTexture(X, Y, Z, Hue1) }
-    triangle { EA, DA, DE HSLTexture(X, Y, Z, Hue1) }
-    triangle { A, EA, AB HSLTexture(X, Y, Z, Hue2) }
-    triangle { E, BE, EA HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, AB, BE HSLTexture(X, Y, Z, Hue2) }
-    triangle { EA, BE, AB HSLTexture(X, Y, Z, Hue2) }
-    triangle { F, FE, DF HSLTexture(X, Y, Z, Hue1) }
-    triangle { E, DE, FE HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DF, DE HSLTexture(X, Y, Z, Hue1) }
-    triangle { FE, DE, DF HSLTexture(X, Y, Z, Hue1) }
-    triangle { F, DF, CF HSLTexture(X, Y, Z, Hue1) }
-    triangle { C, CF, DC HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DC, DF HSLTexture(X, Y, Z, Hue1) }
-    triangle { CF, DF, DC HSLTexture(X, Y, Z, Hue1) }
-    triangle { F, CF, BF HSLTexture(X, Y, Z, Hue2) }
-    triangle { C, BC, CF HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, BF, BC HSLTexture(X, Y, Z, Hue2) }
-    triangle { CF, BC, BF HSLTexture(X, Y, Z, Hue2) }
-    triangle { F, BF, FE HSLTexture(X, Y, Z, Hue2) }
-    triangle { E, FE, BE HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, BE, BF HSLTexture(X, Y, Z, Hue2) }
-    triangle { FE, BF, BE HSLTexture(X, Y, Z, Hue2) }
+    triangle { A, AB, AC DopplerColour(X, Y, Z, Hue2) }
+    triangle { C, AC, BC DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, BC, AB DopplerColour(X, Y, Z, Hue2) }
+    triangle { AC, AB, BC DopplerColour(X, Y, Z, Hue2) }
+    triangle { A, AC, DA DopplerColour(X, Y, Z, Hue1) }
+    triangle { C, DC, AC DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DA, DC DopplerColour(X, Y, Z, Hue1) }
+    triangle { AC, DC, DA DopplerColour(X, Y, Z, Hue1) }
+    triangle { A, DA, EA DopplerColour(X, Y, Z, Hue1) }
+    triangle { E, EA, DE DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DE, DA DopplerColour(X, Y, Z, Hue1) }
+    triangle { EA, DA, DE DopplerColour(X, Y, Z, Hue1) }
+    triangle { A, EA, AB DopplerColour(X, Y, Z, Hue2) }
+    triangle { E, BE, EA DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, AB, BE DopplerColour(X, Y, Z, Hue2) }
+    triangle { EA, BE, AB DopplerColour(X, Y, Z, Hue2) }
+    triangle { F, FE, DF DopplerColour(X, Y, Z, Hue1) }
+    triangle { E, DE, FE DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DF, DE DopplerColour(X, Y, Z, Hue1) }
+    triangle { FE, DE, DF DopplerColour(X, Y, Z, Hue1) }
+    triangle { F, DF, CF DopplerColour(X, Y, Z, Hue1) }
+    triangle { C, CF, DC DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DC, DF DopplerColour(X, Y, Z, Hue1) }
+    triangle { CF, DF, DC DopplerColour(X, Y, Z, Hue1) }
+    triangle { F, CF, BF DopplerColour(X, Y, Z, Hue2) }
+    triangle { C, BC, CF DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, BF, BC DopplerColour(X, Y, Z, Hue2) }
+    triangle { CF, BC, BF DopplerColour(X, Y, Z, Hue2) }
+    triangle { F, BF, FE DopplerColour(X, Y, Z, Hue2) }
+    triangle { E, FE, BE DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, BE, BF DopplerColour(X, Y, Z, Hue2) }
+    triangle { FE, BF, BE DopplerColour(X, Y, Z, Hue2) }
     #if (VisualAids > 0.0)
         sphere { A, 0.05 * Size pigment { colour Red } }
         sphere { F, 0.05 * Size pigment { colour White } }
@@ -435,7 +435,7 @@ WallOfTiles(0.25, -1.0, HBlue, HYellow)
 #local X = -100.0;
 #local Y = 40.0;
 #local Z = TotalZ + 200.0;
-sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
+sphere { LorentzZ(X, Y, Z), 10.0 DopplerColour(X, Y, Z, HOrange) }
 
 #if (VisualAids > 0.0)
     #if (-V > 0.1)
