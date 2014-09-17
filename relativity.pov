@@ -460,20 +460,24 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
-#if (LookForward > 0.0)
-    // Ship clock face
-    sphere { <-1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
-    #local Angle = 0.0;
-    #local Hour = pi / 6.0;
-    #while (Angle < 2.0 * pi)
-        sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
-        #local Angle = Angle + Hour;
+    #if (LookForward > 0.0)
+        // Ship clock face
+        sphere { <-1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
+        #local Angle = 0.0;
+        #local Hour = pi / 6.0;
+        #while (Angle < 2.0 * pi)
+            sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
+            #local Angle = Angle + Hour;
+        #end
+        // Ship clocks
+        ShipClock(0.2, -1.2, 0.6, 0.8, Tau, Green)
+        ShipClock(0.2, -1.2, 0.6, 0.8, Time, Red)
+        #if (Reverse > 0.0)
+            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Blue)
+        #else
+            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, dZ), Yellow)
+        #end
     #end
-    // Ship clocks
-    ShipClock(0.2, -1.2, 0.6, 0.8, Tau, Green)
-    ShipClock(0.2, -1.2, 0.6, 0.8, Time, Red)
-    ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
-#end
 #end
 
 
