@@ -473,7 +473,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
         ShipClock(0.2, -1.2, 0.6, 0.8, Tau, Green)
         ShipClock(0.2, -1.2, 0.6, 0.8, Time, Red)
         #if (Reverse > 0.0)
-            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Blue)
+            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
         #else
             ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, dZ), Yellow)
         #end
