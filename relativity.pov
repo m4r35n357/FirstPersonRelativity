@@ -131,11 +131,7 @@ camera {
 #macro Delay (X, Y, Z)
     sqrt(X * X + Y * Y + Z * Z)
 #end
-/*
-#macro Lorentz (W)  // Special Relativity happens here . . .
-    <W.x, W.y, GAMMA * (W.z - dZ - V * Delay(W.x, W.y, W.z - dZ))>
-#end
-*/
+
 #macro LorentzZ (X, Y, Z)  // Special Relativity happens here . . .
     <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
 #end
@@ -256,7 +252,7 @@ camera {
     LorentzZ(0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z))
 #end
 
-#macro Station (Size, X, Y, Z, T)
+#macro Station (Size, X, Y, Z, T, Hue1, Hue2)
     #local Angle = 0.5 * pi * T / T0;
     #local Cos = cos(Angle);
     #local Sin = sin(Angle);
@@ -285,38 +281,38 @@ camera {
     #local D = LorentzZ(D.x, D.y, D.z);
     #local E = LorentzZ(E.x, E.y, E.z);
     #local F = LorentzZ(F.x, F.y, F.z);
-    triangle { A, AB, AC HSLTexture(X, Y, Z, HOrange) }
-    triangle { C, AC, BC HSLTexture(X, Y, Z, HOrange) }
-    triangle { B, BC, AB HSLTexture(X, Y, Z, HOrange) }
-    triangle { AC, AB, BC HSLTexture(X, Y, Z, HOrange) }
-    triangle { A, AC, DA HSLTexture(X, Y, Z, HBlue) }
-    triangle { C, DC, AC HSLTexture(X, Y, Z, HBlue) }
-    triangle { D, DA, DC HSLTexture(X, Y, Z, HBlue) }
-    triangle { AC, DC, DA HSLTexture(X, Y, Z, HBlue) }
-    triangle { A, DA, EA HSLTexture(X, Y, Z, HBlue) }
-    triangle { E, EA, DE HSLTexture(X, Y, Z, HBlue) }
-    triangle { D, DE, DA HSLTexture(X, Y, Z, HBlue) }
-    triangle { EA, DA, DE HSLTexture(X, Y, Z, HBlue) }
-    triangle { A, EA, AB HSLTexture(X, Y, Z, HOrange) }
-    triangle { E, BE, EA HSLTexture(X, Y, Z, HOrange) }
-    triangle { B, AB, BE HSLTexture(X, Y, Z, HOrange) }
-    triangle { EA, BE, AB HSLTexture(X, Y, Z, HOrange) }
-    triangle { F, FE, DF HSLTexture(X, Y, Z, HBlue) }
-    triangle { E, DE, FE HSLTexture(X, Y, Z, HBlue) }
-    triangle { D, DF, DE HSLTexture(X, Y, Z, HBlue) }
-    triangle { FE, DE, DF HSLTexture(X, Y, Z, HBlue) }
-    triangle { F, DF, CF HSLTexture(X, Y, Z, HBlue) }
-    triangle { C, CF, DC HSLTexture(X, Y, Z, HBlue) }
-    triangle { D, DC, DF HSLTexture(X, Y, Z, HBlue) }
-    triangle { CF, DF, DC HSLTexture(X, Y, Z, HBlue) }
-    triangle { F, CF, BF HSLTexture(X, Y, Z, HOrange) }
-    triangle { C, BC, CF HSLTexture(X, Y, Z, HOrange) }
-    triangle { B, BF, BC HSLTexture(X, Y, Z, HOrange) }
-    triangle { CF, BC, BF HSLTexture(X, Y, Z, HOrange) }
-    triangle { F, BF, FE HSLTexture(X, Y, Z, HOrange) }
-    triangle { E, FE, BE HSLTexture(X, Y, Z, HOrange) }
-    triangle { B, BE, BF HSLTexture(X, Y, Z, HOrange) }
-    triangle { FE, BF, BE HSLTexture(X, Y, Z, HOrange) }
+    triangle { A, AB, AC HSLTexture(X, Y, Z, Hue2) }
+    triangle { C, AC, BC HSLTexture(X, Y, Z, Hue2) }
+    triangle { B, BC, AB HSLTexture(X, Y, Z, Hue2) }
+    triangle { AC, AB, BC HSLTexture(X, Y, Z, Hue2) }
+    triangle { A, AC, DA HSLTexture(X, Y, Z, Hue1) }
+    triangle { C, DC, AC HSLTexture(X, Y, Z, Hue1) }
+    triangle { D, DA, DC HSLTexture(X, Y, Z, Hue1) }
+    triangle { AC, DC, DA HSLTexture(X, Y, Z, Hue1) }
+    triangle { A, DA, EA HSLTexture(X, Y, Z, Hue1) }
+    triangle { E, EA, DE HSLTexture(X, Y, Z, Hue1) }
+    triangle { D, DE, DA HSLTexture(X, Y, Z, Hue1) }
+    triangle { EA, DA, DE HSLTexture(X, Y, Z, Hue1) }
+    triangle { A, EA, AB HSLTexture(X, Y, Z, Hue2) }
+    triangle { E, BE, EA HSLTexture(X, Y, Z, Hue2) }
+    triangle { B, AB, BE HSLTexture(X, Y, Z, Hue2) }
+    triangle { EA, BE, AB HSLTexture(X, Y, Z, Hue2) }
+    triangle { F, FE, DF HSLTexture(X, Y, Z, Hue1) }
+    triangle { E, DE, FE HSLTexture(X, Y, Z, Hue1) }
+    triangle { D, DF, DE HSLTexture(X, Y, Z, Hue1) }
+    triangle { FE, DE, DF HSLTexture(X, Y, Z, Hue1) }
+    triangle { F, DF, CF HSLTexture(X, Y, Z, Hue1) }
+    triangle { C, CF, DC HSLTexture(X, Y, Z, Hue1) }
+    triangle { D, DC, DF HSLTexture(X, Y, Z, Hue1) }
+    triangle { CF, DF, DC HSLTexture(X, Y, Z, Hue1) }
+    triangle { F, CF, BF HSLTexture(X, Y, Z, Hue2) }
+    triangle { C, BC, CF HSLTexture(X, Y, Z, Hue2) }
+    triangle { B, BF, BC HSLTexture(X, Y, Z, Hue2) }
+    triangle { CF, BC, BF HSLTexture(X, Y, Z, Hue2) }
+    triangle { F, BF, FE HSLTexture(X, Y, Z, Hue2) }
+    triangle { E, FE, BE HSLTexture(X, Y, Z, Hue2) }
+    triangle { B, BE, BF HSLTexture(X, Y, Z, Hue2) }
+    triangle { FE, BF, BE HSLTexture(X, Y, Z, Hue2) }
     #if (VisualAids > 0.0)
         sphere { A, 0.05 * Size pigment { colour Red } }
         sphere { F, 0.05 * Size pigment { colour White } }
@@ -423,12 +419,12 @@ Frame(2.0, 0.1, 20.0)
 #local Xc = -1.0;
 #local Yc = 0.0;
 #while (Zc <= 20)
-    Station(0.25, Xc, Yc, Zc, Time - Delay(Xc, Yc, Zc - dZ))
+    Station(0.25, Xc, Yc, Zc, Time - Delay(Xc, Yc, Zc - dZ), HBlue, HOrange)
     #local Zc = Zc + 1;
 #end
 
 // Destination
-Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ))
+Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ), HBlue, HOrange)
 //Icosahedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
