@@ -100,6 +100,7 @@
     #declare dZ = TotalZ - dZ;
     #declare V = -V;
 #end
+#declare SpeedColour = CHSL2RGB(<250.0 * (1.0 - abs(V)), 1.0, 0.5>);
 
 global_settings { assumed_gamma 1.0 }
 
@@ -336,7 +337,7 @@ camera {
     #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
-    sphere { A, 0.003 pigment { colour CHSL2RGB(<250.0 - 250.0 * abs(V), 1.0, 0.5>) } }
+    sphere { A, 0.003 pigment { colour SpeedColour } }
 #end
 
 #macro Frame (Size, BlockSize, Z)
@@ -416,10 +417,10 @@ Frame(2.0, 0.1, 20.0)
     Tiles(0.125, -0.5, HRed, HViolet)
     Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 #else
-    #local X = Horizontal;
-    #while (X >= - Horizontal)
-        Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-        #local X = X - 0.1;
+    #local Xm = Horizontal;
+    #while (Xm >= - Horizontal)
+        Milestones(Xm, - 0.05, 0.0, TotalZ + 5.0)
+        #local Xm = Xm - 0.1;
     #end
 #end
 
@@ -491,7 +492,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 DopplerColour(X, Y, Z, HOrange) }
         #local Hour = pi / 12.0;
         #local Angle = - pi + 2.0 * Hour;
         #while (Angle < pi - Hour)
-            sphere { <1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
+            sphere { <1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour SpeedColour } }
             #local Angle = Angle + Hour;
         #end
         Speedometer(0.2, 1.2, 0.6, 0.8, V, Red)
