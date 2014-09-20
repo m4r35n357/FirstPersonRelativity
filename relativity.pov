@@ -137,12 +137,9 @@ camera {
     <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
 #end
 
-#macro LorentzT (X, Y, Z)  // . . . and here!
-    GAMMA * (Delay(X, Y, Z - dZ) - V * (Z - dZ))
-#end
-
 #macro Doppler (X, Y, Z, Hue)
-    #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
+    #local R = Delay(X, Y, Z - dZ);
+    #local DF = GAMMA * (R - V * (Z - dZ)) / R;  // . . . and here!
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(<250.0 - (250.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
     #else  // red shift, darken
