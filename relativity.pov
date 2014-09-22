@@ -109,11 +109,12 @@ light_source { <1, 1, 0> colour White shadowless }
 camera {
   up <0, 0.9, 0>
   right <1.6, 0, 0>
-  location <0.0, 0.0, 0.0>
   angle 120.0
   #if (LookForward > 0.0)
+    location <0.0, 0.0, 0.0>
     look_at <0, 0, 1>
   #else  // look left
+    location <3.0, 1.5, 0.0>
     look_at <-1, 0, 0>
   #end
 }
@@ -246,6 +247,50 @@ camera {
     #end
 #end
 
+#macro Icosahedron (Size, X, Y, Z, T)
+    #local Angle = - 0.5 * pi * T / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local dA = 0.5 * Size * 0.525731112119133606;
+    #local dB = 0.5 * Size * 0.850650808352039932;
+    #local V0 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z + dB);
+    #local V1 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z + dB);
+    #local V2 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z - dB);
+    #local V3 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z - dB);
+    #local V4 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z + dA);
+    #local V5 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z - dA);
+    #local V6 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z + dA);
+    #local V7 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z - dA);
+    #local V8 = LorentzZ(X + dB * Cos - dA * Sin, Y + dA * Cos + dB * Sin, Z);
+    #local V9 = LorentzZ(X - dB * Cos - dA * Sin, Y + dA * Cos - dB * Sin, Z);
+    #local V10 = LorentzZ(X + dB * Cos + dA * Sin, Y - dA * Cos + dB * Sin, Z);
+    #local V11 = LorentzZ(X - dB * Cos + dA * Sin, Y - dA * Cos - dB * Sin, Z);
+    triangle { V0, V4, V1 DopplerColour(X, Y, Z, HRed) }
+    triangle { V0, V9, V4 DopplerColour(X, Y, Z, HRed) }
+    triangle { V9, V5, V4 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V4, V5, V8 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V4, V8, V1 DopplerColour(X, Y, Z, HRed) }
+    triangle { V8, V10, V1 DopplerColour(X, Y, Z, HRed) }
+    triangle { V8, V3, V10 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V5, V3, V8 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V5, V2, V3 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V2, V7, V3 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V10, V3 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V6, V10 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V11, V6 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V11, V0, V6 DopplerColour(X, Y, Z, HRed) }
+    triangle { V0, V1, V6 DopplerColour(X, Y, Z, HRed) }
+    triangle { V6, V1, V10 DopplerColour(X, Y, Z, HRed) }
+    triangle { V9, V0, V11 DopplerColour(X, Y, Z, HRed) }
+    triangle { V9, V11, V2 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V9, V2, V5 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V2, V11 DopplerColour(X, Y, Z, HGreen) }
+    #if (VisualAids > 0.0)
+        sphere { V5, 0.05 * Size pigment { colour Red } }
+        sphere { V7, 0.05 * Size pigment { colour White } }
+    #end
+#end
+
 #macro Bisect (I, J)
     LorentzZ(0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z))
 #end
@@ -360,7 +405,8 @@ camera {
 //CubeRing (2.0, 0.1, 0.0, 0.0, TotalZ + 10.0)
 Frame(2.0, 0.1, 0.0)
 Frame(2.0, 0.1, 5.0)
-Frame(2.0, 0.1, 10.0)
+CubeRing (1.0, 0.1, 0.0, 0.0, 10.0)
+//Frame(2.0, 0.1, 10.0)
 Frame(2.0, 0.1, 15.0)
 Frame(2.0, 0.1, 20.0)
 //CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
@@ -379,7 +425,7 @@ Frame(2.0, 0.1, 20.0)
         #end
         #end
         #local Xt = -2.0 + Half;
-	#while (Xt < 2.0)
+	#while (Xt < 0.0)
             ZTile(Size, Xt, Yt + Half, Z, Hue)
             #local Xt = Xt + Size;
         #end
@@ -423,7 +469,7 @@ Frame(2.0, 0.1, 20.0)
 
 // Clock stations
 #local Zc = 0;
-#local Xc = -1.0;
+#local Xc = 1.0;
 #local Yc = 0.0;
 #while (Zc <= 20)
     Station(0.25, Xc, Yc, Zc, Time - Delay(Xc, Yc, Zc - dZ), HBlue, HOrange)
@@ -431,8 +477,8 @@ Frame(2.0, 0.1, 20.0)
 #end
 
 // Destination
-Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ), HBlue, HOrange)
-//Icosahedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
+Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ  + 0.6 - dZ), HBlue, HOrange)
+Icosahedron(1.0, -1.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ + 1.5 - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
 //WallOfTiles(0.25, TotalZ + 6.0, HBlue, HYellow)
