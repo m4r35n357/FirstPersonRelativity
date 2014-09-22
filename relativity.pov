@@ -401,16 +401,6 @@ camera {
      #end
 #end
 
-// Frames
-//CubeRing (2.0, 0.1, 0.0, 0.0, TotalZ + 10.0)
-Frame(2.0, 0.1, 0.0)
-Frame(2.0, 0.1, 5.0)
-CubeRing (1.0, 0.1, 0.0, 0.0, 10.0)
-//Frame(2.0, 0.1, 10.0)
-Frame(2.0, 0.1, 15.0)
-Frame(2.0, 0.1, 20.0)
-//CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
-
 // Tiles
 #macro WallOfTiles (Size, Z, Hue1, Hue2)
     #local Half = 0.5 * Size;
@@ -455,6 +445,13 @@ Frame(2.0, 0.1, 20.0)
     #end
 #end
 
+// Frames
+Frame(2.0, 0.1, 0.0)
+Frame(2.0, 0.1, 5.0)
+Frame(2.0, 0.1, 10.0)
+Frame(2.0, 0.1, 15.0)
+Frame(2.0, 0.1, 20.0)
+
 // Floor/Milestones
 #if (Floor > 0)
     Tiles(0.125, -0.5, HRed, HViolet)
@@ -467,42 +464,53 @@ Frame(2.0, 0.1, 20.0)
     #end
 #end
 
+// Home station
+#local Xd = 0.0;
+#local Yd = 0.0;
+#local Zd = TotalZ + 0.6;
+Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ), HBlue, HOrange)
+//CubeRing (0.5, 0.1, 0.0, 0.0, TotalZ + 10.0)
+
 // Clock stations
-#local Zc = 0;
 #local Xc = 1.0;
 #local Yc = 0.0;
+#local Zc = 0;
 #while (Zc <= 20)
     Station(0.25, Xc, Yc, Zc, Time - Delay(Xc, Yc, Zc - dZ), HBlue, HOrange)
     #local Zc = Zc + 1;
 #end
 
-// Destination
-Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ  + 0.6 - dZ), HBlue, HOrange)
-Icosahedron(1.0, -1.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ + 1.5 - dZ))
+// Half way
+#local Xh = -3.0;
+#local Yh = 0.0;
+#local Zh = 0.5 * TotalZ;
+//Icosahedron(1.0, Xh, Yh, Zh, Time - Delay(Xh, Yh, Zh - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
-//WallOfTiles(0.25, TotalZ + 6.0, HBlue, HYellow)
+// Back wall
 WallOfTiles(0.25, -1.0, HBlue, HYellow)
+//Icosahedron(1.0, -3.0, 0.0, 0.0, Time - Delay(-3.0, 0.0, - dZ))
 
 // Sun
-#local X = -100.0;
-#local Y = 40.0;
-#local Z = TotalZ + 200.0;
-sphere { LorentzZ(X, Y, Z), 10.0 DopplerColour(X, Y, Z, HOrange) }
+#local Xs = -100.0;
+#local Ys = 40.0;
+#local Zs = TotalZ + 200.0;
+sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
 
+// HUD
 #if (VisualAids > 0.0)
-    #if (-V > 0.1)
+    #if (abs(V) > 0.001)
     #local XY = sqrt((V * GAMMA) * (V * GAMMA) - (GAMMA - 1.0) * (GAMMA - 1.0)) / (GAMMA - 1.0);
     // Doppler indicators
     #local RTXY = 0.5 * sqrt(2.0) * XY;
-    sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <0.0, XY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <RTXY, -RTXY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <-XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <-RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <0.0, -XY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <-RTXY, -RTXY, 1.0>, 0.01 pigment { colour Grey } }
+    sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <0.0, XY, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <RTXY, -RTXY, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <-XY, 0.0, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <-RTXY, RTXY, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <0.0, -XY, 1.0>, 0.01 pigment { colour Yellow } }
+    sphere { <-RTXY, -RTXY, 1.0>, 0.01 pigment { colour Yellow } }
     #end
     // Position indicators
     sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
@@ -542,7 +550,7 @@ sphere { LorentzZ(X, Y, Z), 10.0 DopplerColour(X, Y, Z, HOrange) }
     #end
 #end
 
-
+// File output
 #debug concat("tau: ", str(Tau,3,3))
 #debug concat(", TS: ", str(Time - Delay(1.0, 0.0, - dZ),3,3))
 #debug concat(", TD: ", str(Time - Delay(1.0, 0.0, TotalZ - dZ),3,3))
