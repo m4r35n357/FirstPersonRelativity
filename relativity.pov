@@ -468,7 +468,7 @@ Frame(2.0, 0.1, 20.0)
 #local Xd = 0.0;
 #local Yd = 0.0;
 #local Zd = TotalZ + 0.6;
-Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ), HBlue, HOrange)
+Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ - dZ), HBlue, HOrange)
 //CubeRing (0.5, 0.1, 0.0, 0.0, TotalZ + 10.0)
 
 // Clock stations
@@ -499,7 +499,7 @@ sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
 
 // HUD
 #if (VisualAids > 0.0)
-    #if (abs(V) > 0.001)
+    #if (-V > 0.001)
     #local XY = sqrt((V * GAMMA) * (V * GAMMA) - (GAMMA - 1.0) * (GAMMA - 1.0)) / (GAMMA - 1.0);
     // Doppler indicators
     #local RTXY = 0.5 * sqrt(2.0) * XY;
