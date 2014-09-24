@@ -114,7 +114,7 @@ camera {
     location <0.0, 0.0, 0.0>
     look_at <0, 0, 1>
   #else  // look left
-    location <3.0, 1.5, 0.0>
+    location <3.0, 2.0, 0.0>
     look_at <-1, 0, 0>
   #end
 }
@@ -467,12 +467,13 @@ Frame(2.0, 0.1, 20.0)
 // Home station
 #local Xd = 0.0;
 #local Yd = 0.0;
-#local Zd = TotalZ + 0.6;
+#local Zd = TotalZ + 0.51;
 Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ - dZ), HBlue, HOrange)
+Icosahedron(0.5, 5.0, 0.0, TotalZ, Time - Delay(5.0, 0.0, TotalZ - dZ))
 //CubeRing (0.5, 0.1, 0.0, 0.0, TotalZ + 10.0)
 
 // Clock stations
-#local Xc = 1.0;
+#local Xc = -1.0;
 #local Yc = 0.0;
 #local Zc = 0;
 #while (Zc <= 20)
@@ -481,15 +482,18 @@ Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ - dZ), HBlue, HOrange)
 #end
 
 // Half way
-#local Xh = -3.0;
+#local Xh = 5.0;
 #local Yh = 0.0;
 #local Zh = 0.5 * TotalZ;
-//Icosahedron(1.0, Xh, Yh, Zh, Time - Delay(Xh, Yh, Zh - dZ))
+Icosahedron(0.5, Xh, Yh, Zh, Time - Delay(Xh, Yh, Zh - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
 // Back wall
+#local Xi = 5.0;
+#local Yi = 0.0;
+#local Zi = 0.0;
+Icosahedron(0.5, Xi, Yi, Zi, Time - Delay(Xi, Yi, Zi - dZ))
 WallOfTiles(0.25, -1.0, HBlue, HYellow)
-//Icosahedron(1.0, -3.0, 0.0, 0.0, Time - Delay(-3.0, 0.0, - dZ))
 
 // Sun
 #local Xs = -100.0;
@@ -499,9 +503,9 @@ sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
 
 // HUD
 #if (VisualAids > 0.0)
+    // Doppler=1 indicators
     #if (-V > 0.001)
-    #local XY = sqrt((V * GAMMA) * (V * GAMMA) - (GAMMA - 1.0) * (GAMMA - 1.0)) / (GAMMA - 1.0);
-    // Doppler indicators
+    #local XY = sqrt(V*V * GAMMA*GAMMA / ((GAMMA - 1.0) * (GAMMA - 1.0)) - 1.0);
     #local RTXY = 0.5 * sqrt(2.0) * XY;
     sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Yellow } }
     sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Yellow } }
@@ -512,7 +516,7 @@ sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
     sphere { <0.0, -XY, 1.0>, 0.01 pigment { colour Yellow } }
     sphere { <-RTXY, -RTXY, 1.0>, 0.01 pigment { colour Yellow } }
     #end
-    // Position indicators
+    // Position, Doppler=Gamma indicators
     sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
