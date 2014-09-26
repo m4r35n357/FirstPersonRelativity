@@ -369,7 +369,7 @@ camera {
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
     #local F = <X - Half * Sin, Y - Half * Cos, Z>;
-    sphere { A, 0.003 pigment { colour Colour } }
+    sphere { A, 0.00075 pigment { colour Colour } }
 //    sphere { F, 0.05 * Size pigment { colour White } }
 #end
 
@@ -379,7 +379,7 @@ camera {
     #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
-    sphere { A, 0.003 pigment { colour SpeedColour } }
+    sphere { A, 0.00075 pigment { colour SpeedColour } }
 #end
 
 #macro Frame (Size, BlockSize, Z)
@@ -527,31 +527,34 @@ sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     #if (LookForward > 0.0)
+        #local Xh = 0.3;
+        #local Yh = 0.15;
+        #local Zh = 0.2;
         // Ship clock face
-        sphere { <-1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
+        sphere { <-Xh, Yh, Zh>, 0.00025 pigment { colour Grey } }
         #local Angle = 0.0;
         #local Hour = pi / 6.0;
         #while (Angle < 2.0 * pi)
-            sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
+            sphere { <-Xh + 0.025 * sin(Angle), Yh + 0.025 * cos(Angle), Zh>, 0.00025 pigment { colour Grey } }
             #local Angle = Angle + Hour;
         #end
         // Ship clocks
-        ShipClock(0.2, -1.2, 0.6, 0.8, Tau, Green)
-        ShipClock(0.2, -1.2, 0.6, 0.8, Time, Red)
+        ShipClock(0.05, -Xh, Yh, Zh, Tau, Green)
+        ShipClock(0.05, -Xh, Yh, Zh, Time, Red)
         #if (Reverse > 0.0)
-            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+            ShipClock(0.05, -Xh, Yh, Zh, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
         #else
-            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, dZ), Yellow)
+            ShipClock(0.05, -Xh, Yh, Zh, Time - Delay(0.0, 0.0, dZ), Yellow)
         #end
         // Speedometer
-        sphere { <1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
+        sphere { <Xh, Yh, Zh>, 0.00025 pigment { colour Grey } }
         #local Hour = pi / 12.0;
         #local Angle = - pi + 2.0 * Hour;
         #while (Angle < pi - Hour)
-            sphere { <1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour SpeedColour } }
+            sphere { <Xh + 0.025 * sin(Angle), Yh + 0.025 * cos(Angle), Zh>, 0.00025 pigment { colour SpeedColour } }
             #local Angle = Angle + Hour;
         #end
-        Speedometer(0.2, 1.2, 0.6, 0.8, V, Red)
+        Speedometer(0.05, Xh, Yh, Zh, V, Red)
     #end
 #end
 
