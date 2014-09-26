@@ -248,7 +248,7 @@ camera {
 #end
 
 #macro Icosahedron (Size, X, Y, Z, T)
-    #local Angle = - 0.5 * pi * T / T0;
+    #local Angle = - 0.5 * pi * T * ClockFactor / T0;
     #local Cos = cos(Angle);
     #local Sin = sin(Angle);
     #local dA = 0.5 * Size * 0.525731112119133606;
@@ -296,7 +296,7 @@ camera {
 #end
 
 #macro Station (Size, X, Y, Z, T, Hue1, Hue2)
-    #local Angle = 0.5 * pi * T / T0;
+    #local Angle = 0.5 * pi * T * ClockFactor / T0;
     #local Cos = cos(Angle);
     #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
