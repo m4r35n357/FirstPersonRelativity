@@ -505,16 +505,17 @@ sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
 #if (VisualAids > 0.0)
     // Doppler=1 indicators
     #if (-V > 0.001)
-    #local XY = sqrt(V*V * GAMMA*GAMMA / ((GAMMA - 1.0) * (GAMMA - 1.0)) - 1.0);
-    #local RTXY = 0.5 * sqrt(2.0) * XY;
-    sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <0.0, XY, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <RTXY, -RTXY, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <-XY, 0.0, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <-RTXY, RTXY, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <0.0, -XY, 1.0>, 0.01 pigment { colour Yellow } }
-    sphere { <-RTXY, -RTXY, 1.0>, 0.01 pigment { colour Yellow } }
+    #local Z1 = 0.5;
+    #local XY = Z1 * sqrt(V*V * GAMMA*GAMMA / ((GAMMA - 1.0) * (GAMMA - 1.0)) - 1.0);
+    #local XY45 = 0.5 * sqrt(2.0) * XY;
+    sphere { <XY, 0.0, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <XY45, XY45, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <0.0, XY, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <XY45, -XY45, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <-XY, 0.0, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <-XY45, XY45, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <0.0, -XY, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <-XY45, -XY45, Z1>, 0.005 pigment { colour Yellow } }
     #end
     // Position, Doppler=Gamma indicators
     sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
