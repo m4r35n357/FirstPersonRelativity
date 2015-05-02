@@ -469,7 +469,7 @@ Frame(2.0, 0.1, 20.0)
 #local Yd = 0.0;
 #local Zd = TotalZ + 0.51;
 Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ - dZ), HBlue, HOrange)
-Icosahedron(0.5, 5.0, 0.0, TotalZ, Time - Delay(5.0, 0.0, TotalZ - dZ))
+//Icosahedron(0.5, 5.0, 0.0, TotalZ, Time - Delay(5.0, 0.0, TotalZ - dZ))
 //CubeRing (0.5, 0.1, 0.0, 0.0, TotalZ + 10.0)
 
 // Clock stations
@@ -485,14 +485,14 @@ Icosahedron(0.5, 5.0, 0.0, TotalZ, Time - Delay(5.0, 0.0, TotalZ - dZ))
 #local Xh = 5.0;
 #local Yh = 0.0;
 #local Zh = 0.5 * TotalZ;
-Icosahedron(0.5, Xh, Yh, Zh, Time - Delay(Xh, Yh, Zh - dZ))
+//Icosahedron(0.5, Xh, Yh, Zh, Time - Delay(Xh, Yh, Zh - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
 // Back wall
 #local Xi = 5.0;
 #local Yi = 0.0;
 #local Zi = 0.0;
-Icosahedron(0.5, Xi, Yi, Zi, Time - Delay(Xi, Yi, Zi - dZ))
+//Icosahedron(0.5, Xi, Yi, Zi, Time - Delay(Xi, Yi, Zi - dZ))
 WallOfTiles(0.25, -1.0, HBlue, HYellow)
 
 // Sun
