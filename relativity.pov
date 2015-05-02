@@ -100,6 +100,7 @@
     #declare dZ = TotalZ - dZ;
     #declare V = -V;
 #end
+#declare SpeedColour = CHSL2RGB(<250.0 * (1.0 - abs(V)), 1.0, 0.5>);
 
 global_settings { assumed_gamma 1.0 }
 
@@ -108,11 +109,12 @@ light_source { <1, 1, 0> colour White shadowless }
 camera {
   up <0, 0.9, 0>
   right <1.6, 0, 0>
-  location <0.0, 0.0, 0.0>
   angle 120.0
   #if (LookForward > 0.0)
+    location <0.0, 0.0, 0.0>
     look_at <0, 0, 1>
   #else  // look left
+    location <3.0, 2.0, 0.0>
     look_at <-1, 0, 0>
   #end
 }
@@ -136,12 +138,9 @@ camera {
     <X, Y, GAMMA * (Z - dZ - V * Delay(X, Y, Z - dZ))>
 #end
 
-#macro LorentzT (X, Y, Z)  // . . . and here!
-    GAMMA * (Delay(X, Y, Z - dZ) - V * (Z - dZ))
-#end
-
 #macro Doppler (X, Y, Z, Hue)
-    #local DF = LorentzT(X, Y, Z) / Delay(X, Y, Z - dZ);
+    #local R = Delay(X, Y, Z - dZ);
+    #local DF = GAMMA * (R - V * (Z - dZ)) / R;  // . . . and here!
     #if (DF >= 1.0)  // blue shift, lighten
         CHSL2RGB(<250.0 - (250.0 - Hue) / DF, 1.0, 1.0 - 0.5 / DF>)
     #else  // red shift, darken
@@ -149,25 +148,25 @@ camera {
     #end
 #end
 
-#macro HSLTexture (X, Y, Z, Colour)
-    texture { pigment { colour Doppler(X, Y, Z, Colour) } }
+#macro DopplerColour (X, Y, Z, Colour)
+    pigment { colour Doppler(X, Y, Z, Colour) }
 #end
 
 #macro Milestones (X, Y, Za, Zz)
     #local Z = Za;
     #while (Z <= Zz) 
         #if (mod(Z, 5) = 0)
-            sphere { LorentzZ(X, Y, Z), 0.01 HSLTexture(X, Y, Z, HGreen) }
+            sphere { LorentzZ(X, Y, Z), 0.01 DopplerColour(X, Y, Z, HGreen) }
         #else
-            sphere { LorentzZ(X, Y, Z), 0.005 HSLTexture(X, Y, Z, HGreen) }
+            sphere { LorentzZ(X, Y, Z), 0.005 DopplerColour(X, Y, Z, HGreen) }
         #end
         #local Z = Z + 1;
     #end
 #end
 
 #macro Tiloid (vA, vB, vC, vD, Hue)
-  triangle { vA, vB, vD HSLTexture(X, Y, Z, Hue) }
-  triangle { vA, vC, vD HSLTexture(X, Y, Z, Hue) }
+  triangle { vA, vB, vD DopplerColour(X, Y, Z, Hue) }
+  triangle { vA, vC, vD DopplerColour(X, Y, Z, Hue) }
 #end
 
 #macro Tile (Size, X, Y, Z, Hue)
@@ -190,23 +189,23 @@ camera {
 
 #macro Cuboid (V1, V2, V3, V4, V5, V6, V7, V8)
   /* top side */
-  triangle { V7, V4, V1 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V7, V2, V1 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V7, V4, V1 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V7, V2, V1 DopplerColour(X, Y, Z, HPaleBlue) }
   /* bottom side */
-  triangle { V8, V6, V3 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V8, V5, V3 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V8, V6, V3 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V8, V5, V3 DopplerColour(X, Y, Z, HPaleBlue) }
   /* left side */
-  triangle { V8, V5, V2 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V8, V7, V2 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V8, V5, V2 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V8, V7, V2 DopplerColour(X, Y, Z, HPaleBlue) }
   /* right side */
-  triangle { V6, V3, V1 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V6, V1, V4 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V6, V3, V1 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V6, V1, V4 DopplerColour(X, Y, Z, HPaleBlue) }
   /* front side */
-  triangle { V8, V6, V7 HSLTexture(X, Y, Z, HPaleBlue) }
-  triangle { V7, V4, V6 HSLTexture(X, Y, Z, HPaleBlue) }
+  triangle { V8, V6, V7 DopplerColour(X, Y, Z, HPaleBlue) }
+  triangle { V7, V4, V6 DopplerColour(X, Y, Z, HPaleBlue) }
   /* back side */
-  triangle { V5, V3, V2 HSLTexture(X, Y, Z, HViolet) }
-  triangle { V2, V1, V3 HSLTexture(X, Y, Z, HViolet) }
+  triangle { V5, V3, V2 DopplerColour(X, Y, Z, HViolet) }
+  triangle { V2, V1, V3 DopplerColour(X, Y, Z, HViolet) }
 #end
 
 #macro Cube (Size, X, Y, Z)
@@ -248,12 +247,56 @@ camera {
     #end
 #end
 
+#macro Icosahedron (Size, X, Y, Z, T)
+    #local Angle = - 0.5 * pi * T * ClockFactor / T0;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local dA = 0.5 * Size * 0.525731112119133606;
+    #local dB = 0.5 * Size * 0.850650808352039932;
+    #local V0 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z + dB);
+    #local V1 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z + dB);
+    #local V2 = LorentzZ(X - dA * Cos, Y - dA * Sin, Z - dB);
+    #local V3 = LorentzZ(X + dA * Cos, Y + dA * Sin, Z - dB);
+    #local V4 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z + dA);
+    #local V5 = LorentzZ(X - dB * Sin, Y + dB * Cos, Z - dA);
+    #local V6 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z + dA);
+    #local V7 = LorentzZ(X + dB * Sin, Y - dB * Cos, Z - dA);
+    #local V8 = LorentzZ(X + dB * Cos - dA * Sin, Y + dA * Cos + dB * Sin, Z);
+    #local V9 = LorentzZ(X - dB * Cos - dA * Sin, Y + dA * Cos - dB * Sin, Z);
+    #local V10 = LorentzZ(X + dB * Cos + dA * Sin, Y - dA * Cos + dB * Sin, Z);
+    #local V11 = LorentzZ(X - dB * Cos + dA * Sin, Y - dA * Cos - dB * Sin, Z);
+    triangle { V0, V4, V1 DopplerColour(X, Y, Z, HRed) }
+    triangle { V0, V9, V4 DopplerColour(X, Y, Z, HRed) }
+    triangle { V9, V5, V4 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V4, V5, V8 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V4, V8, V1 DopplerColour(X, Y, Z, HRed) }
+    triangle { V8, V10, V1 DopplerColour(X, Y, Z, HRed) }
+    triangle { V8, V3, V10 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V5, V3, V8 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V5, V2, V3 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V2, V7, V3 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V10, V3 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V6, V10 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V11, V6 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V11, V0, V6 DopplerColour(X, Y, Z, HRed) }
+    triangle { V0, V1, V6 DopplerColour(X, Y, Z, HRed) }
+    triangle { V6, V1, V10 DopplerColour(X, Y, Z, HRed) }
+    triangle { V9, V0, V11 DopplerColour(X, Y, Z, HRed) }
+    triangle { V9, V11, V2 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V9, V2, V5 DopplerColour(X, Y, Z, HGreen) }
+    triangle { V7, V2, V11 DopplerColour(X, Y, Z, HGreen) }
+    #if (VisualAids > 0.0)
+        sphere { V5, 0.05 * Size pigment { colour Red } }
+        sphere { V7, 0.05 * Size pigment { colour White } }
+    #end
+#end
+
 #macro Bisect (I, J)
     LorentzZ(0.5 * (I.x + J.x), 0.5 * (I.y + J.y), 0.5 * (I.z + J.z))
 #end
 
 #macro Station (Size, X, Y, Z, T, Hue1, Hue2)
-    #local Angle = 0.5 * pi * T / T0;
+    #local Angle = 0.5 * pi * T * ClockFactor / T0;
     #local Cos = cos(Angle);
     #local Sin = sin(Angle);
     #local Half = 0.5 * Size;
@@ -281,38 +324,38 @@ camera {
     #local D = LorentzZ(D.x, D.y, D.z);
     #local E = LorentzZ(E.x, E.y, E.z);
     #local F = LorentzZ(F.x, F.y, F.z);
-    triangle { A, AB, AC HSLTexture(X, Y, Z, Hue2) }
-    triangle { C, AC, BC HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, BC, AB HSLTexture(X, Y, Z, Hue2) }
-    triangle { AC, AB, BC HSLTexture(X, Y, Z, Hue2) }
-    triangle { A, AC, DA HSLTexture(X, Y, Z, Hue1) }
-    triangle { C, DC, AC HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DA, DC HSLTexture(X, Y, Z, Hue1) }
-    triangle { AC, DC, DA HSLTexture(X, Y, Z, Hue1) }
-    triangle { A, DA, EA HSLTexture(X, Y, Z, Hue1) }
-    triangle { E, EA, DE HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DE, DA HSLTexture(X, Y, Z, Hue1) }
-    triangle { EA, DA, DE HSLTexture(X, Y, Z, Hue1) }
-    triangle { A, EA, AB HSLTexture(X, Y, Z, Hue2) }
-    triangle { E, BE, EA HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, AB, BE HSLTexture(X, Y, Z, Hue2) }
-    triangle { EA, BE, AB HSLTexture(X, Y, Z, Hue2) }
-    triangle { F, FE, DF HSLTexture(X, Y, Z, Hue1) }
-    triangle { E, DE, FE HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DF, DE HSLTexture(X, Y, Z, Hue1) }
-    triangle { FE, DE, DF HSLTexture(X, Y, Z, Hue1) }
-    triangle { F, DF, CF HSLTexture(X, Y, Z, Hue1) }
-    triangle { C, CF, DC HSLTexture(X, Y, Z, Hue1) }
-    triangle { D, DC, DF HSLTexture(X, Y, Z, Hue1) }
-    triangle { CF, DF, DC HSLTexture(X, Y, Z, Hue1) }
-    triangle { F, CF, BF HSLTexture(X, Y, Z, Hue2) }
-    triangle { C, BC, CF HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, BF, BC HSLTexture(X, Y, Z, Hue2) }
-    triangle { CF, BC, BF HSLTexture(X, Y, Z, Hue2) }
-    triangle { F, BF, FE HSLTexture(X, Y, Z, Hue2) }
-    triangle { E, FE, BE HSLTexture(X, Y, Z, Hue2) }
-    triangle { B, BE, BF HSLTexture(X, Y, Z, Hue2) }
-    triangle { FE, BF, BE HSLTexture(X, Y, Z, Hue2) }
+    triangle { A, AB, AC DopplerColour(X, Y, Z, Hue2) }
+    triangle { C, AC, BC DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, BC, AB DopplerColour(X, Y, Z, Hue2) }
+    triangle { AC, AB, BC DopplerColour(X, Y, Z, Hue2) }
+    triangle { A, AC, DA DopplerColour(X, Y, Z, Hue1) }
+    triangle { C, DC, AC DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DA, DC DopplerColour(X, Y, Z, Hue1) }
+    triangle { AC, DC, DA DopplerColour(X, Y, Z, Hue1) }
+    triangle { A, DA, EA DopplerColour(X, Y, Z, Hue1) }
+    triangle { E, EA, DE DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DE, DA DopplerColour(X, Y, Z, Hue1) }
+    triangle { EA, DA, DE DopplerColour(X, Y, Z, Hue1) }
+    triangle { A, EA, AB DopplerColour(X, Y, Z, Hue2) }
+    triangle { E, BE, EA DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, AB, BE DopplerColour(X, Y, Z, Hue2) }
+    triangle { EA, BE, AB DopplerColour(X, Y, Z, Hue2) }
+    triangle { F, FE, DF DopplerColour(X, Y, Z, Hue1) }
+    triangle { E, DE, FE DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DF, DE DopplerColour(X, Y, Z, Hue1) }
+    triangle { FE, DE, DF DopplerColour(X, Y, Z, Hue1) }
+    triangle { F, DF, CF DopplerColour(X, Y, Z, Hue1) }
+    triangle { C, CF, DC DopplerColour(X, Y, Z, Hue1) }
+    triangle { D, DC, DF DopplerColour(X, Y, Z, Hue1) }
+    triangle { CF, DF, DC DopplerColour(X, Y, Z, Hue1) }
+    triangle { F, CF, BF DopplerColour(X, Y, Z, Hue2) }
+    triangle { C, BC, CF DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, BF, BC DopplerColour(X, Y, Z, Hue2) }
+    triangle { CF, BC, BF DopplerColour(X, Y, Z, Hue2) }
+    triangle { F, BF, FE DopplerColour(X, Y, Z, Hue2) }
+    triangle { E, FE, BE DopplerColour(X, Y, Z, Hue2) }
+    triangle { B, BE, BF DopplerColour(X, Y, Z, Hue2) }
+    triangle { FE, BF, BE DopplerColour(X, Y, Z, Hue2) }
     #if (VisualAids > 0.0)
         sphere { A, 0.05 * Size pigment { colour Red } }
         sphere { F, 0.05 * Size pigment { colour White } }
@@ -326,8 +369,17 @@ camera {
     #local Half = 0.5 * Size;
     #local A = <X + Half * Sin, Y + Half * Cos, Z>;
     #local F = <X - Half * Sin, Y - Half * Cos, Z>;
-    sphere { A, 0.003 pigment { colour Colour } }
+    sphere { A, 0.00075 pigment { colour Colour } }
 //    sphere { F, 0.05 * Size pigment { colour White } }
+#end
+
+#macro Speedometer (Size, X, Y, Z, Speed, Colour)
+    #local Angle = 0.5 * 5.0 / 3.0 * pi * Speed;
+    #local Cos = cos(Angle);
+    #local Sin = sin(Angle);
+    #local Half = 0.5 * Size;
+    #local A = <X + Half * Sin, Y + Half * Cos, Z>;
+    sphere { A, 0.00075 pigment { colour SpeedColour } }
 #end
 
 #macro Frame (Size, BlockSize, Z)
@@ -349,15 +401,6 @@ camera {
      #end
 #end
 
-// Frames
-//CubeRing (2.0, 0.1, 0.0, 0.0, TotalZ + 10.0)
-Frame(2.0, 0.1, 0.0)
-Frame(2.0, 0.1, 5.0)
-Frame(2.0, 0.1, 10.0)
-Frame(2.0, 0.1, 15.0)
-Frame(2.0, 0.1, 20.0)
-//CubeRing (1.0, 0.1, 0.0, 0.0, TotalZ + 0.1)
-
 // Tiles
 #macro WallOfTiles (Size, Z, Hue1, Hue2)
     #local Half = 0.5 * Size;
@@ -372,7 +415,7 @@ Frame(2.0, 0.1, 20.0)
         #end
         #end
         #local Xt = -2.0 + Half;
-	#while (Xt < 2.0)
+	#while (Xt < 0.0)
             ZTile(Size, Xt, Yt + Half, Z, Hue)
             #local Xt = Xt + Size;
         #end
@@ -402,56 +445,79 @@ Frame(2.0, 0.1, 20.0)
     #end
 #end
 
+// Frames
+Frame(2.0, 0.1, 0.0)
+Frame(2.0, 0.1, 5.0)
+Frame(2.0, 0.1, 10.0)
+Frame(2.0, 0.1, 15.0)
+Frame(2.0, 0.1, 20.0)
+
 // Floor/Milestones
 #if (Floor > 0)
     Tiles(0.125, -0.5, HRed, HViolet)
     Milestones(0.0, - 0.05, 0.0, TotalZ + 5.0)
 #else
-    #local X = Horizontal;
-    #while (X >= - Horizontal)
-        Milestones(X, - 0.05, 0.0, TotalZ + 5.0)
-        #local X = X - 0.1;
+    #local Xm = Horizontal;
+    #while (Xm >= - Horizontal)
+        Milestones(Xm, - 0.05, 0.0, TotalZ + 5.0)
+        #local Xm = Xm - 0.1;
     #end
 #end
 
+// Home station
+#local Xd = 0.0;
+#local Yd = 0.0;
+#local Zd = TotalZ + 0.51;
+Station(1.0, Xd, Yd, Zd, Time - Delay(Xd, Yd, TotalZ - dZ), HBlue, HOrange)
+//Icosahedron(0.5, 5.0, 0.0, TotalZ, Time - Delay(5.0, 0.0, TotalZ - dZ))
+//CubeRing (0.5, 0.1, 0.0, 0.0, TotalZ + 10.0)
+
 // Clock stations
-#local Zc = 0;
 #local Xc = -1.0;
 #local Yc = 0.0;
+#local Zc = 0;
 #while (Zc <= 20)
     Station(0.25, Xc, Yc, Zc, Time - Delay(Xc, Yc, Zc - dZ), HBlue, HOrange)
     #local Zc = Zc + 1;
 #end
 
-// Destination
-Station(1.0, 0.0, 0.0, TotalZ + 0.6, Time - Delay(0.0, 0.0, TotalZ - dZ), HBlue, HOrange)
-//Icosahedron(1.0, 0.0, 0.0, TotalZ + 1.5, Time - Delay(0.0, 0.0, TotalZ - dZ))
+// Half way
+#local Xh = 5.0;
+#local Yh = 0.0;
+#local Zh = 0.5 * TotalZ;
+//Icosahedron(0.5, Xh, Yh, Zh, Time - Delay(Xh, Yh, Zh - dZ))
 //IsoSphere (0.0, 0.0, TotalZ + 5.0)
 
-//WallOfTiles(0.25, TotalZ + 6.0, HBlue, HYellow)
+// Back wall
+#local Xi = 5.0;
+#local Yi = 0.0;
+#local Zi = 0.0;
+//Icosahedron(0.5, Xi, Yi, Zi, Time - Delay(Xi, Yi, Zi - dZ))
 WallOfTiles(0.25, -1.0, HBlue, HYellow)
 
 // Sun
-#local X = -100.0;
-#local Y = 40.0;
-#local Z = TotalZ + 200.0;
-sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
+#local Xs = -100.0;
+#local Ys = 40.0;
+#local Zs = TotalZ + 200.0;
+sphere { LorentzZ(Xs, Ys, Zs), 10.0 DopplerColour(Xs, Ys, Zs, HOrange) }
 
+// HUD
 #if (VisualAids > 0.0)
-    #if (-V > 0.1)
-    #local XY = sqrt((V * GAMMA) * (V * GAMMA) - (GAMMA - 1.0) * (GAMMA - 1.0)) / (GAMMA - 1.0);
-    // Doppler indicators
-    #local RTXY = 0.5 * sqrt(2.0) * XY;
-    sphere { <XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <0.0, XY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <RTXY, -RTXY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <-XY, 0.0, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <-RTXY, RTXY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <0.0, -XY, 1.0>, 0.01 pigment { colour Grey } }
-    sphere { <-RTXY, -RTXY, 1.0>, 0.01 pigment { colour Grey } }
+    // Doppler=1 indicators
+    #if (-V > 0.001)
+    #local Z1 = 0.5;
+    #local XY = Z1 * sqrt(V*V * GAMMA*GAMMA / ((GAMMA - 1.0) * (GAMMA - 1.0)) - 1.0);
+    #local XY45 = 0.5 * sqrt(2.0) * XY;
+    sphere { <XY, 0.0, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <XY45, XY45, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <0.0, XY, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <XY45, -XY45, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <-XY, 0.0, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <-XY45, XY45, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <0.0, -XY, Z1>, 0.005 pigment { colour Yellow } }
+    sphere { <-XY45, -XY45, Z1>, 0.005 pigment { colour Yellow } }
     #end
-    // Position indicators
+    // Position, Doppler=Gamma indicators
     sphere { LorentzZ(1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(0.0, 1.0, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-1.0, 0.0, dZ), 0.05 pigment { colour Magenta } }
@@ -461,26 +527,38 @@ sphere { LorentzZ(X, Y, Z), 10.0 HSLTexture(X, Y, Z, HOrange) }
     sphere { LorentzZ(-0.7, 0.7, dZ), 0.05 pigment { colour Magenta } }
     sphere { LorentzZ(-0.7, -0.7, dZ), 0.05 pigment { colour Magenta } }
     #if (LookForward > 0.0)
+        #local Xh = 0.3;
+        #local Yh = 0.15;
+        #local Zh = 0.2;
         // Ship clock face
-        sphere { <-1.2, 0.6, 0.8>, 0.001 pigment { colour Grey } }
+        sphere { <-Xh, Yh, Zh>, 0.00025 pigment { colour Grey } }
         #local Angle = 0.0;
         #local Hour = pi / 6.0;
         #while (Angle < 2.0 * pi)
-            sphere { <-1.2 + 0.1 * sin(Angle), 0.6 + 0.1 * cos(Angle), 0.8>, 0.001 pigment { colour Grey } }
+            sphere { <-Xh + 0.025 * sin(Angle), Yh + 0.025 * cos(Angle), Zh>, 0.00025 pigment { colour Grey } }
             #local Angle = Angle + Hour;
         #end
         // Ship clocks
-        ShipClock(0.2, -1.2, 0.6, 0.8, Tau, Green)
-        ShipClock(0.2, -1.2, 0.6, 0.8, Time, Red)
+        ShipClock(0.05, -Xh, Yh, Zh, Tau, Green)
+        ShipClock(0.05, -Xh, Yh, Zh, Time, Red)
         #if (Reverse > 0.0)
-            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
+            ShipClock(0.05, -Xh, Yh, Zh, Time - Delay(0.0, 0.0, TotalZ - dZ), Yellow)
         #else
-            ShipClock(0.2, -1.2, 0.6, 0.8, Time - Delay(0.0, 0.0, dZ), Yellow)
+            ShipClock(0.05, -Xh, Yh, Zh, Time - Delay(0.0, 0.0, dZ), Yellow)
         #end
+        // Speedometer
+        sphere { <Xh, Yh, Zh>, 0.00025 pigment { colour Grey } }
+        #local Hour = pi / 12.0;
+        #local Angle = - pi + 2.0 * Hour;
+        #while (Angle < pi - Hour)
+            sphere { <Xh + 0.025 * sin(Angle), Yh + 0.025 * cos(Angle), Zh>, 0.00025 pigment { colour SpeedColour } }
+            #local Angle = Angle + Hour;
+        #end
+        Speedometer(0.05, Xh, Yh, Zh, V, Red)
     #end
 #end
 
-
+// File output
 #debug concat("tau: ", str(Tau,3,3))
 #debug concat(", TS: ", str(Time - Delay(1.0, 0.0, - dZ),3,3))
 #debug concat(", TD: ", str(Time - Delay(1.0, 0.0, TotalZ - dZ),3,3))
