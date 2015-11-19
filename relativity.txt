@@ -1,0 +1,12 @@
+The twin "paradox" (in quotes because it is NOT a real paradox!) is a valuable learning tool for Special Relativity: http://math.ucr.edu/home/baez/physics/Relativity/SR/TwinParadox/twin_intro.html
+
+This is a series of visualizations of the journey from the point of view of the travelling twin, who flies 20 light years away from his home station then returns.  The journey consists of four parts, joined together.  The first quarter is an acceleration away from the station.  During the second and third quarters the ship accelerates towards the station (so that at the half way point the ship is stationary 20 light years away).  In the fourth quarter the ship accelerates away from the station in order to come to rest there.
+
+The total coordinate travel time (shown as a red dot in the top left HUD clock) is 43.711/58.918 years for acceleration at earth/moon gravity levels, whilst proper time (green dot) is 12.101/38.694 years.  The yellow dot represents the time the traveller would see on the station clock face through a very powerful telescope!  The octahedral stations (spaced one light year apart and one light year to the left of the flight path) are all synchronized to coordinate time and rotate once over the course of the whole journey.  There is a 2x2 light year wall one light year beyond the far end of the journey, and large rectangular frames every 5 light years.  Where a floor is shown it is 1 light year per stripe, and there are small 1 ly milestone spheres along the way, with a larger one every five light years.
+
+The flights are rendered without relativistic effects and then for two values of acceleration (currently earth gravity and moon gravity).  The distortion artifacts are due to aberration of light, the Doppler effect and the headlight effect.  The earth gravity videos exhibit some nice penrose-terrel "rotation" effects.  Magenta markers in a circle show where you really are in the scene (Doppler shift = gamma for this circle), and grey markers show the circle where the doppler shift is 1 (gamma is in theory directly observable on this circle).
+
+These videos were made with POV-Ray (http://www.povray.org/) and avconv/ffmpeg (https://www.ffmpeg.org/) video encoding software.
+
+POV and support files are available from https://github.com/m4r35n357/FirstPersonRelativity.git
+
